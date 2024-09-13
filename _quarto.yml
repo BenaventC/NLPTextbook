@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "Introduction aux méthodes de traitement du langage naturel"
+  subtitle: "pour les sciences sociales"
+  author: "Christophe Benavent"
+  date: "07/07/2023"
+  chapters:
+    - index.qmd
+    - q01_introduction.qmd
+    - q02_corpus.qmd
+    - q03_corpus_suite.qmd
+    - q04_explorer.qmd
+    - q05_manipuler_caractere.qmd
+    - q06_Analyse_quantitative.qmd
+    - q07_tokenisation.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-fold: true
+    code-summary: "Show the code"
+  pdf:
+    documentclass: scrreprt
+
+execute:
+  warning: false
+  message: false
+
+
+editor: visual
+

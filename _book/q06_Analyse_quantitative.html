@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction aux méthodes de traitement du langage naturel - 6&nbsp; Analyse Quantitative du corpus</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./q07_tokenisation.html" rel="next">
+<link href="./q05_manipuler_caractere.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q06_Analyse_quantitative.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction aux méthodes de traitement du langage naturel</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préambule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#comptons-les-mots" id="toc-comptons-les-mots" class="nav-link active" data-scroll-target="#comptons-les-mots"><span class="header-section-number">6.1</span> Comptons les mots</a></li>
+  <li><a href="#la-production-dans-le-temps" id="toc-la-production-dans-le-temps" class="nav-link" data-scroll-target="#la-production-dans-le-temps"><span class="header-section-number">6.2</span> La production dans le temps</a></li>
+  <li><a href="#popularité-des-tweets" id="toc-popularité-des-tweets" class="nav-link" data-scroll-target="#popularité-des-tweets"><span class="header-section-number">6.3</span> Popularité des tweets</a></li>
+  <li><a href="#lisibilité-et-complexité-lexicale" id="toc-lisibilité-et-complexité-lexicale" class="nav-link" data-scroll-target="#lisibilité-et-complexité-lexicale"><span class="header-section-number">6.4</span> Lisibilité et complexité lexicale</a>
+  <ul class="collapse">
+  <li><a href="#les-indices-de-lisibilité" id="toc-les-indices-de-lisibilité" class="nav-link" data-scroll-target="#les-indices-de-lisibilité"><span class="header-section-number">6.4.1</span> Les indices de lisibilité</a></li>
+  <li><a href="#les-indices-de-complexité-lexicale" id="toc-les-indices-de-complexité-lexicale" class="nav-link" data-scroll-target="#les-indices-de-complexité-lexicale"><span class="header-section-number">6.4.2</span> Les indices de complexité lexicale</a></li>
+  </ul></li>
+  <li><a href="#la-mesure-de-la-concentration-des-termes" id="toc-la-mesure-de-la-concentration-des-termes" class="nav-link" data-scroll-target="#la-mesure-de-la-concentration-des-termes"><span class="header-section-number">6.5</span> La mesure de la concentration des termes</a>
+  <ul class="collapse">
+  <li><a href="#un-débat-théorique" id="toc-un-débat-théorique" class="nav-link" data-scroll-target="#un-débat-théorique"><span class="header-section-number">6.5.1</span> Un débat théorique</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">6.5.2</span> Application</a></li>
+  </ul></li>
+  <li><a href="#comptons-les-mots-1" id="toc-comptons-les-mots-1" class="nav-link" data-scroll-target="#comptons-les-mots-1"><span class="header-section-number">6.6</span> Comptons les mots</a>
+  <ul class="collapse">
+  <li><a href="#les-nuages-de-mots" id="toc-les-nuages-de-mots" class="nav-link" data-scroll-target="#les-nuages-de-mots"><span class="header-section-number">6.6.1</span> Les nuages de mots</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.7</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapître</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#accessoires de ggplot</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#NLP</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats )</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#tableau</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#palettes</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#names(wes_palettes)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>col_1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>col_1b<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#F4B5BD"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>col_2<span class="ot">&lt;-</span>c <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>, <span class="st">"#F4B5BD"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>col_4<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>, <span class="st">"#F4B5BD"</span>, <span class="st">"#9C964A"</span>, <span class="st">"#CDC08C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Objectifs du chapitre :</strong></p>
+<div>
+<ul>
+<li>Avant de se plonger sans l’analyse du lexique on peut étudier le corpus de manière quantitative d’autant plus s’il se distribue dans le temps. La fréquence des textes, leur longueur, la longueur des mots, leur diversité.</li>
+</ul>
+</div>
+<p>Une première manière d’aborder un texte ou un corpus est volumétrique. Quel volume de texte? Quelle longueur ? Combien de mots ? Quelles variations?</p>
+<p>A cette fin on utilise le cas des tweets de Donald Trump. Des premiers aux derniers, jusqu’au moment de son bannissement en Janvier 2021, après sa défaite aux élections présidentielles. Chargeons le fichier de données.( on retrouvera la description du fichier en préambule)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/TrumpTwitterArchive01-08-2021.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>nrow<span class="ot">&lt;-</span><span class="fu">nrow</span>(df) <span class="co">#nombre de ligne</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ncol<span class="ot">&lt;-</span><span class="fu">ncol</span>(df) <span class="co">#nombre de colonne</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>nb_mots<span class="ot">&lt;-</span><span class="fu">str_count</span>(df<span class="sc">$</span>text, <span class="st">" "</span>)<span class="sc">+</span><span class="dv">1</span> <span class="co"># l'astuce : compter les espaces et ajouter 1, pour compter les mots</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sum_mots<span class="ot">&lt;-</span><span class="fu">sum</span>(df<span class="sc">$</span>nb_mots)             <span class="co">#ON COMPTE LE NOMBRE DE MOTS</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="comptons-les-mots" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="comptons-les-mots"><span class="header-section-number">6.1</span> Comptons les mots</h2>
+<p>Il y 56571 tweets et 9 variables et 1.117018^{6} mots cumulés.</p>
+<p>On peut vouloir compter le nombre de mots. A cette fin on emploie une fonction de <code>stringr</code>, un package précieux que nous allons étudier de plus dans le chapitres suivant : <code>str_count</code>.</p>
+<p>On note immédiatement la bi-modalité de la distribution qui correspond au changement de règle par Twitter en matière de non de caractères utilisés, étendu de 180 à 280.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>nb_mots))<span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill=</span>col_1, <span class="at">binwidth =</span> <span class="dv">10</span>)<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste0</span>(<span class="st">"Nombre total de mots du corpus : "</span>,sum_mots), </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Nombre de mots par post"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Fréquence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/602-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La bimodalité provient surement du changement de taille maximum effectué en septembre 2017, le passage de 180 caractères max à 280. On peut le vérifier en examinant cette même distribution - par les courbes de densité - pour chacune des années, avec cette technique rendue fameuse par la pochette de l’album de Joy Division : un graphique en crêtes (ridges plot) avec <a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html"><code>ggridges</code></a>.</p>
+<p>Le résultat remarquable est que si Trump dans un premier temps exploite cette nouvel fonctionnalité, il en revient avec un phrasé de 20 mots en moyenne, gardant cependant à l’occasion d’autre contenu en 50 mots environ.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Year<span class="ot">&lt;-</span><span class="fu">format</span>(df<span class="sc">$</span>date, <span class="at">format =</span> <span class="st">"%Y"</span>) <span class="co">#on extrait l'année de la date</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">!=</span><span class="st">"2021"</span>) <span class="co">#parce qu'il n'y a quelques quelques jours en janvier, le compte a été interrompu vers le 5 janavier</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo,<span class="fu">aes</span>(<span class="at">x =</span> nb_mots, <span class="at">y =</span> Year, <span class="at">group =</span> Year)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="dv">4</span>, <span class="at">color=</span><span class="st">"grey90"</span>,<span class="at">fill=</span>col_1, <span class="at">alpha=</span>.<span class="dv">7</span>)<span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ridges</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Nombre de mots par post"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/603-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="la-production-dans-le-temps" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="la-production-dans-le-temps"><span class="header-section-number">6.2</span> La production dans le temps</h2>
+<p>Examinons le nombre de tweets produit au cours du temps.</p>
+<p>On se rappellera qu’après une carrière immobilière menée dans les casinos, le golf et les hôtels, l’appétit médiatique de Trump s’est réalisé dans “the apprentice”, de 2004 à 2015. C’est un pro de la TV, il a une formation de Popstar. Il sera élu en Décembre 2016 pour prendre le pouvoir en Janvier.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date2<span class="ot">&lt;-</span><span class="fu">format</span>(df<span class="sc">$</span>date, <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date3<span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(df<span class="sc">$</span>date2, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>isRetweet<span class="ot">&lt;-</span><span class="fu">as.character</span>(df<span class="sc">$</span>isRetweet)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year<span class="sc">!=</span><span class="dv">2021</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date3, isRetweet)<span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">n</span>())</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## plot time series of tweets</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>date3, <span class="at">y=</span>n,<span class="at">group=</span>isRetweet))<span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>isRetweet), <span class="at">alpha=</span>.<span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span>isRetweet),<span class="at">span=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_datetime</span>(<span class="at">date_breaks =</span> <span class="st">"1 year"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date_short</span>())<span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"nombre de tweets par jour"</span>, <span class="at">x=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> col_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/604-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#raf : labeliser avec les dates clés</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="popularité-des-tweets" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="popularité-des-tweets"><span class="header-section-number">6.3</span> Popularité des tweets</h2>
+<p>Dans ce set de donnée si l’auteur est unique, la réception est multiple, rappelons que près de 90 millions de personnes suivaient Trump. On possède deux indicateurs : le nombre de retweet et de RT.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">select</span>(Year, favorites, retweets)<span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(favorites) <span class="sc">&amp;</span> Year<span class="sc">!=</span><span class="dv">2021</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year)<span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_rt=</span><span class="fu">sum</span>(retweets),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">sum_fav=</span><span class="fu">sum</span>(favorites),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_rt=</span><span class="fu">mean</span>(retweets),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_fav=</span><span class="fu">mean</span>(favorites)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Year,<span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>values,<span class="at">group=</span>variable))<span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>variable), <span class="at">size=</span><span class="dv">1</span>,<span class="at">alpha=</span>.<span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"nombre de tweets par jour"</span>, <span class="at">x=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> col_4)<span class="sc">+</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">scale=</span><span class="st">"free"</span>)<span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/605-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On s’aperçoit d’un changement de régime, quand l’audience est limitée RT et fac sont fortement corrélés, l’entrée en politique de Trump se caractérise par un changement de régime. La décorrélation peut s’expliquer par l’usage d’agent d’influences, qui retweetent plus qu’ils n’approuvent. Ils contribuent à la décorrélation.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">select</span>(Year, favorites, retweets)<span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(favorites) <span class="sc">&amp;</span> Year<span class="sc">!=</span><span class="dv">2021</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year)<span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">cor</span>(favorites, retweets)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">correlation =</span><span class="dv">2</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>correlation, <span class="at">group=</span><span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>,<span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">color=</span>col_1b)<span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color=</span>col_1b, <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">fill=</span><span class="st">"grey90"</span>)<span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Corrélation entre fav et rt"</span>, <span class="at">x=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/606-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">select</span>(Year, favorites, retweets)<span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(favorites) <span class="sc">&amp;</span> Year<span class="sc">==</span><span class="dv">2020</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x =</span> favorites, <span class="at">y =</span> retweets)) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_log10</span>()<span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_log10</span>()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># contour lines</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>m <span class="sc">+</span> <span class="fu">geom_density_2d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/607-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date2<span class="ot">&lt;-</span><span class="fu">format</span>(df<span class="sc">$</span>date, <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date3<span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(df<span class="sc">$</span>date2, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>isRetweet<span class="ot">&lt;-</span><span class="fu">as.character</span>(df<span class="sc">$</span>isRetweet)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year<span class="sc">!=</span><span class="dv">2021</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date3, isRetweet)<span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">n</span>())</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## plot time series of tweets</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>date3, <span class="at">y=</span>n,<span class="at">group=</span>isRetweet))<span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>isRetweet), <span class="at">alpha=</span>.<span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span>isRetweet),<span class="at">span=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_datetime</span>(<span class="at">date_breaks =</span> <span class="st">"1 year"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date_short</span>())<span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"nombre de tweets par jour"</span>, <span class="at">x=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> col_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/608-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#raf : labeliser avec les dates clés</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="lisibilité-et-complexité-lexicale" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="lisibilité-et-complexité-lexicale"><span class="header-section-number">6.4</span> Lisibilité et complexité lexicale</h2>
+<p>Pour aller un peu plus loin - nous savons désormais que Trump aime une forme courte en 21 mots, et que son expérience de twitter est longue, on peut s’intéresser à des paramètres clés relatifs aux conditions de la réception: les textes sont-ils aisés à lire ? sont-ils sophistiqués ?</p>
+<p>Introduisons deux quantifications utiles du texte : la lisibilité et la complexité lexicale. Ce sont des classiques, les critères initiaux de l’analyse quantitative du texte. Ils sont toujours utiles.</p>
+<section id="les-indices-de-lisibilité" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="les-indices-de-lisibilité"><span class="header-section-number">6.4.1</span> Les indices de lisibilité</h3>
+<p>La lisibilité est une notion ancienne tout autant que sa mesure (par exemple <span class="citation" data-cites="coleman_computer_1975">Coleman and Liau (<a href="#ref-coleman_computer_1975" role="doc-biblioref">1975</a>)</span>). Elle répond à la question du degré de maîtrise requis pour lire un texte en s’appuyant sur les caractéristiques objectives du texte plutôt que sur sa perception. Il s’agissait donc d’évaluer la complexité d’un texte à partir de deux critères : la complexité des mots capturée par le nombre moyen de syllabes, et la complexité des phrases mesurée par le nombre de mots.</p>
+<p>A partir de ces deux paramètres, une multitudes d’indicateurs ont été proposés. Dans l’exemple qui va suivre, on se contente d’un grand classique, le plus ancien, l’indice de Flesch <span class="citation" data-cites="flesch_new_1948">(<a href="#ref-flesch_new_1948" role="doc-biblioref">Flesch 1948</a>)</span> et de ses constituants : le nombre moyen de syllabes par mot et le nombre moyen de mots par phrase.</p>
+<p>On les retrouve, avec une autre grande variété, dans le package compagnon de quanteda , <a href="https://quanteda.io/reference/textstat_readability.html"><code>quanteda.textstats</code></a> , qui en fournit des dizaines de variantes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#on sélectionne les tweets originaux</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(isRetweet<span class="sc">==</span><span class="cn">FALSE</span>) <span class="co"># on ne prend pas en compte les RT</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#la fonction de calcul de lisibilité</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>readability<span class="ot">&lt;-</span><span class="fu">textstat_readability</span>(foo<span class="sc">$</span>text, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">measure =</span> <span class="fu">c</span>(<span class="st">"Flesch"</span>,<span class="st">"meanSentenceLength"</span>, <span class="st">"meanWordSyllables"</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">min_sentence_length =</span> <span class="dv">3</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">max_sentence_length =</span> <span class="dv">1000</span>) </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># on joint les données</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span><span class="fu">cbind</span>(foo,readability[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#on agrège par année</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>foo1<span class="ot">&lt;-</span>foo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year<span class="sc">!=</span><span class="dv">2021</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">all_tweet=</span><span class="fu">n</span>(),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">Flesch=</span><span class="fu">mean</span>(Flesch, <span class="at">na.rm=</span><span class="cn">TRUE</span>), </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">SentenceLength=</span> <span class="fu">mean</span>(meanSentenceLength, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">WordSyllables=</span> <span class="fu">mean</span>(meanWordSyllables, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>Year)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#visualisation</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo1,<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>value, <span class="at">group=</span>variable))<span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="fl">1.2</span>, <span class="fu">aes</span>(<span class="at">color=</span>variable), <span class="at">stat=</span><span class="st">"identity"</span>)<span class="sc">+</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">scale=</span><span class="st">"free"</span>, <span class="at">ncol=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Evolution de la lisibilité des tweets de Trump"</span>, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/609-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pour aider le lecteur à donner un sens, voici l’abaque proposée par <a href="http://www.appstate.edu/~steelekm/classes/psy2664/Flesch.htm">Flesch</a> lui-même.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./image/ReadabilityFlesch.JPG" class="img-fluid figure-img"></p>
+<figcaption>Flesch</figcaption>
+</figure>
+</div>
+<p>On peut aussi prendre pour références les éléments suivants:</p>
+<p>“All Plain English examples in this book score at least 60. Here are the scores of some reading materials I’ve tested. These are average scores of random samples.” ( source ?)</p>
+<ul>
+<li><p>Comics 92</p></li>
+<li><p>Consumer ads in magazines 82</p></li>
+<li><p>Reader’s Digest 65</p></li>
+<li><p>Time 52</p></li>
+<li><p>Wall Street Journal 43</p></li>
+<li><p>Harvard Business Review 43</p></li>
+<li><p>Harvard Law Review 32</p></li>
+<li><p>Auto insurance policy 10</p></li>
+</ul>
+<p>Trump ne parait pas être sa caricature, non niveau de lisibilité correspond à la Licence. Le Reader’s Digest est beaucoup plus simple, il se situe au dessus de la Harvard Business Review !</p>
+</section>
+<section id="les-indices-de-complexité-lexicale" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="les-indices-de-complexité-lexicale"><span class="header-section-number">6.4.2</span> Les indices de complexité lexicale</h3>
+<p>La complexité lexicale rend compte de la diversité du vocabulaire, elle consiste à rapporter le nombre de mot uniques sur le nombre total de mots. La difficulté est que la taille des corpus joue fortement sur cette mesure et que lorsque cette taille est hétérogène, l’indicateur marque plus cette variété que les variations de complexité lexicale.<span class="citation" data-cites="tweedie_how_1998">(<a href="#ref-tweedie_how_1998" role="doc-biblioref">Tweedie and Baayen 1998</a>)</span></p>
+<p>Dans notre univers trumpesque, ce n’est pas trop sensible, d’autant plus que nous allons moyenner les tweets par période.Notons au passage que si nous moyennons la diversité lexicale de chaque tweet, une autre approche pourrait être de concaténer l’ensemble des tweets d’une période (un jour, une semaine) pour approcher cette variable à une autre échelle, qui couvre l’ensemble des sujets d’intérêt de Trump, que les tweets fractionnent nécessairement. Ce qui en en question dans la mise en pratique n’est pas seulement la question du choix de l’indice mais aussi la définition de l’unité de calcul. La diversité lexicale concerne sans doute plus le discours que la phrase.</p>
+<p>On choisit de ne travailler sur deux des multiples indicateurs disponibles :</p>
+<ul>
+<li>le CTTR de Caroll qui rapporte le nombre de mots distincts ( V) sur le nombre de mots exprimés. Avec ce critère la diversité maximale est obtenue quand le nombre de mots différents est égal au nombre de mots exprimés.</li>
+</ul>
+<p><span class="math display">\[
+CTTR = \frac{V}{\sqrt{2N}}
+\]</span></p>
+<ul>
+<li>le Mass supposé être moins sensible à la longueur des textes. (voir Torruella et Capsada 2013 ou )</li>
+</ul>
+<p><span class="math display">\[
+M = \frac{log(n) - log(t)}{log² (n)}
+\]</span></p>
+<p>On notera que le problème de la longueur variables des textes dans un corpus produit un biais : les textes seront mécaniquement plus divers que les textes court, ce qui conduit à des approches segmentées, où la mesure de diversité est une moyenne des moyenne pour chacun des segments de texte . On emploie ici le MATTR, dont le MA signifie moyenne mobile (moving average), et le TTR le token/type ratio.</p>
+<p>(attention un pb de log dans le calcul)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#on retient les tweets de plus de 5 mots</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nb_mots<span class="sc">&gt;</span><span class="dv">10</span> <span class="sc">&amp;</span> isRetweet<span class="sc">==</span><span class="st">"FALSE"</span> <span class="sc">&amp;</span> Year<span class="sc">!=</span><span class="dv">2021</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#la fonction de calcul de diversité</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>t1<span class="ot">=</span><span class="fu">Sys.time</span>()</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>lexdiv<span class="ot">&lt;-</span><span class="fu">tokens</span>(foo<span class="sc">$</span>text)<span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_lexdiv</span>(foo<span class="sc">$</span>text, <span class="at">measure =</span> <span class="fu">c</span>(<span class="st">"CTTR"</span>, <span class="st">"Maas"</span>),  <span class="at">log.base =</span> <span class="dv">10</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>,  </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,  </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">remove_hyphens =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">=</span><span class="fu">Sys.time</span>()</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span> t2<span class="sc">-</span>t1</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 4.253881 secs</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#On combine les données et on aggrège sur l'année</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span><span class="fu">cbind</span>(foo,lexdiv[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>foo1<span class="ot">&lt;-</span>foo <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">CTTR=</span><span class="fu">mean</span>(CTTR, <span class="at">na.rm=</span><span class="cn">TRUE</span>), </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Maas=</span><span class="fu">mean</span>(Maas, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>Year)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo1,<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>value, <span class="at">group=</span>variable))<span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="fl">1.2</span>, <span class="fu">aes</span>(<span class="at">color=</span>variable), <span class="at">stat=</span><span class="st">"identity"</span>)<span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">scale=</span><span class="st">"free"</span>, <span class="at">ncol=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Evolution de la diversité lexicale des tweets de Trump"</span>, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/610-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="la-mesure-de-la-concentration-des-termes" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="la-mesure-de-la-concentration-des-termes"><span class="header-section-number">6.5</span> La mesure de la concentration des termes</h2>
+<p>Le langage d’un point de vue quantitatif a été caractérisé depuis bien longtemps et il est caractérisé par la loi de Zipf distribution 1949 . Estout est un des premiers à avoir proposé la loi, mais un sténographe fameux en aurait mis en évidence empiriquement avant 1916.</p>
+<section id="un-débat-théorique" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="un-débat-théorique"><span class="header-section-number">6.5.1</span> Un débat théorique</h3>
+<p>Celle-ci s’exprime de la manière suivante : si on classe les termes par ordre de fréquence r, le produit de leur rang par la fréquence est égale à une constante. Autrement dit dans une métrique log, la relation entre rang et fréquence est linéaire et sa pente est négative.</p>
+<p><span class="math display">\[f(r).{r}={K} \]</span> Mandelbrot la généralise</p>
+<p>les études empiriques</p>
+<p>On peut encore débattre de sa signification. Une économie cognitive? Une conséquence de la théorie de l’information ? Un signature pour identifier un discours ## Les lois de distribution du langage</p>
+<p>Les lois puissances qui déterminent cet univers et marque dans le registre de l’analyse quantitative une évolution sérieuse. Alors que le modèle dominant de la statistique est la distribution gaussienne, le traitement du langage doit se familiariser avec des distributions puissance.</p>
+<p>La régularité statistique nécessite une interprétation, il n’y en a pas qu’une</p>
+<ul>
+<li><p>la loi du moindre de effort qui va aboutir à un débat entre Mandelbrot et Simon.</p></li>
+<li><p>Economie de l’information, un mot puis deux, puis trois, puis des mots spécifique à un certain registre d’action. Le sens est une affaire d’échelle, du concret au général. Le plus concret est celui des mots scientifiques telles qu’on les retrouve en biologie pour décrire une espèce, en droit pour décrire une propriété, ou en médecine pour désigner une pathologie ou un élément d’anatomie. ( espace de connaissance - épistémologique)</p></li>
+<li><p>la distribution des locuteurs et de leurs élocution. Dans le langage vernaculaire celui de nos sociabilités, peu de mots sont employés, à mesure qu’on les enregistre ils prennent une place plus importance d’un point de de vue statistique dans les corpus. Les mots rares sont employés par peu de personne. (espace des population - démographique)</p></li>
+</ul>
+</section>
+<section id="application" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="application"><span class="header-section-number">6.5.2</span> Application</h3>
+<p>Examinons plus concrètement</p>
+<p>On reprend la procédure de comptage des mots par groupe, mais sans filtrer sur la fréquence de ces mots. On en obtient <code>n_w</code> mots distincts. En examinant avec plus de détail il y a 5 élément d’information : a ) le trait (feature), c’est à dire ici le mot étudié, b) le nombre de fois où il apparaît dans le corpus, c)le rank qui lui correspond, d)le nombre de documents dans lesquels il apparaît.</p>
+<p>Le tableau nous donne les 10 premiers. Il y a 28000 éléments, dont une simple inspection montrera qu’il sont des liens ou d’autres mentions. Il est nécessaire de retraiter le corpus pour éliminer ces éléments. Nous étudierons comment faire dans les chapitres suivants. A ce stade on se contente d’enlever les <em>apax</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> dont on ne peut véritablement calculer un rang ( ils ont tous le dernier). Il nous reste 10854 termes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(isRetweet<span class="sc">==</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"2016"</span>,<span class="st">"2017"</span>,<span class="st">"2018"</span>,<span class="st">"2019"</span>,<span class="st">"2020"</span>))<span class="co"># on ne prend pas en compte les RT</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>toks<span class="ot">&lt;-</span> <span class="fu">tokens</span>(foo<span class="sc">$</span>text) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>,  <span class="at">remove =</span> <span class="fu">stopwords</span>(<span class="st">"english"</span>))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>freq_g <span class="ot">&lt;-</span> <span class="fu">textstat_frequency</span>(toks)<span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(feature<span class="sc">!=</span><span class="st">"amp"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(frequency<span class="sc">&gt;</span><span class="dv">1</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(freq_g, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-16484a8e{}.cl-1637ad14{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1637ad32{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-163e5b00{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-163e5b14{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-163e8cc4{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8cd8{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8cd9{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8ce2{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8cec{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8ced{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8cf6{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-163e8cf7{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-16484a8e"><caption><p>Mots les plus fréquents</p></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-163e8cc4"><p class="cl-163e5b00"><span class="cl-1637ad14">feature</span></p></th><th class="cl-163e8cd8"><p class="cl-163e5b14"><span class="cl-1637ad14">frequency</span></p></th><th class="cl-163e8cd8"><p class="cl-163e5b14"><span class="cl-1637ad14">rank</span></p></th><th class="cl-163e8cd8"><p class="cl-163e5b14"><span class="cl-1637ad14">docfreq</span></p></th><th class="cl-163e8cc4"><p class="cl-163e5b00"><span class="cl-1637ad14">group</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-163e8cd9"><p class="cl-163e5b00"><span class="cl-1637ad32">great</span></p></td><td class="cl-163e8ce2"><p class="cl-163e5b14"><span class="cl-1637ad32">4,077</span></p></td><td class="cl-163e8ce2"><p class="cl-163e5b14"><span class="cl-1637ad32">1</span></p></td><td class="cl-163e8ce2"><p class="cl-163e5b14"><span class="cl-1637ad32">3,755</span></p></td><td class="cl-163e8cd9"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">thank</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">2,041</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">3</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">2,029</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">people</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">2,040</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">4</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,895</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">just</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,633</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">5</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,572</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">now</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,544</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">6</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,505</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">president</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,466</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">7</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,322</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">trump</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,424</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">8</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,307</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">big</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,360</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">9</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,263</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">news</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,347</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">10</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,254</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">country</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,274</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">11</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,233</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">get</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,180</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">12</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,083</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">fake</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,177</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">13</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,100</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">new</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,167</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">14</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,089</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">democrats</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,163</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">15</span></p></td><td class="cl-163e8ced"><p class="cl-163e5b14"><span class="cl-1637ad32">1,119</span></p></td><td class="cl-163e8cec"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-163e8cf6"><p class="cl-163e5b00"><span class="cl-1637ad32">many</span></p></td><td class="cl-163e8cf7"><p class="cl-163e5b14"><span class="cl-1637ad32">1,108</span></p></td><td class="cl-163e8cf7"><p class="cl-163e5b14"><span class="cl-1637ad32">16</span></p></td><td class="cl-163e8cf7"><p class="cl-163e5b14"><span class="cl-1637ad32">1,061</span></p></td><td class="cl-163e8cf6"><p class="cl-163e5b00"><span class="cl-1637ad32">all</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>On peut aussi représenter cela graphiquement. La loi de zipf s’observe jusqu’au 500 premiers mots, ensuite elle suit une autre pente. C’est assez caractéristique, la loi de zipf est incomplète, d’un point de vue empirique il semble qu’il y ait deux lois qui se superposes, la loi des mots communs, et celle des mots singuliers. C’est du moins hypothèse que nous proposons.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq_g, <span class="fu">aes</span>(<span class="at">x=</span>rank, <span class="at">y=</span>frequency))<span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>.<span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">color=</span>col_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/612-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>freq_g <span class="sc">%&gt;%</span><span class="fu">filter</span>(rank <span class="sc">&lt;</span><span class="dv">500</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>rank, <span class="at">y=</span>frequency))<span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>.<span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()<span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">color=</span>col_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/612-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pour être plus qualitatif Une première manière de représenter la diversité du corpus est de représenter les mots les plus fréquents, selon cette fréquente et le ratio fréquence par document. Plus ce dernier est élevé plus il fait du mot un mot spécifique.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span> freq_g <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(frequency<span class="sc">&gt;</span><span class="dv">150</span> <span class="sc">&amp;</span>frequency<span class="sc">&lt;</span><span class="dv">1500</span> )</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span>docfreq, <span class="at">y=</span> frequency<span class="sc">/</span>docfreq))<span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>feature), <span class="at">size=</span><span class="dv">2</span>, <span class="at">max.overlaps =</span> <span class="dv">30</span>)<span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()<span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/613-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comptons-les-mots-1" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="comptons-les-mots-1"><span class="header-section-number">6.6</span> Comptons les mots</h2>
+<p>Il est temps de compter les mots, chacun d’entre eux, de se faire une idée une idée de leurs fréquences, de leur distribution.</p>
+<p>Souvent on éliminera ceux qui apparaissent de manière occasionnelle, mais aussi ceux qui apparaissent systématiquement dans tous les textes. Une fois ces deux filtrages effectués, le lexique est généralement de l’ordre de 500 à 10000 mots.</p>
+<p>Deux outils sont disponibles: les nuages de mots et les lollyplots. Les premiers donnent une idée immédiates, les seconds se prêtent mieux à une analyse systématique</p>
+<section id="les-nuages-de-mots" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="les-nuages-de-mots"><span class="header-section-number">6.6.1</span> Les nuages de mots</h3>
+<p>Ils sont devenus extrêmement populaires même si l’effet esthétique est plus important que leur utilité analytique.</p>
+<p><a href="https://cran.r-project.org/web/packages/ggwordcloud/vignettes/ggwordcloud.html"><code>ggwordcloud</code></a></p>
+<p>Pour l’application on prépare les données avec quanteda : on tokenise et on construit le dfm (pour le détail voir chapitre tokenization), ce qui nous permets notamment d’éliminer la ponctuation et les mots courants (articles, déterminant etc) qui apportent peu de signification.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(isRetweet<span class="sc">==</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"2016"</span>,<span class="st">"2017"</span>,<span class="st">"2018"</span>,<span class="st">"2019"</span>,<span class="st">"2020"</span>))<span class="co"># on ne prend pas en compte les RT</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>toks<span class="ot">&lt;-</span> <span class="fu">tokens</span>(foo<span class="sc">$</span>text) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>,  <span class="at">remove =</span> <span class="fu">stopwords</span>(<span class="st">"english"</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(toks,<span class="st">"Year"</span>)<span class="ot">&lt;-</span>foo<span class="sc">$</span>Year</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#on se concentre du les termes utilisés 300 fois.  </span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>toks <span class="sc">%&gt;%</span> </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">250</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">&lt;-</span> <span class="fu">textstat_frequency</span>(foo)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq, <span class="fu">aes</span>(<span class="at">label =</span> feature)) <span class="sc">+</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="fu">aes</span>(<span class="at">size=</span>frequency, <span class="at">color=</span>rank)) <span class="sc">+</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> col_1, <span class="at">high =</span> col_1b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/614-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"./image/g0.jpg"</span>, <span class="at">plot=</span><span class="fu">last_plot</span>(), <span class="at">width =</span> <span class="dv">27</span>, <span class="at">height =</span> <span class="dv">19</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Et pour faire des comparaisons, entre l’année 2016 qui le conduit à être élu, 2018 une année de midterm et 2020 année de sa défaite, on utilise la même procédure mais on distingue un comptage de fréquence de mot par période. Le ggplot est identique aux précédents mais comprend en plus une géométrie “facet_wrap” qui éclate le nuages de mot selon les 3 périodes étudiées.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>toks <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> Year) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>url_regex <span class="ot">&lt;-</span> <span class="st">"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&amp;+]|[!*</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#pour compter la fréquence des mots par année</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">&lt;-</span> <span class="fu">textstat_frequency</span>(foo, <span class="at">group =</span>Year) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">feature=</span><span class="fu">str_remove_all</span>(feature, url_regex))<span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(feature) <span class="sc">&amp;</span> frequency<span class="sc">&gt;</span><span class="dv">200</span> )<span class="sc">%&gt;%</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(feature<span class="sc">!=</span><span class="st">"amp"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>           </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq, <span class="fu">aes</span>(<span class="at">label =</span> feature)) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="fu">aes</span>(<span class="at">size=</span>frequency, <span class="at">color=</span>rank)) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(group)) <span class="sc">+</span>  </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">8</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q06_Analyse_quantitative_files/figure-html/615-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"./image/g1.jpg"</span>, <span class="at">plot=</span><span class="fu">last_plot</span>(), <span class="at">width =</span> <span class="dv">27</span>, <span class="at">height =</span> <span class="dv">19</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.7</span> Conclusion</h2>
+<p>Nous aurons appris à</p>
+<ul>
+<li>Compter le nombre de documents et leurs longueurs</li>
+<li>Mesurer la complexité du langage</li>
+<li>Mesurer la diversité de son vocabulaire.</li>
+<li>A évaluer la concentration des sources</li>
+<li>A se donner une première idée de la lexicographie</li>
+</ul>
+<p>Ces mesures n’ont ne sens que si elles peuvent être l’objet de comparaison :</p>
+<ul>
+<li>De manière interne la comparaison se fait dans dans le temps et à travers des segments. On s’intéresse moins au niveau, qu’aux différences entre les niveaux.</li>
+<li>De manière externe elle requiert un étalonnage. Comparer par rapport au français courant, à un niveau de langue soutenu, ou relâché. L’étalonnage revient à caractériser des types de corpus : presses, écriture savante, réseaux sociaux, publications officielles etc. On ne peut que souhaiter que des comparaisons systématiques soient engagées et compilées pour donner des points de repère précis quand on étudie un corpus particulier.</li>
+</ul>
+<p>Elles participent à un premier niveau d’analyse du texte, en surface, visant à apprécier la dynamique de sa production, à établir les échelles d’analyse, à repérer les éléments structurels.</p>
+<p>Le texte est une matière qui a un poids (le nombre de mot), une variété (le nombre d’expressions), une complexité (les règles qui l’organisent). nous venons de nous doter des premiers outils d’analyse, il est temps de passer à la suite.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-coleman_computer_1975" class="csl-entry" role="listitem">
+Coleman, Meri, and T. L. Liau. 1975. <span>“A Computer Readability Formula Designed for Machine Scoring.”</span> <em>Journal of Applied Psychology</em> 60 (2): 283–84. <a href="https://doi.org/10.1037/h0076540">https://doi.org/10.1037/h0076540</a>.
+</div>
+<div id="ref-flesch_new_1948" class="csl-entry" role="listitem">
+Flesch, Rudolph. 1948. <span>“A New Readability Yardstick.”</span> <em>Journal of Applied Psychology</em> 32 (3): 221–33. <a href="https://doi.org/10.1037/h0057532">https://doi.org/10.1037/h0057532</a>.
+</div>
+<div id="ref-tweedie_how_1998" class="csl-entry" role="listitem">
+Tweedie, Fiona J., and R. Harald Baayen. 1998. <span>“How Variable May a Constant Be? Measures of Lexical Richness in Perspective.”</span> <em>Computers and the Humanities</em> 32: 323–52.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>les apax sont les termes qui n’apparaissent qu’une seule fois dans un corpus.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./q05_manipuler_caractere.html" class="pagination-link" aria-label="Manipuler les chaines de caractères">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./q07_tokenisation.html" class="pagination-link" aria-label="Découper les mots en jetons (Tokenize)">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

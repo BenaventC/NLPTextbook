@@ -1,0 +1,87 @@
+# Explorer le corpus
+
+```{r 400}
+#les librairies du chapître
+library(tidyverse)
+library(readr)
+library(quanteda)
+library(flextable)
+
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+
+
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+```         
+*Apprendre à naviguer au sein du corpus*
+
+</div>
+```
+
+Un des meilleur conseils qu'on puisse donner, est de lire soi-même le texte avant de le confier aux machines. Comme dans le cas de grand corpus, il est difficile d'en lire l'ensemble, certains outils plus ou moins interactifs, permettent de se donner rapidement une idée des contenus.
+
+## Kwic
+
+Le premier réflexe dans la lecture d'un corpus est de rechercher dans quels contextes sont utilisé des mots cibles. C'est l'objet d'une vieille technique les : Key Word In Context.
+
+Exemple :
+
+```{r}
+df <- read_csv("data/PMPLast3.csv", locale = locale(encoding = "WINDOWS-1252"))%>%
+   rename(Text=11, Year=3)
+ 
+corp<-corpus(df$Text)
+ 
+foo<- kwic(corp, "évaluation",
+  window = 6) %>%
+  as.data.frame()
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+
+ft<-flextable(foo)
+ft <- set_caption(ft, caption = "Keywords in context") 
+ft
+```
+
+## Explorer le corpus
+
+Avant de procéder aux analyses du corpus, il est souvent utile de le représenter. On va utiliser le package Corpora explore à cette fin. Il permet de préparer un corpus et de le visualiser de manière interactive avec la génération d'une app shiny. Malheureusement nous ne savons pas rendre compte de la dynamique de l'outil. On peut naviguer aisément dans l'ensemble de texte.
+
+On va utiliser une collection de donnée préparée avec Manel Benzarafa de l'Université paris Nanterre, et qui comprend l'intégralité des résumés, auteurs etc.. relatifs aux articles publiés dans PMP. Une base bibliographique intégrale. 1025 articles la compose.
+
+```{r 402 }
+library(readr) 
+#install.packages("corporaexplorer") 
+library(corporaexplorer)   
+library(readr) 
+
+foo<-df %>% select(Key, Author, Title, Year, Text) %>%
+  rename(year=Year)%>%filter(Text!="Null" & !is.na(year))    
+
+corpus <- prepare_data(foo, date_based_corpus =FALSE, grouping_variable = "year")
+
+explore(corpus)
+
+
+```
+
+Dans la photo d'écran suivante, on teste les termes " politique" et "management". Chaque tuile ( uile) représente un des 1025 abstracts qui composent le corpus. Les couleurs correspondent à la fréquence des deux termes.
+
+![Exploration des abstracts de PMP](./image/corpexplor.jpg)
+
+### reprendre le topic de revtools dans topic model
+
+https://revtools.net/screening.html#screening-with-topic-models

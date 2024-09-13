@@ -1,0 +1,118 @@
+# Préambule {.unnumbered}
+
+"Au commencement était le verbe", et désormais le verbe est partout, non pas l'esprit de Dieu, mais la parole humaine qui s'éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l'enregistrement des transactions informatiques.
+
+Le verbe est désormais une copie du monde, moins l'affirmation d'une vision, que la stratification de nos manifestations sociales.
+
+C'est bien sur le fruit d'un développement technique engagés depuis 10 000 ans et dont l'imprimerie est une nouvelle étape. La révolution actuelle réside dans la colonisation de l'espace social, chaque bribes de parole est enregistrée , transcrite, archivée. Le livre n'est plus qu'un îlot dans un océan de texte.
+
+Il y a un défi empirique pour les sciences sociales, la société produit massivement la documentation de son développement. L'exploitation de ces sources est un enjeu majeur pour la psychologique, sociologique, économique, le droit, les sciences de gestion en ouvrant un nouvel accès au données.
+
+A mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d'études que pour répondre à des besoins opérationnels. Les développements du NLP viennent de la nécessité de répondre à des problèmes opérationnels.
+
+Ils offrent cependant de nouvelles ressources pour l'approche analytique
+
+## Le but de l'ouvrage
+
+Ce e-book est le syllabus d'un cours que nous dispensons sous différents formats et avec différents degré d'approfondissement. Il fait l'inventaire des méthodes les plus courantes incluant le développement des embeddings.
+
+Il a une vocation pratique , des cas, des codes.
+
+## Les contributeurs :
+
+Le contenu doit tant par les données, les idées, les codes, à plusieurs personnes en particulier. On citera par ordre chronologique
+
+-   Julien Monnot
+
+-   Bruno Chavez
+
+-   José Moreno
+
+-   Olivier Caron
+
+On ne peut en produire la liste exhaustives, mais plusieurs générations d'étudiants ont contribué à ce travail en explorant un certains nombre de jeux de données proposés ici.
+
+## Le plan du cours
+
+Il s'organise selon les grandes étapes du processus d'analyse et des types de problèmes posés par le traitement et l'analyse du texte. Ce processus va de l'acquisition des données à leurs représentations en passant par des phases de transformation, mais aussi un ordre de complexité des modèles et des ressources.
+
+Il suit ainsi une sorte de développement historique qui se construit par l'accumulation de différentes philosophies d'analyses et de méthodes et qui peut se présenter en trois grandes périodes:
+
+-   compter les mots et jouer avec leur co-occurences
+
+-   annoter des mots en s'appuyant sur leurs régularités syntaxiques.
+
+-   encoder les mots dans un espace vectoriel, cette perspective a été ouverte par word2vec , étendue avec les transformers, systématisée par les grands modèles de langages tels que gpt4 ou Bloom.
+
+Voici les raisons qui organisent le cours en 14 chapitres
+
+1.  Préambule ( ce que vous êtes en train de lire !)
+
+2.  Chapitre 1 : une réflexion et une introduction à la linguistique, car le calcul ne suffit pas à se substituer à plus de 2000 ans de réflexions sur la langues, et au cours des deux derniers siècle à la clarification de questions essentielles.
+
+3.  Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu'on étudie par collection. Il faut aussi penser à la notion de corpus.
+
+4.  Chapitre 4 : corpus - techniques avancées D'un point de vue matériel le corpus est aussi
+
+5.  Chapitre 5 : Explorer et naviguer dans le corpus
+
+6.  Chapitre 7 : Analyse quantitative du corpus
+
+7.  Chapitre 8 : Tokenisation et dtm
+
+8.  Chapitre 9 : Analyse des co-occurences
+
+9.  Chapitre 10 : au début il y avait l'analyse factorielle
+
+10. Chapitre 11 : SVD et LSA :
+
+11. Chapitre 12 : Topic model
+
+12. Chapitre13 : Supervised modeling
+
+13. Chapitre 14 : word2vec to doc2vec
+
+14. Chapitre 15 : transformers
+
+15. Chapitre 16 : tasks , Zsl, abstracting
+
+16. chapitre 17 : generative models , un monde à inventer
+
+17. chapitre 18 : Perspectives : un melting pot de question
+
+## Data sets
+
+On s'appuiera sur des data test "réél" et publics
+
+-   [Trump Tweeter Archive](https://www.thetrumparchive.com/) : c'est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.
+
+-   Tripadvisor en Polynésie
+
+-   Airbnb Paris 2019
+
+-   PMP40ans : ce set de données comprend tous les résumés d'articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu'en 2023. C'est un observatoire intéressant d'une discipline naissance et de l'évolution des normes professionnelles de la recherche en gestion.
+
+-   yyy
+
+-   zzz
+
+## Packages
+
+Ce cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d'images. Zotero pour la bibliographie.
+
+Il n'y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.
+
+```{r 03}
+#environnement de travail
+library(tidyverse) # the perfect tool box.
+#ses compléments  
+library(ggwordcloud)
+
+library(flextable) # pour produire des tableaux élégants
+
+
+#ressource nlp  
+library(quanteda) 
+library(udpipe)
+
+```

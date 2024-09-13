@@ -1,0 +1,44 @@
+{
+  "index.qmd": {
+    "index.html": "fafccb7f"
+  },
+  "intro.qmd": {
+    "intro.html": "3e32e306"
+  },
+  "summary.qmd": {
+    "summary.html": "b3a67a30"
+  },
+  "references.qmd": {
+    "references.html": "6bde4110"
+  },
+  "q02_corpus.qmd": {
+    "q02_corpus.html": "acf0ab76"
+  },
+  "q01_introduction.qmd": {
+    "q01_introduction.html": "6cea70b6"
+  },
+  "q03_corpus_suite.qmd": {
+    "q03_corpus_suite.html": "dbb01754"
+  },
+  "q04_explorer.qmd": {
+    "q04_explorer.html": "692a9d44"
+  },
+  "q05_manipuler_caractere.qmd": {
+    "q05_manipuler_caractere.html": "4b9469e8"
+  },
+  "q06_tokenisation.qmd": {
+    "q06_tokenisation.html": "412c79af"
+  },
+  "q06_Analyse_quantitative.qmd": {
+    "q06_Analyse_quantitative.html": "7c7f38a6"
+  },
+  "q07_tokenisation.qmd": {
+    "q07_tokenisation.html": "11cdc6cb"
+  },
+  "q08_analyse_syntaxic.qmd": {
+    "q08_analyse_syntaxic.html": "1a92c110"
+  },
+  "q09_Analyse_Cooccurences.qmd": {
+    "q09_Analyse_Cooccurences.html": "dd71ae37"
+  }
+}
