@@ -12,13 +12,13 @@ A mesure que ces données prolifèrent, des méthodes pour les analyser se sont 
 
 ## Le but de l'ouvrage
 
-Ce e-book est le syllabus d'un cours que nous dispensons sous différents formats et avec différents degrés d'approfondissement. Il fait l'inventaire des méthodes les plus courantes incluant le développement des embeddings.
+Ce e-book est le syllabus d'un cours que nous dispensons sous différents formats et avec différents degrés d'approfondissement. Il fait l'inventaire des méthodes les plus courantes incluant le développement des embeddings et aboutit à l'usage des LLM pour différentes formes d'annotations.
 
 Il a une vocation pratique , des cas, des codes.
 
 ## Les contributeurs
 
-On ne peut en produire la liste exhaustives, mais plusieurs générations d'étudiants ont contribué à ce travail en explorant un certain nombre de jeux de données proposés ici.
+On ne peut (encore) en  produire la liste exhaustives, mais plusieurs générations d'étudiants ont contribué à ce travail en explorant un certain nombre de jeux de données proposés ici.
 
 ## Le plan du cours
 
@@ -32,11 +32,11 @@ Il suit ainsi une sorte de développement historique qui se construit par l'accu
 
 -   encoder les mots dans un espace vectoriel, cette perspective a été ouverte par word2vec , étendue avec les transformers, systématisée par les grands modèles de langages tels que gpt4 ou Bloom.
 
-Voici les raisons qui organisent le cours en 14 chapitres
+Voici les raisons qui organisent le cours en 20 chapitres (c'est à ajuster au cours de la rédaction)
 
 1.  Préambule (ce que vous êtes en train de lire !)
 
-2.  Chapitre 1 : une réflexion et une introduction à la linguistique, car le calcul ne suffit pas à se substituer à plus de 2000 ans de réflexions sur la langues, et au cours des deux derniers siècle à la clarification de questions essentielles.
+2.  Chapitre 1 : une introduction générale à des éléments linguistique et technique et sociaux de l'analyse du langage naturel et de ses fulgurantes évolutions au cours de la dernière décennie.
 
 3.  Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu'on étudie par collection. Il faut aussi penser à la notion de corpus.
 
@@ -99,7 +99,6 @@ glossary_path("glossary.yml")
 #glossary_add(term = "loi de Dirichlet",
 #             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")
 
-
 #ses compléments  
 library(ggwordcloud)
 
@@ -108,5 +107,9 @@ library(flextable) # pour produire des tableaux élégants
 #ressource nlp  
 library(quanteda) 
 library(udpipe)
+
+#analyse de données
+library(FactoMineR)
+library(factoextra)
 
 ```
