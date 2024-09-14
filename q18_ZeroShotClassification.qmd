@@ -1,0 +1,39 @@
+# Zero shot Classification
+
+```{r 600}
+#les librairies du chapître
+library(tidyverse)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*labelliser un corpus.*
+
+</div>
+
+C'est une application fondamentale pour les sciences sociales.
+
+## le NLI
+
+L'analyse des classes latentes
+
+## Une application avec 
+
+sur ce plan On doit beaucoup à sokal et sneath
+
+## generalisation
+
+## Conclusion

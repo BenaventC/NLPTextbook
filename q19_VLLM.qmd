@@ -1,0 +1,63 @@
+# Utilisation de l'IA generative
+
+```{r, results='asis'}
+#les librairies du chapitre
+library(tidyverse)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+# glossaire
+library(glossary)
+glossary_path("glossary.yml")
+glossary_style(color = "purple", 
+               text_decoration = "underline",
+               def_bg = "#333",
+               def_color = "white")
+glossary_popup("click")
+
+#theme settings
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*IAG*
+
+\*\*
+
+</div>
+
+Genralité sur les l'IAG
+
+la nature de l'usage ; generatif ou
+
+## Prompter pour des tâche classiques
+
+L'analyse des classes latentes ? est-ce nécessaire ?
+
+### NER
+
+### ZERO shot
+
+## Transformer le texte
+
+### résumé
+
+### lecture d'image
+
+sur ce plan On doit beaucoup à mikolov
+
+## Conclusion
+
+## Références

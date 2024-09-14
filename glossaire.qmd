@@ -1,0 +1,16 @@
+# Glossaire {.unnumbered}
+
+fonction glossaire
+
+```{r , results='asis'}
+# glossaire
+library(glossary)
+glossary_path("glossary.yml")
+glossary_style(color = "purple", 
+               text_decoration = "underline",
+               def_bg = "#333",
+               def_color = "white")
+glossary_popup("click")
+glossary_table()
+
+```

@@ -15,11 +15,20 @@ book:
     - q05_manipuler_caractere.qmd
     - q06_Analyse_quantitative.qmd
     - q07_tokenisation.qmd
-    - q07_tokenisation.qmd
     - q08_Analyse_syntaxic.qmd
     - q09_token_to_dfm.qmd
     - q10_Analyse_Cooccurences.qmd
-    - q11_Topic_Model.qmd
+    - q11_Sentimentetdict.qmd
+    - q12_Topic_Model.qmd
+    - q13_Firstembeddings.qmd
+    - q14_Transformers.qmd
+    - q15_Classification.qmd
+    - q16_LLM.qmd
+    - q17_NER.qmd
+    - q18_ZeroShotClassification.qmd
+    - q19_VLLM.qmd
+    - glossaire.qmd
+    - references.qmd
 
 bibliography: references.bib
 

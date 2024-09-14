@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Sophie Balech et Christophe Benavent">
-<meta name="dcterms.date" content="2024-09-14">
 
-<title>Introduction aux méthodes de traitement du langage naturel</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 17&nbsp; Introduction aux LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -66,7 +84,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./q01_introduction.html" rel="next">
+<link href="./q17_NER.html" rel="next">
+<link href="./q15_Classification.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q16_LLM.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
   </div>
 </li>
@@ -228,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -239,26 +258,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
+  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -283,14 +302,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#préambule" id="toc-préambule" class="nav-link active" data-scroll-target="#préambule"><span class="header-section-number">1</span> Préambule</a>
+  <li><a href="#la-montée-en-puissance-des-llm" id="toc-la-montée-en-puissance-des-llm" class="nav-link active" data-scroll-target="#la-montée-en-puissance-des-llm"><span class="header-section-number">17.1</span> La montée en puissance des LLM</a>
   <ul class="collapse">
-  <li><a href="#le-but-de-louvrage" id="toc-le-but-de-louvrage" class="nav-link" data-scroll-target="#le-but-de-louvrage"><span class="header-section-number">1.1</span> Le but de l’ouvrage</a></li>
-  <li><a href="#les-contributeurs" id="toc-les-contributeurs" class="nav-link" data-scroll-target="#les-contributeurs"><span class="header-section-number">1.2</span> Les contributeurs</a></li>
-  <li><a href="#le-plan-du-cours" id="toc-le-plan-du-cours" class="nav-link" data-scroll-target="#le-plan-du-cours"><span class="header-section-number">1.3</span> Le plan du cours</a></li>
-  <li><a href="#data-sets" id="toc-data-sets" class="nav-link" data-scroll-target="#data-sets"><span class="header-section-number">1.4</span> Data sets</a></li>
-  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">1.5</span> Packages</a></li>
+  <li><a href="#modèles-privés-et-modèles-ouvert" id="toc-modèles-privés-et-modèles-ouvert" class="nav-link" data-scroll-target="#modèles-privés-et-modèles-ouvert"><span class="header-section-number">17.1.1</span> Modèles privés et modèles ouvert</a></li>
+  <li><a href="#une-évolution-pré-cambrienne" id="toc-une-évolution-pré-cambrienne" class="nav-link" data-scroll-target="#une-évolution-pré-cambrienne"><span class="header-section-number">17.1.2</span> Une évolution pré-cambrienne</a></li>
   </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">17.2</span> </a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions"><span class="header-section-number">17.3</span> Distributions</a></li>
+  <li><a href="#ajuster-les-modèles-à-des-tâches-et-des-set-de-données-particuliers" id="toc-ajuster-les-modèles-à-des-tâches-et-des-set-de-données-particuliers" class="nav-link" data-scroll-target="#ajuster-les-modèles-à-des-tâches-et-des-set-de-données-particuliers"><span class="header-section-number">17.4</span> Ajuster les modèles à des tâches et des set de données particuliers</a>
+  <ul class="collapse">
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning"><span class="header-section-number">17.4.1</span> Fine tuning</a></li>
+  <li><a href="#lora" id="toc-lora" class="nav-link" data-scroll-target="#lora"><span class="header-section-number">17.4.2</span> Lora</a></li>
+  <li><a href="#rag" id="toc-rag" class="nav-link" data-scroll-target="#rag"><span class="header-section-number">17.4.3</span> Rag</a></li>
+  </ul></li>
+  <li><a href="#la-question-de-la-validation" id="toc-la-question-de-la-validation" class="nav-link" data-scroll-target="#la-question-de-la-validation"><span class="header-section-number">17.5</span> La question de la validation</a>
+  <ul class="collapse">
+  <li><a href="#rhlf" id="toc-rhlf" class="nav-link" data-scroll-target="#rhlf"><span class="header-section-number">17.5.1</span> RHLF</a></li>
+  <li><a href="#post-coorection" id="toc-post-coorection" class="nav-link" data-scroll-target="#post-coorection"><span class="header-section-number">17.5.2</span> post coorection</a></li>
+  <li><a href="#measurement-validity-and-reliability" id="toc-measurement-validity-and-reliability" class="nav-link" data-scroll-target="#measurement-validity-and-reliability"><span class="header-section-number">17.5.3</span> measurement validity and reliability</a></li>
+  </ul></li>
+  <li><a href="#iag" id="toc-iag" class="nav-link" data-scroll-target="#iag"><span class="header-section-number">17.6</span> IAG</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">17.7</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -299,27 +331,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction aux méthodes de traitement du langage naturel</h1>
-<p class="subtitle lead">pour les sciences sociales</p>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Sophie Balech et Christophe Benavent </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -329,96 +348,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="préambule" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Préambule</h1>
-<p>“Au commencement était le verbe”, et désormais le verbe est partout, non pas l’esprit de Dieu, mais la parole humaine qui s’éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l’enregistrement des transactions informatiques.</p>
-<p>Le verbe est désormais une copie du monde, moins l’affirmation d’une vision, que la stratification de nos manifestations sociales.</p>
-<p>C’est bien sur le fruit d’un développement technique engagés depuis 10 000 ans et dont l’imprimerie est une nouvelle étape. La révolution actuelle réside dans la colonisation de l’espace social, chaque bribes de parole est enregistrée , transcrite, archivée. Le livre n’est plus qu’un îlot dans un océan de texte.</p>
-<p>Il y a un défi empirique pour les sciences sociales, la société produit massivement la documentation de son développement. L’exploitation de ces sources est un enjeu majeur pour la psychologique, sociologique, économique, le droit, les sciences de gestion en ouvrant un nouvel accès au données.</p>
-<p>A mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d’études que pour répondre à des besoins opérationnels. Aujourd’hui, dans le sillage de l’invention des embeddings, nous sommes à l’ère des grands modèles de langages qui ouvrent de nouveaux horizons dans la capacité de produire du texte (par exemple des descriptions d’images), de transformer le texte (résumé ou traduction), et surtout de l’annoter ( classification, NER…)</p>
-<section id="le-but-de-louvrage" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="le-but-de-louvrage"><span class="header-section-number">1.1</span> Le but de l’ouvrage</h2>
-<p>Ce e-book est le syllabus d’un cours que nous dispensons sous différents formats et avec différents degrés d’approfondissement. Il fait l’inventaire des méthodes les plus courantes incluant le développement des embeddings et aboutit à l’usage des LLM pour différentes formes d’annotations.</p>
-<p>Il a une vocation pratique , des cas, des codes.</p>
-</section>
-<section id="les-contributeurs" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="les-contributeurs"><span class="header-section-number">1.2</span> Les contributeurs</h2>
-<p>On ne peut (encore) en produire la liste exhaustives, mais plusieurs générations d’étudiants ont contribué à ce travail en explorant un certain nombre de jeux de données proposés ici.</p>
-</section>
-<section id="le-plan-du-cours" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="le-plan-du-cours"><span class="header-section-number">1.3</span> Le plan du cours</h2>
-<p>Il s’organise selon les grandes étapes du processus d’analyse et des types de problèmes posés par le traitement et l’analyse du texte. Ce processus va de l’acquisition des données à leurs représentations en passant par des phases de transformation, mais aussi un ordre de complexité des modèles et des ressources.</p>
-<p>Il suit ainsi une sorte de développement historique qui se construit par l’accumulation de différentes philosophies d’analyses et de méthodes et qui peut se présenter en trois grandes périodes:</p>
-<ul>
-<li><p>compter les mots et jouer avec leur co-occurences</p></li>
-<li><p>annoter des mots en s’appuyant sur leurs régularités syntaxiques.</p></li>
-<li><p>encoder les mots dans un espace vectoriel, cette perspective a été ouverte par word2vec , étendue avec les transformers, systématisée par les grands modèles de langages tels que gpt4 ou Bloom.</p></li>
-</ul>
-<p>Voici les raisons qui organisent le cours en 20 chapitres (c’est à ajuster au cours de la rédaction)</p>
-<ol type="1">
-<li><p>Préambule (ce que vous êtes en train de lire !)</p></li>
-<li><p>Chapitre 1 : une introduction générale à des éléments linguistique et technique et sociaux de l’analyse du langage naturel et de ses fulgurantes évolutions au cours de la dernière décennie.</p></li>
-<li><p>Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu’on étudie par collection. Il faut aussi penser à la notion de corpus.</p></li>
-<li><p>Chapitre 4 : corpus - techniques avancées D’un point de vue matériel le corpus est aussi</p></li>
-<li><p>Chapitre 5 : Explorer et naviguer dans le corpus</p></li>
-<li><p>Chapitre 6 : Analyse quantitative du corpus</p></li>
-<li><p>Chapitre 7 : Tokenisation et dtm</p></li>
-<li><p>Chapitre 8 : Analyse des co-occurences</p></li>
-<li><p>Chapitre 9 : au début il y avait l’analyse factorielle</p></li>
-<li><p>Chapitre 10 : SVD et LSA :</p></li>
-<li><p>Chapitre 11 : Topic model</p></li>
-<li><p>Chapitre 12 : Supervised modeling</p></li>
-<li><p>Chapitre 13 : word2vec to doc2vec</p></li>
-<li><p>Chapitre 14 : Transformers</p></li>
-<li><p>Chapitre 15 : tasks , Zsl, abstracting</p></li>
-<li><p>chapitre 16 : generative models , un monde à inventer.</p></li>
-</ol>
-</section>
-<section id="data-sets" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="data-sets"><span class="header-section-number">1.4</span> Data sets</h2>
-<p>On s’appuiera sur des data test “réel” et publics</p>
-<ul>
-<li><p><a href="https://www.thetrumparchive.com/">Trump Tweeter Archive</a> : c’est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.</p></li>
-<li><p>Tripadvisor en Polynésie</p></li>
-<li><p>Airbnb Paris 2019</p></li>
-<li><p>PMP40ans : ce set de données comprend tous les résumés d’articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu’en 2023. C’est un observatoire intéressant d’une discipline naissance et de l’évolution des normes professionnelles de la recherche en gestion.</p></li>
-<li><p>yyy</p></li>
-<li><p>zzz</p></li>
-</ul>
-</section>
-<section id="packages" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="packages"><span class="header-section-number">1.5</span> Packages</h2>
-<p>Ce cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d’images. Zotero pour la bibliographie.</p>
-<p>Il n’y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#environnement de travail</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># the perfect tool box.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glossary)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary_path</span>(<span class="st">"glossary.yml"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># un exemple pour ajouter des termes au cours de la rédaction</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#glossary_add(term = "loi de Dirichlet",</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#ses compléments  </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># pour produire des tableaux élégants</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#ressource nlp  </span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda) </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#analyse de données</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapître</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-
-
+<p><strong>Objectifs du chapitre :</strong></p>
+<div>
+<p>L’actualité du NLP est largement occupée par les performance potentielles des IAG génératives qui s’appuient sur des représentations du langage que contrôlent des modèles de renforcement fondés sur des annotations humaines (RHLF). Cependant ils s’appuient sur un modèle économique qui laisse peu de place à la transparence, et à la persistance des modèles.</p>
+<p>Pour les sciences sociales, les LLM ouverts présentent sans plus d’intérêts, car plus pratiquables, et ré-entrainables pour s’ajuster à des corpus spécifiques.</p>
+</div>
+<section id="la-montée-en-puissance-des-llm" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="la-montée-en-puissance-des-llm"><span class="header-section-number">17.1</span> La montée en puissance des LLM</h2>
+<p><em>Bert</em> au départ. Plus de paramètres plus de données</p>
+<section id="modèles-privés-et-modèles-ouvert" class="level3" data-number="17.1.1">
+<h3 data-number="17.1.1" class="anchored" data-anchor-id="modèles-privés-et-modèles-ouvert"><span class="header-section-number">17.1.1</span> Modèles privés et modèles ouvert</h3>
+<p>Le modèle privé est celui typique d’open AI, il s’impose par sa puissance 3000 milliard de paramètres? La qualité de son apprentissage, la généralité de son corpus, et se propose de résoudre l’ensemble des problèmes de NLP .</p>
+<p>les modèles ouverts, sont promus par les retardataires : meta avec Llama, mistral, et rejouent les débuts de l’ère digitale. Ms-dos versus linux. Le système ouvert n’est pas un modèle gratuit, c’est un modèle où les acteurs s’accorde sur un standard public et construisent sur ce socle des services spécifiques. Dans ce genre d’expérience, l’histoire économique nous apprends qu’il y a deux équilibres et une polarisation du marché.</p>
 </section>
+<section id="une-évolution-pré-cambrienne" class="level3" data-number="17.1.2">
+<h3 data-number="17.1.2" class="anchored" data-anchor-id="une-évolution-pré-cambrienne"><span class="header-section-number">17.1.2</span> Une évolution pré-cambrienne</h3>
+<p>encoder et decoder</p>
+<p><a href="https://github.com/Mooler0410/LLMsPracticalGuide">source</a> <span class="citation" data-cites="yang_harnessing_2023">(<a href="references.html#ref-yang_harnessing_2023" role="doc-biblioref">Yang et al. 2023</a>)</span></p>
+<p><img src="image/LLMevolution.jpg" class="img-fluid"></p>
+</section>
+</section>
+<section id="section" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="section"><span class="header-section-number">17.2</span> </h2>
+<p>Dans cette section on examine principalement l’usage des modèles ouverts dans la veine de LLma, Mistral et les autres.</p>
+</section>
+<section id="distributions" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="distributions"><span class="header-section-number">17.3</span> Distributions</h2>
+<p>La première question posée par les modèles ouverts est celle de leur exploitation qui requiert qu’ils puissent être opérables et que leurs poids soient partagés. Hugging face est devenue le centre de gravité de ce véritable écosystème. 14000 modèles déposés.</p>
+<p>Leur opérationnalité est une question de hardware : taille de la mémoire, usage de gpu, on comprendre que dans la logique de l’économie de plateforme pour encourager l’usage de ces modèles, et peut être imposer des standarts, les acteurs ont avantage à servir ces modèles en différents rapport de taille et de performance, pour différents usages ou capacités. Ils sont ainsi livré sous différentes version 7B, 13B, 70 MB, les premier pouvant être opérés sur une station de travail, les 70B exigent un GPU. On constate l’effort d’offrir des tradeèoff.</p>
+<p>L’enjeu est de réduire la taille des modèles, sans perdre excessivement de précision.</p>
+<ul>
+<li><p>Certains modèles sont Distillés</p></li>
+<li><p>Ils peuvent aussi être quantisisés. C’est l’idée d’arrondir les paramètre pour les rendre plus léger.</p></li>
+</ul>
+<p>Ils peuvent être enfin entrainés à des fins particulières. Le NER ou le SZC comme nous l’avons étudié auparavant.</p>
+</section>
+<section id="ajuster-les-modèles-à-des-tâches-et-des-set-de-données-particuliers" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="ajuster-les-modèles-à-des-tâches-et-des-set-de-données-particuliers"><span class="header-section-number">17.4</span> Ajuster les modèles à des tâches et des set de données particuliers</h2>
+<p>En matière d’annotation, une première exigence est celle de la fiabilité des mesures. Un modèle entrainé sur un corpus général est sans doute moins performant qu’un modèle de plus petite taille qu’on réentrainé sur un corpus spécifique.</p>
+<p>C’est aujourd’hui la question principale à laquelle nous n’avons pas de réponse définitive.</p>
+<section id="fine-tuning" class="level3" data-number="17.4.1">
+<h3 data-number="17.4.1" class="anchored" data-anchor-id="fine-tuning"><span class="header-section-number">17.4.1</span> Fine tuning</h3>
+<p>Les LLMs sont entraînés sur des corpus vastes et hétérogènes, pour leur donner plus de finnesse il peut être utile de les ré-entraîner sur des corpus spécifiques. Mais comment faire?</p>
+<p>pour entraîner un LMM, la tâche est simple : faire des trous dans le texte et prédire le mot qui devait être dans le trous. ré-entraîner un modèle général à un set de données particulier, reviens à trouer le set de données, et à prédire les mots en modifiant les parametres du modèle initial.</p>
+</section>
+<section id="lora" class="level3" data-number="17.4.2">
+<h3 data-number="17.4.2" class="anchored" data-anchor-id="lora"><span class="header-section-number">17.4.2</span> Lora</h3>
+<p>Le fine tuning est coûteux et des solutions sont rapidement apparu pour réduit ce coût, l’approche lora en est un cas remarquable. L’idée est de modifier qu’une partie des paramètres, plutôt les couches hautes.</p>
+<p>Construire les data set d’apprentissage</p>
+</section>
+<section id="rag" class="level3" data-number="17.4.3">
+<h3 data-number="17.4.3" class="anchored" data-anchor-id="rag"><span class="header-section-number">17.4.3</span> Rag</h3>
+<p>DPO</p>
+</section>
+</section>
+<section id="la-question-de-la-validation" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="la-question-de-la-validation"><span class="header-section-number">17.5</span> La question de la validation</h2>
+<section id="rhlf" class="level3" data-number="17.5.1">
+<h3 data-number="17.5.1" class="anchored" data-anchor-id="rhlf"><span class="header-section-number">17.5.1</span> RHLF</h3>
+</section>
+<section id="post-coorection" class="level3" data-number="17.5.2">
+<h3 data-number="17.5.2" class="anchored" data-anchor-id="post-coorection"><span class="header-section-number">17.5.2</span> post coorection</h3>
+</section>
+<section id="measurement-validity-and-reliability" class="level3" data-number="17.5.3">
+<h3 data-number="17.5.3" class="anchored" data-anchor-id="measurement-validity-and-reliability"><span class="header-section-number">17.5.3</span> measurement validity and reliability</h3>
+</section>
+</section>
+<section id="iag" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="iag"><span class="header-section-number">17.6</span> IAG</h2>
+</section>
+<section id="conclusion" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">17.7</span> Conclusion</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-yang_harnessing_2023" class="csl-entry" role="listitem">
+Yang, Jingfeng, Hongye Jin, Ruixiang Tang, Xiaotian Han, Qizhang Feng, Haoming Jiang, Bing Yin, and Xia Hu. 2023. <span>“Harnessing the Power of <span>LLMs</span> in Practice: A Survey on <span>ChatGPT</span> and Beyond.”</span>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -833,10 +849,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./q15_Classification.html" class="pagination-link" aria-label="Classification with embeddings">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./q01_introduction.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./q17_NER.html" class="pagination-link" aria-label="Modèles de Topic">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

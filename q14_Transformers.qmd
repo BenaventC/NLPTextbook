@@ -1,0 +1,42 @@
+# Transformers
+
+```{r 600}
+#les librairies du chapître
+library(tidyverse)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+* La révolution des transformers *
+
+* représentation de langage*
+
+</div>
+
+
+## le mécanisme Attention
+
+L'analyse des classes latentes
+
+## Bert
+
+sur ce plan On doit beaucoup à sokal et sneath
+
+## Les variation de bert
+
+### Application de bert au sentiment
+
+### Application de bert au topic ( bert model)

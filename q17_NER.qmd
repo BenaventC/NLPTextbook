@@ -1,0 +1,37 @@
+# Reconnaissance des entités nommées (NER)
+
+```{r 600}
+#les librairies du chapître
+library(tidyverse)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*reconnaissance des entités nommées.*
+
+</div>
+
+## Le principe et l'histoire
+
+L'analyse des classes latentes
+
+## Gliner
+
+sur ce plan On doit beaucoup à sokal et sneath
+
+## Application
+
+## Conclusion

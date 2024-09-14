@@ -193,17 +193,13 @@ les entités nommées appartiennent à différentes catégories d'objets : des n
 
 Elles ne représentent jamais une catégorie mais une unité singulière.
 
-des ressources : 
--  [nametager](https://cran.r-project.org/web/packages/nametagger/nametagger.pdf)
-- [tds](https://towardsdatascience.com/quick-guide-to-entity-recognition-and-geocoding-with-r-c0a915932895
-- [tester cette solution ](https://github.com/trinker/entity/)tester cette solution) 
--[xx](https://www.smalsresearch.be/named-entity-recognition-une-application-du-nlp-utile/)
+des ressources : - [nametager](https://cran.r-project.org/web/packages/nametagger/nametagger.pdf) - [tds](https://towardsdatascience.com/quick-guide-to-entity-recognition-and-geocoding-with-r-c0a915932895%20-%20%5Btester%20cette%20solution%20%5D(https://github.com/trinker/entity/)tester%20cette%20solution) -[xx](https://www.smalsresearch.be/named-entity-recognition-une-application-du-nlp-utile/)
 
 ## Co-reférences
 
 En linguistique, la co-référence est le phénomène qui consiste pour plusieurs `r glossary("Syntagme")`s nominaux (SN) différents contenus dans une phrase ou dans un discours, à désigner la même entité. Par exemple une personne, un lieu, un évènement, ou encore une date. Dans la terminologie linguistique, on dit qu'une co-référence est reliée à son antécédent. Pour que les syntagmes se co-réfèrent, les deux expressions doivent porter les mêmes traits : ils doivent être en accord en genre, en nombre et en personne.
 
-C'est une tâche difficile, les ressources en français semble inexistante dans l'univers r. [Une piste en anglais](https://www.rdocumentation.org/packages/cleanNLP/versions/1.9.0/topics/get_coreference )
+C'est une tâche difficile, les ressources en français semble inexistante dans l'univers r. [Une piste en anglais](https://www.rdocumentation.org/packages/cleanNLP/versions/1.9.0/topics/get_coreference)
 
 ## Conclusion
 

@@ -52,5 +52,35 @@
   },
   "q11_Topic_Model.qmd": {
     "q11_Topic_Model.html": "816e8836"
+  },
+  "q19_VLLM.qmd": {
+    "q19_VLLM.html": "ca90a1eb"
+  },
+  "q11_Sentimentetdict.qmd": {
+    "q11_Sentimentetdict.html": "3b16638a"
+  },
+  "q12_Topic_Model.qmd": {
+    "q12_Topic_Model.html": "62bb6915"
+  },
+  "q13_Firstembeddings.qmd": {
+    "q13_Firstembeddings.html": "d5186d93"
+  },
+  "q14_Transformers.qmd": {
+    "q14_Transformers.html": "16cc1282"
+  },
+  "q15_Classification.qmd": {
+    "q15_Classification.html": "d2e7a482"
+  },
+  "q16_LLM.qmd": {
+    "q16_LLM.html": "bdde1fa7"
+  },
+  "q17_NER.qmd": {
+    "q17_NER.html": "650a9f2d"
+  },
+  "q18_ZeroShotClassification.qmd": {
+    "q18_ZeroShotClassification.html": "a2487f38"
+  },
+  "glossaire.qmd": {
+    "glossaire.html": "52fd99b2"
   }
 }
