@@ -448,7 +448,7 @@ ggplot(freq, aes(label = feature)) +
   theme_minimal() +  scale_size_area(max_size = 10) + 
   scale_color_gradient(low = col_1, high = col_1b)
 
-ggsave("./image/g0.jpg", plot=last_plot(), width = 27, height = 19, units = "cm")
+ggsave("image/g0.jpg", plot=last_plot(), width = 27, height = 19, units = "cm")
 
 
 ```

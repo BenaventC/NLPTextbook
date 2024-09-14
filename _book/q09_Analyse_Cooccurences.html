@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Sophie Balech et Christophe Benavent">
-<meta name="dcterms.date" content="2024-09-14">
 
-<title>Introduction aux méthodes de traitement du langage naturel</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 11&nbsp; Analyse des co-occurrences</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./q01_introduction.html" rel="next">
+<link href="./q08_Analyse_syntaxic.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q09_Analyse_Cooccurences.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
   </div>
 </li>
@@ -203,20 +201,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./q11_Topic_Model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  <a href="./q09_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
   </div>
 </li>
     </ul>
@@ -229,14 +215,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#préambule" id="toc-préambule" class="nav-link active" data-scroll-target="#préambule"><span class="header-section-number">1</span> Préambule</a>
+  <li><a href="#des-co-occurences-aux-similarités" id="toc-des-co-occurences-aux-similarités" class="nav-link active" data-scroll-target="#des-co-occurences-aux-similarités"><span class="header-section-number">11.1</span> Des co-occurences aux similarités</a></li>
+  <li><a href="#approche-par-classification-hiérarchique" id="toc-approche-par-classification-hiérarchique" class="nav-link" data-scroll-target="#approche-par-classification-hiérarchique"><span class="header-section-number">11.2</span> Approche par classification hiérarchique</a>
   <ul class="collapse">
-  <li><a href="#le-but-de-louvrage" id="toc-le-but-de-louvrage" class="nav-link" data-scroll-target="#le-but-de-louvrage"><span class="header-section-number">1.1</span> Le but de l’ouvrage</a></li>
-  <li><a href="#les-contributeurs" id="toc-les-contributeurs" class="nav-link" data-scroll-target="#les-contributeurs"><span class="header-section-number">1.2</span> Les contributeurs</a></li>
-  <li><a href="#le-plan-du-cours" id="toc-le-plan-du-cours" class="nav-link" data-scroll-target="#le-plan-du-cours"><span class="header-section-number">1.3</span> Le plan du cours</a></li>
-  <li><a href="#data-sets" id="toc-data-sets" class="nav-link" data-scroll-target="#data-sets"><span class="header-section-number">1.4</span> Data sets</a></li>
-  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">1.5</span> Packages</a></li>
+  <li><a href="#un-peu-dhistoire-et-de-théorie" id="toc-un-peu-dhistoire-et-de-théorie" class="nav-link" data-scroll-target="#un-peu-dhistoire-et-de-théorie"><span class="header-section-number">11.2.1</span> Un peu d’histoire et de théorie</a></li>
+  <li><a href="#un-exemple-simple" id="toc-un-exemple-simple" class="nav-link" data-scroll-target="#un-exemple-simple"><span class="header-section-number">11.2.2</span> Un exemple simple</a></li>
+  <li><a href="#des-variantes-pertinentes-relativement-au-texte" id="toc-des-variantes-pertinentes-relativement-au-texte" class="nav-link" data-scroll-target="#des-variantes-pertinentes-relativement-au-texte"><span class="header-section-number">11.2.3</span> Des variantes pertinentes relativement au texte</a></li>
   </ul></li>
+  <li><a href="#cartes-de-positionnement" id="toc-cartes-de-positionnement" class="nav-link" data-scroll-target="#cartes-de-positionnement"><span class="header-section-number">11.3</span> Cartes de positionnement</a>
+  <ul class="collapse">
+  <li><a href="#mds-et-pca" id="toc-mds-et-pca" class="nav-link" data-scroll-target="#mds-et-pca"><span class="header-section-number">11.3.1</span> MDS et PCA</a></li>
+  <li><a href="#les-modèles-de-forces" id="toc-les-modèles-de-forces" class="nav-link" data-scroll-target="#les-modèles-de-forces"><span class="header-section-number">11.3.2</span> les modèles de forces</a></li>
+  <li><a href="#tsne" id="toc-tsne" class="nav-link" data-scroll-target="#tsne"><span class="header-section-number">11.3.3</span> tsne</a></li>
+  <li><a href="#umap" id="toc-umap" class="nav-link" data-scroll-target="#umap"><span class="header-section-number">11.3.4</span> UMAP</a></li>
+  </ul></li>
+  <li><a href="#analyse-de-réseau" id="toc-analyse-de-réseau" class="nav-link" data-scroll-target="#analyse-de-réseau"><span class="header-section-number">11.4</span> Analyse de réseau</a>
+  <ul class="collapse">
+  <li><a href="#la-grammaire-des-réseaux" id="toc-la-grammaire-des-réseaux" class="nav-link" data-scroll-target="#la-grammaire-des-réseaux"><span class="header-section-number">11.4.1</span> la grammaire des réseaux</a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">11.4.2</span> visualisation</a></li>
+  <li><a href="#indices-de-centralités" id="toc-indices-de-centralités" class="nav-link" data-scroll-target="#indices-de-centralités"><span class="header-section-number">11.4.3</span> Indices de centralités</a></li>
+  <li><a href="#détection-des-communauté" id="toc-détection-des-communauté" class="nav-link" data-scroll-target="#détection-des-communauté"><span class="header-section-number">11.4.4</span> Détection des communauté</a></li>
+  <li><a href="#dautres-manières-daborder-le-réseaux" id="toc-dautres-manières-daborder-le-réseaux" class="nav-link" data-scroll-target="#dautres-manières-daborder-le-réseaux"><span class="header-section-number">11.4.5</span> D’autres manières d’aborder le réseaux</a></li>
+  </ul></li>
+  <li><a href="#en-3d" id="toc-en-3d" class="nav-link" data-scroll-target="#en-3d"><span class="header-section-number">11.5</span> en 3D</a>
+  <ul class="collapse">
+  <li><a href="#analyse-procustéenne" id="toc-analyse-procustéenne" class="nav-link" data-scroll-target="#analyse-procustéenne"><span class="header-section-number">11.5.1</span> Analyse procustéenne</a></li>
+  <li><a href="#des-technique-vidéo." id="toc-des-technique-vidéo." class="nav-link" data-scroll-target="#des-technique-vidéo."><span class="header-section-number">11.5.2</span> Des technique vidéo.</a></li>
+  <li><a href="#vers-des-représentation-interactives" id="toc-vers-des-représentation-interactives" class="nav-link" data-scroll-target="#vers-des-représentation-interactives"><span class="header-section-number">11.5.3</span> Vers des représentation interactives</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.6</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -245,27 +252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction aux méthodes de traitement du langage naturel</h1>
-<p class="subtitle lead">pour les sciences sociales</p>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Sophie Balech et Christophe Benavent </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -275,93 +269,130 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="préambule" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Préambule</h1>
-<p>“Au commencement était le verbe”, et désormais le verbe est partout, non pas l’esprit de Dieu, mais la parole humaine qui s’éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l’enregistrement des transactions informatiques.</p>
-<p>Le verbe est désormais une copie du monde, moins l’affirmation d’une vision, que la stratification de nos manifestations sociales.</p>
-<p>C’est bien sur le fruit d’un développement technique engagés depuis 10 000 ans et dont l’imprimerie est une nouvelle étape. La révolution actuelle réside dans la colonisation de l’espace social, chaque bribes de parole est enregistrée , transcrite, archivée. Le livre n’est plus qu’un îlot dans un océan de texte.</p>
-<p>Il y a un défi empirique pour les sciences sociales, la société produit massivement la documentation de son développement. L’exploitation de ces sources est un enjeu majeur pour la psychologique, sociologique, économique, le droit, les sciences de gestion en ouvrant un nouvel accès au données.</p>
-<p>A mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d’études que pour répondre à des besoins opérationnels. Aujourd’hui, dans le sillage de l’invention des embeddings, nous sommes à l’ère des grands modèles de langages qui ouvrent de nouveaux horizons dans la capacité de produire du texte (par exemple des descriptions d’images), de transformer le texte (résumé ou traduction), et surtout de l’annoter ( classification, NER…)</p>
-<section id="le-but-de-louvrage" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="le-but-de-louvrage"><span class="header-section-number">1.1</span> Le but de l’ouvrage</h2>
-<p>Ce e-book est le syllabus d’un cours que nous dispensons sous différents formats et avec différents degrés d’approfondissement. Il fait l’inventaire des méthodes les plus courantes incluant le développement des embeddings.</p>
-<p>Il a une vocation pratique , des cas, des codes.</p>
-</section>
-<section id="les-contributeurs" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="les-contributeurs"><span class="header-section-number">1.2</span> Les contributeurs</h2>
-<p>On ne peut en produire la liste exhaustives, mais plusieurs générations d’étudiants ont contribué à ce travail en explorant un certain nombre de jeux de données proposés ici.</p>
-</section>
-<section id="le-plan-du-cours" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="le-plan-du-cours"><span class="header-section-number">1.3</span> Le plan du cours</h2>
-<p>Il s’organise selon les grandes étapes du processus d’analyse et des types de problèmes posés par le traitement et l’analyse du texte. Ce processus va de l’acquisition des données à leurs représentations en passant par des phases de transformation, mais aussi un ordre de complexité des modèles et des ressources.</p>
-<p>Il suit ainsi une sorte de développement historique qui se construit par l’accumulation de différentes philosophies d’analyses et de méthodes et qui peut se présenter en trois grandes périodes:</p>
-<ul>
-<li><p>compter les mots et jouer avec leur co-occurences</p></li>
-<li><p>annoter des mots en s’appuyant sur leurs régularités syntaxiques.</p></li>
-<li><p>encoder les mots dans un espace vectoriel, cette perspective a été ouverte par word2vec , étendue avec les transformers, systématisée par les grands modèles de langages tels que gpt4 ou Bloom.</p></li>
-</ul>
-<p>Voici les raisons qui organisent le cours en 14 chapitres</p>
-<ol type="1">
-<li><p>Préambule (ce que vous êtes en train de lire !)</p></li>
-<li><p>Chapitre 1 : une réflexion et une introduction à la linguistique, car le calcul ne suffit pas à se substituer à plus de 2000 ans de réflexions sur la langues, et au cours des deux derniers siècle à la clarification de questions essentielles.</p></li>
-<li><p>Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu’on étudie par collection. Il faut aussi penser à la notion de corpus.</p></li>
-<li><p>Chapitre 4 : corpus - techniques avancées D’un point de vue matériel le corpus est aussi</p></li>
-<li><p>Chapitre 5 : Explorer et naviguer dans le corpus</p></li>
-<li><p>Chapitre 6 : Analyse quantitative du corpus</p></li>
-<li><p>Chapitre 7 : Tokenisation et dtm</p></li>
-<li><p>Chapitre 8 : Analyse des co-occurences</p></li>
-<li><p>Chapitre 9 : au début il y avait l’analyse factorielle</p></li>
-<li><p>Chapitre 10 : SVD et LSA :</p></li>
-<li><p>Chapitre 11 : Topic model</p></li>
-<li><p>Chapitre 12 : Supervised modeling</p></li>
-<li><p>Chapitre 13 : word2vec to doc2vec</p></li>
-<li><p>Chapitre 14 : Transformers</p></li>
-<li><p>Chapitre 15 : tasks , Zsl, abstracting</p></li>
-<li><p>chapitre 16 : generative models , un monde à inventer.</p></li>
-</ol>
-</section>
-<section id="data-sets" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="data-sets"><span class="header-section-number">1.4</span> Data sets</h2>
-<p>On s’appuiera sur des data test “réel” et publics</p>
-<ul>
-<li><p><a href="https://www.thetrumparchive.com/">Trump Tweeter Archive</a> : c’est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.</p></li>
-<li><p>Tripadvisor en Polynésie</p></li>
-<li><p>Airbnb Paris 2019</p></li>
-<li><p>PMP40ans : ce set de données comprend tous les résumés d’articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu’en 2023. C’est un observatoire intéressant d’une discipline naissance et de l’évolution des normes professionnelles de la recherche en gestion.</p></li>
-<li><p>yyy</p></li>
-<li><p>zzz</p></li>
-</ul>
-</section>
-<section id="packages" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="packages"><span class="header-section-number">1.5</span> Packages</h2>
-<p>Ce cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d’images. Zotero pour la bibliographie.</p>
-<p>Il n’y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#environnement de travail</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># the perfect tool box.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glossary)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary_path</span>(<span class="st">"glossary.yml"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># un exemple pour ajouter des termes au cours de la rédaction</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#glossary_add(term = "loi de Dirichlet",</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapitre</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#ses compléments  </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># pour produire des tableaux élégants</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#ressource nlp  </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda) </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-
-
+<p><strong>Objectifs du chapitre :</strong></p>
+<div>
+<p><em>Jusqu’à présent, nous nous sommes consacrés au traitement des chaines de caractères, généralement dans un but univarié, examinant la distribution des termes.</em></p>
+<p><em>Ce chapitre est celui d’un virage multivarié : ce qu’on va étudier ce sont les distributions conjointes des termes, au travers principalement de l’analyse de leur co-occurrences. On découvrira une large palette de techniques qui permettent de les représenter et d’identifier des thématique et la manières dont elles s’articulent. Elles sont principalement descriptive.</em></p>
+</div>
+<p>A ce stade nous arrivons à la question de l’analyse des co-occurences.</p>
+<p>Dans quelle mesures deux termes se retrouvent souvent ensemble c’est à dire dans le même contexte?</p>
+<p>C’est à dire l’analyse d’une matrice de similarités entre un grand nombre d’objets,</p>
+<section id="des-co-occurences-aux-similarités" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="des-co-occurences-aux-similarités"><span class="header-section-number">11.1</span> Des co-occurences aux similarités</h2>
+<p>On continue avec la boite à outil quanteda</p>
+<p>On peut naturellement faire varier les critères de cooccurence en définition la fen^rtre commune de deux mots. Au lieu de prendre l’ensemble du texte.</p>
+<p>Un tel tableau est un tableau de similarité, et il sera généralement utile de traiter un tableau de dis-similarités.</p>
+<p>Une</p>
 </section>
+<section id="approche-par-classification-hiérarchique" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="approche-par-classification-hiérarchique"><span class="header-section-number">11.2</span> Approche par classification hiérarchique</h2>
+<p>Une approche évidente de ce type d’objet est celle des méthodes de classification hiérarchiques dont il faut rappeler l’origine biologiques. Dans le problèmes de la construction d’un arbre évolutionnaire des espèces ou des variétés, la méthode générale s’appuie sur le calcul de distances, qui peuvent être phénotypiques, ou génomiques.</p>
+<section id="un-peu-dhistoire-et-de-théorie" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="un-peu-dhistoire-et-de-théorie"><span class="header-section-number">11.2.1</span> Un peu d’histoire et de théorie</h3>
+<p>sur ce plan On doit beaucoup à sokal et sneath</p>
+<p>https://www.amazon.com/Principles-Numerical-Taxonomy-Robert-Sneath/dp/B009SA478O</p>
+<p>pour un commentaire, car celà appartient à l’histoire des sciences</p>
+<p>https://www.jstor.org/stable/4026976</p>
+<p>Ces méthodes généralement différent par deux critère</p>
+<p>le mode de clacul de la distance</p>
+<p>la méthode d’agrgation</p>
+</section>
+<section id="un-exemple-simple" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="un-exemple-simple"><span class="header-section-number">11.2.2</span> Un exemple simple</h3>
+</section>
+<section id="des-variantes-pertinentes-relativement-au-texte" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="des-variantes-pertinentes-relativement-au-texte"><span class="header-section-number">11.2.3</span> Des variantes pertinentes relativement au texte</h3>
+<p>les approches descendantes ( et les arbres de décision) rheinhart</p>
+<p>dbscan de bertopic</p>
+</section>
+</section>
+<section id="cartes-de-positionnement" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="cartes-de-positionnement"><span class="header-section-number">11.3</span> Cartes de positionnement</h2>
+<p>Le problème de la représentation des distance entre un certain nombres de point est abordé depuis longtemps par les méthodes d’analyses de similarités, qui cependant n’étaient pas forcément adaptées au traitement d’un grand nombre d’objets. Des méthodes de forces ont été introduites notamment pour résoudre les problème de visualisation. Aujourd’hui deux méthodes ce sont imposée et sont les standards dans les domaines du texte, ou les termes sont très nombreux. Il s’agit de Tsne et d’Umap.</p>
+<section id="mds-et-pca" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="mds-et-pca"><span class="header-section-number">11.3.1</span> MDS et PCA</h3>
+<ol type="1">
+<li><p>Torgerson, Warren S. (1958). <em>Theory &amp; Methods of Scaling</em>. New York: Wiley. <a href="https://en.wikipedia.org/wiki/ISBN_(identifier)" title="ISBN (identifier)">ISBN</a>&nbsp;<a href="https://en.wikipedia.org/wiki/Special:BookSources/978-0-89874-722-5" title="Special:BookSources/978-0-89874-722-5">978-0-89874-722-5</a>.</p></li>
+<li></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Joseph_Kruskal" title="Joseph Kruskal">Kruskal, J. B.</a> (1964). “Multidimensional scaling by optimizing goodness of fit to a nonmetric hypothesis”. <em>Psychometrika</em>. <strong>29</strong> (1): 1–27. <a href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)">doi</a>:<a href="https://doi.org/10.1007%2FBF02289565">10.1007/BF02289565</a>. <a href="https://en.wikipedia.org/wiki/S2CID_(identifier)" title="S2CID (identifier)">S2CID</a>&nbsp;<a href="https://api.semanticscholar.org/CorpusID:48165675">48165675</a>.</p></li>
+<li><p>Mead, A (1992). “Review of the Development of Multidimensional Scaling Methods”. <em>Journal of the Royal Statistical Society. Series D (The Statistician)</em>. <strong>41</strong> (1): 27–39. <a href="https://en.wikipedia.org/wiki/JSTOR_(identifier)" title="JSTOR (identifier)">JSTOR</a>&nbsp;<a href="https://www.jstor.org/stable/2348634">2348634</a>. Abstract. Multidimensional scaling methods are now a common statistical tool in psychophysics and sensory analysis. The development of these methods is charted, from the original research of Torgerson (metric scaling), Shepard and Kruskal (non-metric scaling) through individual differences scaling and the maximum likelihood methods proposed by Ramsay.</p></li>
+<li><p>Green, P. (January 1975). “Marketing applications of MDS: Assessment and outlook”. <em>Journal of Marketing</em>. <strong>39</strong> (1): 24–31. <a href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)">doi</a>:<a href="https://doi.org/10.2307%2F1250799">10.2307/1250799</a>. <a href="https://en.wikipedia.org/wiki/JSTOR_(identifier)" title="JSTOR (identifier)">JSTOR</a>&nbsp;<a href="https://www.jstor.org/stable/1250799">1250799</a>.</p></li>
+<li></li>
+</ol>
+</section>
+<section id="les-modèles-de-forces" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="les-modèles-de-forces"><span class="header-section-number">11.3.2</span> les modèles de forces</h3>
+<p>attraction répulsion</p>
+<p>une esthétique de la dynamaique</p>
+</section>
+<section id="tsne" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="tsne"><span class="header-section-number">11.3.3</span> tsne</h3>
+</section>
+<section id="umap" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="umap"><span class="header-section-number">11.3.4</span> UMAP</h3>
+</section>
+</section>
+<section id="analyse-de-réseau" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="analyse-de-réseau"><span class="header-section-number">11.4</span> Analyse de réseau</h2>
+<section id="la-grammaire-des-réseaux" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="la-grammaire-des-réseaux"><span class="header-section-number">11.4.1</span> la grammaire des réseaux</h3>
+</section>
+<section id="visualisation" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">11.4.2</span> visualisation</h3>
+</section>
+<section id="indices-de-centralités" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="indices-de-centralités"><span class="header-section-number">11.4.3</span> Indices de centralités</h3>
+</section>
+<section id="détection-des-communauté" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="détection-des-communauté"><span class="header-section-number">11.4.4</span> Détection des communauté</h3>
+</section>
+<section id="dautres-manières-daborder-le-réseaux" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="dautres-manières-daborder-le-réseaux"><span class="header-section-number">11.4.5</span> D’autres manières d’aborder le réseaux</h3>
+<p>une approche bi grammes</p>
+</section>
+</section>
+<section id="en-3d" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="en-3d"><span class="header-section-number">11.5</span> en 3D</h2>
+<p>Il y a une dynamique des réseaux, mais un problème majeur, d’un période à l’autre les configurations peut être très différentes.</p>
+<p>il y a une solution générale. Ensuite ce ne sont que des questions techniques.</p>
+<section id="analyse-procustéenne" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="analyse-procustéenne"><span class="header-section-number">11.5.1</span> Analyse procustéenne</h3>
+</section>
+<section id="des-technique-vidéo." class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="des-technique-vidéo."><span class="header-section-number">11.5.2</span> Des technique vidéo.</h3>
+</section>
+<section id="vers-des-représentation-interactives" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="vers-des-représentation-interactives"><span class="header-section-number">11.5.3</span> Vers des représentation interactives</h3>
+<p>the shiny way</p>
+<p>exploration of sémantic space</p>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.6</span> Conclusion</h2>
+<p>Dans ce chapitre nous avons introduit une large gamme de techniques destinées à mesurer et à représenter les relation entre un ensemble importants de termes. L’échelle va de quelques dizaines à plusieurs milliers. Nous aurons au passage souligné qu’on peut réduire l’analyse sur des registres homogènes de termes</p>
+<p>Épistémologiquement nous nous appuyons sur l’idée simple que le sens vient de la fréquences des termes associés, c’est l’idée de hirth que nous avons évoqué dans le chapitre intoductif. Et nous pouvons constater que la mise en scène de cette idée c’est largement sophistiquée. On gardera cependant en tête, fort de la connaissance de la nature de la distribution des mots, selon une loi puissance, que ces méthodes ne valent qu’à certaines échelles.</p>
+<p>On soulignera l’importance de la qualité des visualisation qui permettent à l’analyse d’inférer des histoires. Ces méthodes sont frtement qualitatives , même si les métriques de réseaux et de distances laisse espérer qu’on puisse capturer des propriété déterminantes.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -776,11 +807,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./q08_Analyse_syntaxic.html" class="pagination-link" aria-label="Annotations syntaxiques">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./q01_introduction.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

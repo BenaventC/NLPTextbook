@@ -4,8 +4,8 @@ project:
 book:
   title: "Introduction aux méthodes de traitement du langage naturel"
   subtitle: "pour les sciences sociales"
-  author: "Christophe Benavent"
-  date: "07/07/2023"
+  author: "Sophie Balech et Christophe Benavent"
+  date: today
   chapters:
     - index.qmd
     - q01_introduction.qmd
@@ -15,6 +15,11 @@ book:
     - q05_manipuler_caractere.qmd
     - q06_Analyse_quantitative.qmd
     - q07_tokenisation.qmd
+    - q07_tokenisation.qmd
+    - q08_Analyse_syntaxic.qmd
+    - q09_token_to_dfm.qmd
+    - q10_Analyse_Cooccurences.qmd
+    - q11_Topic_Model.qmd
 
 bibliography: references.bib
 

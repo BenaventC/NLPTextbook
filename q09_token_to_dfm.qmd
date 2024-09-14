@@ -1,0 +1,75 @@
+# Des tokens à leurs co-occurences.
+
+```{r, results='asis'}
+#les librairies du chapître
+library(tidyverse)
+#accessoires de ggplot
+library(ggridges)
+library(ggrepel)
+library(ggwordcloud)
+library(igraph)
+library(ggraph)
+
+theme_set(theme_minimal()) 
+
+#NLP
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(quanteda.textstats )
+# glossaire
+library(glossary)
+glossary_path("glossary.yml")
+glossary_style(color = "purple", 
+               text_decoration = "underline",
+               def_bg = "#333",
+               def_color = "white")
+glossary_popup("click")
+
+#tableau
+library(flextable)
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+
+#palettes
+
+library(wesanderson)
+#names(wes_palettes)
+col_1<-c("#85D4E3")
+col_1b<-c("#F4B5BD")
+col_2<-c <-c("#85D4E3", "#F4B5BD")
+col_4<-c("#85D4E3", "#F4B5BD", "#9C964A", "#CDC08C")
+
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,...), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques *
+
+</div>
+
+
+
+## des tokens au DFM
+
+### La construction du tableau
+
+### Son l'analyse par la vénérable AFC
+
+### Pondérer par la rareté parmi les documents
+
+## Calculer les coocurrences
+
+### Un simple exemple
+
+### plus compliqué
+
+### ou des distances
+
+
+
+## Références

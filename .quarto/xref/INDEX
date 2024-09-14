@@ -40,5 +40,17 @@
   },
   "q09_Analyse_Cooccurences.qmd": {
     "q09_Analyse_Cooccurences.html": "dd71ae37"
+  },
+  "q08_Analyse_syntaxic.qmd": {
+    "q08_Analyse_syntaxic.html": "15cbd007"
+  },
+  "q09_token_to_dfm.qmd": {
+    "q09_token_to_dfm.html": "5bb3fe3c"
+  },
+  "q10_Analyse_Cooccurences.qmd": {
+    "q10_Analyse_Cooccurences.html": "33c86613"
+  },
+  "q11_Topic_Model.qmd": {
+    "q11_Topic_Model.html": "816e8836"
   }
 }

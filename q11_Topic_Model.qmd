@@ -1,0 +1,61 @@
+# Modèles de Topic
+
+```{r, results='asis'}
+#les librairies du chapitre
+library(tidyverse)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+# glossaire
+library(glossary)
+glossary_path("glossary.yml")
+glossary_style(color = "purple", 
+               text_decoration = "underline",
+               def_bg = "#333",
+               def_color = "white")
+glossary_popup("click")
+
+#theme settings
+
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*Avec l'analyse des données classiques, on classifie soit les termes soit les documents, on ne saisit pas le fait qu'un même document puisse relever de plusieurs thématiques. C'est l'objet principal des analyses de topics*
+
+**
+
+</div>
+
+L'idée d'identifier des thématiques sémantique dans un corpus de texte est ancienne. AFC, clustering et Analyses de réseaux en sont les premières tentatives qui se poursuit avec la généralisation de techniques factorielle fondée sur la décomposition SVD.
+
+Mais l'innovation majeure est celle de la méthode LDA, dont l'apport essentiel est d'identifier les thématique au niveau des documents plutôt qu'à celui du corpus. Si dans les approches précédentes un texte sera classifié parmi l'un des k sujets que l'on cherche à identifier, désormais il se traduit par une distribution de probabilité d'appartenir à chacun des k topics.
+
+## LSA et les autres
+
+L'analyse des classes latentes ? est-ce nécessaire ?
+
+## Le modèle fondateur : LDA
+
+sur ce plan On doit beaucoup à @blei_latent_2003
+
+### la struture du modèle
+
+il appuie sur une représentation statistique où les mots se distribuent selon une loi de probabilité particulière en occurrence la loi de Dirichlet.  `r glossary("loi de Dirichlet")`
+
+### mise en oeuvre
+
+## Une  variante utile : le modèle STM
+
+## Conclusion

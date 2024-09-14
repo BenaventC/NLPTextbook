@@ -1,0 +1,148 @@
+# Analyse des co-occurrences
+
+```{r 600}
+#les librairies du chapitre
+library(tidyverse)
+library(readr)
+library(tokenizers)
+library(quanteda)
+library(quanteda.textplots)
+library(flextable)
+
+
+# glossaire
+library(glossary)
+glossary_path("glossary.yml")
+glossary_style(color = "purple", 
+               text_decoration = "underline",
+               def_bg = "#333",
+               def_color = "white")
+
+#theme setting
+theme_set(theme_minimal()) 
+
+set_flextable_defaults(
+  font.size = 10, theme_fun = theme_vanilla,
+  padding = 6,
+  background.color = "#EFEFEF")
+```
+
+**Objectifs du chapitre :**
+
+<div>
+
+*Jusqu'à présent, nous nous sommes consacrés au traitement des chaines de caractères, généralement dans un but univarié, examinant la distribution des termes.*
+
+*Ce chapitre est celui d'un virage multivarié : ce qu'on va étudier ce sont les distributions conjointes des termes, au travers principalement de l'analyse de leur co-occurrences. On découvrira une large palette de techniques qui permettent de les représenter et d'identifier des thématique et la manières dont elles s'articulent. Elles sont principalement descriptive.*
+
+</div>
+
+A ce stade nous arrivons à la question de l'analyse des co-occurences.
+
+Dans quelle mesures deux termes se retrouvent souvent ensemble c'est à dire dans le même contexte?
+
+C'est à dire l'analyse d'une matrice de similarités entre un grand nombre d'objets,
+
+## Des co-occurences aux similarités
+
+On continue avec la boite à outil quanteda
+
+On peut naturellement faire varier les critères de cooccurence en définition la fen\^rtre commune de deux mots. Au lieu de prendre l'ensemble du texte.
+
+Un tel tableau est un tableau de similarité, et il sera généralement utile de traiter un tableau de dis-similarités.
+
+Une
+
+## Approche par classification hiérarchique
+
+Une approche évidente de ce type d'objet est celle des méthodes de classification hiérarchiques dont il faut rappeler l'origine biologiques. Dans le problèmes de la construction d'un arbre évolutionnaire des espèces ou des variétés, la méthode générale s'appuie sur le calcul de distances, qui peuvent être phénotypiques, ou génomiques.
+
+### Un peu d'histoire et de théorie
+
+sur ce plan On doit beaucoup à sokal et sneath
+
+https://www.amazon.com/Principles-Numerical-Taxonomy-Robert-Sneath/dp/B009SA478O
+
+pour un commentaire, car celà appartient à l'histoire des sciences
+
+https://www.jstor.org/stable/4026976
+
+Ces méthodes généralement différent par deux critère
+
+le mode de clacul de la distance
+
+la méthode d'agrgation
+
+### Un exemple simple
+
+### Des variantes pertinentes relativement au texte
+
+les approches descendantes ( et les arbres de décision) rheinhart
+
+dbscan de bertopic
+
+## Cartes de positionnement
+
+Le problème de la représentation des distance entre un certain nombres de point est abordé depuis longtemps par les méthodes d'analyses de similarités, qui cependant n'étaient pas forcément adaptées au traitement d'un grand nombre d'objets. Des méthodes de forces ont été introduites notamment pour résoudre les problème de visualisation. Aujourd'hui deux méthodes ce sont imposée et sont les standards dans les domaines du texte, ou les termes sont très nombreux. Il s'agit de Tsne et d'Umap.
+
+### MDS et PCA
+
+1.  Torgerson, Warren S. (1958). *Theory & Methods of Scaling*. New York: Wiley. [ISBN](https://en.wikipedia.org/wiki/ISBN_(identifier) "ISBN (identifier)") [978-0-89874-722-5](https://en.wikipedia.org/wiki/Special:BookSources/978-0-89874-722-5 "Special:BookSources/978-0-89874-722-5").
+
+2.  
+
+3.  [Kruskal, J. B.](https://en.wikipedia.org/wiki/Joseph_Kruskal "Joseph Kruskal") (1964). "Multidimensional scaling by optimizing goodness of fit to a nonmetric hypothesis". *Psychometrika*. **29** (1): 1--27. [doi](https://en.wikipedia.org/wiki/Doi_(identifier) "Doi (identifier)"):[10.1007/BF02289565](https://doi.org/10.1007%2FBF02289565). [S2CID](https://en.wikipedia.org/wiki/S2CID_(identifier) "S2CID (identifier)") [48165675](https://api.semanticscholar.org/CorpusID:48165675).
+
+4.  Mead, A (1992). "Review of the Development of Multidimensional Scaling Methods". *Journal of the Royal Statistical Society. Series D (The Statistician)*. **41** (1): 27--39. [JSTOR](https://en.wikipedia.org/wiki/JSTOR_(identifier) "JSTOR (identifier)") [2348634](https://www.jstor.org/stable/2348634). Abstract. Multidimensional scaling methods are now a common statistical tool in psychophysics and sensory analysis. The development of these methods is charted, from the original research of Torgerson (metric scaling), Shepard and Kruskal (non-metric scaling) through individual differences scaling and the maximum likelihood methods proposed by Ramsay.
+
+5.  Green, P. (January 1975). "Marketing applications of MDS: Assessment and outlook". *Journal of Marketing*. **39** (1): 24--31. [doi](https://en.wikipedia.org/wiki/Doi_(identifier) "Doi (identifier)"):[10.2307/1250799](https://doi.org/10.2307%2F1250799). [JSTOR](https://en.wikipedia.org/wiki/JSTOR_(identifier) "JSTOR (identifier)") [1250799](https://www.jstor.org/stable/1250799).
+
+6.  
+
+### les modèles de forces
+
+attraction répulsion
+
+une esthétique de la dynamaique
+
+### tsne
+
+### UMAP
+
+## Analyse de réseau
+
+### la grammaire des réseaux
+
+### visualisation
+
+### Indices de centralités
+
+### Détection des communauté
+
+### D'autres manières d'aborder le réseaux
+
+une approche bi grammes
+
+## en 3D
+
+Il y a une dynamique des réseaux, mais un problème majeur, d'un période à l'autre les configurations peut être très différentes.
+
+il y a une solution générale. Ensuite ce ne sont que des questions techniques.
+
+### Analyse procustéenne
+
+### Des technique vidéo.
+
+### Vers des représentation interactives
+
+the shiny way
+
+exploration of sémantic space
+
+## Conclusion
+
+Dans ce chapitre nous avons introduit une large gamme de techniques destinées à mesurer et à représenter les relation entre un ensemble importants de termes. L'échelle va de quelques dizaines à plusieurs milliers. Nous aurons au passage souligné qu'on peut réduire l'analyse sur des registres homogènes de termes
+
+Épistémologiquement nous nous appuyons sur l'idée simple que le sens vient de la fréquences des termes associés, c'est l'idée de hirth que nous avons évoqué dans le chapitre intoductif. Et nous pouvons constater que la mise en scène de cette idée c'est largement sophistiquée. On gardera cependant en tête, fort de la connaissance de la nature de la distribution des mots, selon une loi puissance, que ces méthodes ne valent qu'à certaines échelles.
+
+On soulignera l'importance de la qualité des visualisation qui permettent à l'analyse d'inférer des histoires. Ces méthodes sont frtement qualitatives , même si les métriques de réseaux et de distances laisse espérer qu'on puisse capturer des propriété déterminantes.
