@@ -106,7 +106,7 @@ La formulation de regex est un art, dans le quotidien on se contentera de repren
 
 en voici quelles-unes
 
--   date "[0-9]{2}-[0-9]{2}-[0-9]{2}"
+-   date "\[0-9\]{2}-\[0-9\]{2}-\[0-9\]{2}"
 
 -   mention
 

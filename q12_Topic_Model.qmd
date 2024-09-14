@@ -34,7 +34,7 @@ set_flextable_defaults(
 
 *Avec l'analyse des données classiques, on classifie soit les termes soit les documents, on ne saisit pas le fait qu'un même document puisse relever de plusieurs thématiques. C'est l'objet principal des analyses de topics*
 
-**
+\*\*
 
 </div>
 
@@ -52,10 +52,10 @@ sur ce plan On doit beaucoup à @blei_latent_2003
 
 ### la struture du modèle
 
-il appuie sur une représentation statistique où les mots se distribuent selon une loi de probabilité particulière en occurrence la loi de Dirichlet.  `r glossary("loi de Dirichlet")`
+il appuie sur une représentation statistique où les mots se distribuent selon une loi de probabilité particulière en occurrence la loi de Dirichlet. `r glossary("loi de Dirichlet")`
 
 ### mise en oeuvre
 
-## Une  variante utile : le modèle STM
+## Une variante utile : le modèle STM
 
 ## Conclusion

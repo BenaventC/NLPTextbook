@@ -38,27 +38,21 @@ set_flextable_defaults(
 
 </div>
 
-
 ## Le principe
 
 L'analyse des classes latentes ? est-ce nécessaire ?
 
 ## Word2vec
 
-
 Word2vec parachève une idée essentielle du NLP. Représenter les mots dans un vaste espace, de telle manière à ce que leur corrélations, leurs proximités soient conservées.
-
 
 sur ce plan On doit beaucoup à mikolov
 
 ## Text2vec
 
-
 ## Les alternatives
 
 Glove
-
-
 
 ## Conclusion
 

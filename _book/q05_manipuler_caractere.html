@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction aux méthodes de traitement du langage naturel - 6&nbsp; Manipuler les chaines de caractères</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 5&nbsp; Manipuler les chaines de caractères</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q05_manipuler_caractere.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q05_manipuler_caractere.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,79 +143,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
+ <span class="menu-text">Préambule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./q11_Topic_Model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
@@ -228,18 +282,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#stringr" id="toc-stringr" class="nav-link active" data-scroll-target="#stringr"><span class="header-section-number">6.1</span> Stringr</a>
+  <li><a href="#stringr" id="toc-stringr" class="nav-link active" data-scroll-target="#stringr"><span class="header-section-number">5.1</span> Stringr</a>
   <ul class="collapse">
-  <li><a href="#compter" id="toc-compter" class="nav-link" data-scroll-target="#compter"><span class="header-section-number">6.1.1</span> Compter :</a></li>
-  <li><a href="#extraire" id="toc-extraire" class="nav-link" data-scroll-target="#extraire"><span class="header-section-number">6.1.2</span> Extraire</a></li>
-  <li><a href="#remplacer" id="toc-remplacer" class="nav-link" data-scroll-target="#remplacer"><span class="header-section-number">6.1.3</span> Remplacer</a></li>
+  <li><a href="#compter" id="toc-compter" class="nav-link" data-scroll-target="#compter"><span class="header-section-number">5.1.1</span> Compter :</a></li>
+  <li><a href="#extraire" id="toc-extraire" class="nav-link" data-scroll-target="#extraire"><span class="header-section-number">5.1.2</span> Extraire</a></li>
+  <li><a href="#remplacer" id="toc-remplacer" class="nav-link" data-scroll-target="#remplacer"><span class="header-section-number">5.1.3</span> Remplacer</a></li>
   </ul></li>
-  <li><a href="#regex" id="toc-regex" class="nav-link" data-scroll-target="#regex"><span class="header-section-number">6.2</span> Regex</a>
+  <li><a href="#regex" id="toc-regex" class="nav-link" data-scroll-target="#regex"><span class="header-section-number">5.2</span> Regex</a>
   <ul class="collapse">
-  <li><a href="#les-éléments-principaux" id="toc-les-éléments-principaux" class="nav-link" data-scroll-target="#les-éléments-principaux"><span class="header-section-number">6.2.1</span> les éléments principaux</a></li>
-  <li><a href="#des-formules-usuelles" id="toc-des-formules-usuelles" class="nav-link" data-scroll-target="#des-formules-usuelles"><span class="header-section-number">6.2.2</span> Des formules usuelles</a></li>
+  <li><a href="#les-éléments-principaux" id="toc-les-éléments-principaux" class="nav-link" data-scroll-target="#les-éléments-principaux"><span class="header-section-number">5.2.1</span> les éléments principaux</a></li>
+  <li><a href="#des-formules-usuelles" id="toc-des-formules-usuelles" class="nav-link" data-scroll-target="#des-formules-usuelles"><span class="header-section-number">5.2.2</span> Des formules usuelles</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.3</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.3</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -248,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></h1>
 </div>
 
 
@@ -292,12 +346,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>*Apprendre à manipuler les chaines de caractères ainsi que les regex*
 
 &lt;/div&gt;</code></pre>
-<section id="stringr" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="stringr"><span class="header-section-number">6.1</span> Stringr</h2>
+<section id="stringr" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="stringr"><span class="header-section-number">5.1</span> Stringr</h2>
 <p>C’est l’outil général que nous favorisons , il est intégré dans la suite tidyverse et propose de nombreuses fonctions.</p>
 <p>https://stringr.tidyverse.org/index.html</p>
-<section id="compter" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="compter"><span class="header-section-number">6.1.1</span> Compter :</h3>
+<section id="compter" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="compter"><span class="header-section-number">5.1.1</span> Compter :</h3>
 <p>Dans le chunck suivant on utilise le set de donnée PMP40ans. Le but est de compter le nombre de fois où un terme apparaît dans chacun des textes avec la fonction <code>str_count</code>. On en donne l’évolution au cours du temps</p>
 <div class="cell">
 <details class="code-fold">
@@ -322,24 +376,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="extraire" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="extraire"><span class="header-section-number">6.1.2</span> Extraire</h3>
+<section id="extraire" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="extraire"><span class="header-section-number">5.1.2</span> Extraire</h3>
 <p>Dans certaines situations on peut souhaiter extraire une chaîne de caractère pour l’utiliser à un autre usage.L’exemple ordinaire est celui d’extraire l’année d’une date. ou un auteur</p>
 <p><code>str_extract</code></p>
 </section>
-<section id="remplacer" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="remplacer"><span class="header-section-number">6.1.3</span> Remplacer</h3>
+<section id="remplacer" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="remplacer"><span class="header-section-number">5.1.3</span> Remplacer</h3>
 <p><code>str_replace</code></p>
 </section>
 </section>
-<section id="regex" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="regex"><span class="header-section-number">6.2</span> Regex</h2>
+<section id="regex" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="regex"><span class="header-section-number">5.2</span> Regex</h2>
 <p>Dans la section précédente on a appris à rechercher une chaîne de caractères, ou plusieurs dans une chaîne de caractères, à les compter, les extraire, les enlever, les remplacer. Dans nos exemples, on a employé des pattern simple. Dans l’exemple “évaluation”, on a tenu compte uniquement de cette forme, elle aurait pu être au pluriel, porté une majuscule, exacte ou inexacte. L’enjeu est de pouvoir saisir toute les variantes en une seule expression.</p>
 <p>Dans notre exemple la solution est la suivante : <code>[E|e|é]valuation.*</code>, en voulant saisir plus de variation on peut employer <code>[E|e|é]valu.*</code> qui permet se saisir les former verbales.</p>
 <p>Une expression régulière, ou regex, ou expression rationnelle ou expression normale ou motif est une chaîne de caractères qui décrit, selon une syntaxe précise, un ensemble de chaînes de caractères possibles. Son invention est attribuée au logicien <a href="https://fr.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Cole Kleene</a>)</p>
 <p>sa pratique se fonde sur une forte théorie.</p>
-<section id="les-éléments-principaux" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="les-éléments-principaux"><span class="header-section-number">6.2.1</span> les éléments principaux</h3>
+<section id="les-éléments-principaux" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="les-éléments-principaux"><span class="header-section-number">5.2.1</span> les éléments principaux</h3>
 <p>https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432</p>
 <p>Les regex reposent sur plusieurs concepts :</p>
 <ul>
@@ -373,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Groupes de capture</p></li>
 </ul>
 </section>
-<section id="des-formules-usuelles" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="des-formules-usuelles"><span class="header-section-number">6.2.2</span> Des formules usuelles</h3>
+<section id="des-formules-usuelles" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="des-formules-usuelles"><span class="header-section-number">5.2.2</span> Des formules usuelles</h3>
 <p>La formulation de regex est un art, dans le quotidien on se contentera de reprendre des formules communes</p>
 <p>en voici quelles-unes</p>
 <ul>
@@ -385,8 +439,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.3</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.3</span> Conclusion</h2>
 <p>Sur le plan pratique nous avons fortement avancé, nous pouvons jouer avec les chaînes de caractère, et en saisir les variations. nous avons les moyens de pré-traiter le texte</p>
 <ul>
 <li>pour réduire les morphologies</li>
@@ -810,12 +864,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./q04_explorer.html" class="pagination-link" aria-label="Explorer le corpus">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./q06_Analyse_quantitative.html" class="pagination-link" aria-label="Analyse Quantitative du corpus">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction aux méthodes de traitement du langage naturel - 11&nbsp; Des tokens à leurs co-occurences.</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 9&nbsp; Des tokens à leurs co-occurences.</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q09_token_to_dfm.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q09_token_to_dfm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,79 +143,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
+ <span class="menu-text">Préambule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./q11_Topic_Model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
@@ -228,19 +282,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#des-tokens-au-dfm" id="toc-des-tokens-au-dfm" class="nav-link active" data-scroll-target="#des-tokens-au-dfm"><span class="header-section-number">11.1</span> des tokens au DFM</a>
+  <li><a href="#des-tokens-au-dfm" id="toc-des-tokens-au-dfm" class="nav-link active" data-scroll-target="#des-tokens-au-dfm"><span class="header-section-number">9.1</span> des tokens au DFM</a>
   <ul class="collapse">
-  <li><a href="#la-construction-du-tableau" id="toc-la-construction-du-tableau" class="nav-link" data-scroll-target="#la-construction-du-tableau"><span class="header-section-number">11.1.1</span> La construction du tableau</a></li>
-  <li><a href="#son-lanalyse-par-la-vénérable-afc" id="toc-son-lanalyse-par-la-vénérable-afc" class="nav-link" data-scroll-target="#son-lanalyse-par-la-vénérable-afc"><span class="header-section-number">11.1.2</span> Son l’analyse par la vénérable AFC</a></li>
-  <li><a href="#pondérer-par-la-rareté-parmi-les-documents" id="toc-pondérer-par-la-rareté-parmi-les-documents" class="nav-link" data-scroll-target="#pondérer-par-la-rareté-parmi-les-documents"><span class="header-section-number">11.1.3</span> Pondérer par la rareté parmi les documents</a></li>
+  <li><a href="#la-construction-du-tableau" id="toc-la-construction-du-tableau" class="nav-link" data-scroll-target="#la-construction-du-tableau"><span class="header-section-number">9.1.1</span> La construction du tableau</a></li>
+  <li><a href="#son-lanalyse-par-la-vénérable-afc" id="toc-son-lanalyse-par-la-vénérable-afc" class="nav-link" data-scroll-target="#son-lanalyse-par-la-vénérable-afc"><span class="header-section-number">9.1.2</span> Son l’analyse par la vénérable AFC</a></li>
+  <li><a href="#pondérer-par-la-rareté-parmi-les-documents" id="toc-pondérer-par-la-rareté-parmi-les-documents" class="nav-link" data-scroll-target="#pondérer-par-la-rareté-parmi-les-documents"><span class="header-section-number">9.1.3</span> Pondérer par la rareté parmi les documents</a></li>
   </ul></li>
-  <li><a href="#calculer-les-coocurrences" id="toc-calculer-les-coocurrences" class="nav-link" data-scroll-target="#calculer-les-coocurrences"><span class="header-section-number">11.2</span> Calculer les coocurrences</a>
+  <li><a href="#calculer-les-coocurrences" id="toc-calculer-les-coocurrences" class="nav-link" data-scroll-target="#calculer-les-coocurrences"><span class="header-section-number">9.2</span> Calculer les coocurrences</a>
   <ul class="collapse">
-  <li><a href="#un-simple-exemple" id="toc-un-simple-exemple" class="nav-link" data-scroll-target="#un-simple-exemple"><span class="header-section-number">11.2.1</span> Un simple exemple</a></li>
-  <li><a href="#plus-compliqué" id="toc-plus-compliqué" class="nav-link" data-scroll-target="#plus-compliqué"><span class="header-section-number">11.2.2</span> plus compliqué</a></li>
-  <li><a href="#ou-des-distances" id="toc-ou-des-distances" class="nav-link" data-scroll-target="#ou-des-distances"><span class="header-section-number">11.2.3</span> ou des distances</a></li>
+  <li><a href="#un-simple-exemple" id="toc-un-simple-exemple" class="nav-link" data-scroll-target="#un-simple-exemple"><span class="header-section-number">9.2.1</span> Un simple exemple</a></li>
+  <li><a href="#plus-compliqué" id="toc-plus-compliqué" class="nav-link" data-scroll-target="#plus-compliqué"><span class="header-section-number">9.2.2</span> plus compliqué</a></li>
+  <li><a href="#ou-des-distances" id="toc-ou-des-distances" class="nav-link" data-scroll-target="#ou-des-distances"><span class="header-section-number">9.2.3</span> ou des distances</a></li>
   </ul></li>
-  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">11.3</span> Références</a></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">9.3</span> Références</a></li>
   </ul>
 </nav>
     </div>
@@ -249,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></h1>
 </div>
 
 
@@ -353,34 +407,34 @@ a.glossary:active .def::after {
 </details>
 <p><strong>Objectifs du chapitre :</strong></p>
 <div>
-<p><em>Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,…), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques </em></p>
+<p><em>Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,…), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques</em></p>
 </div>
-<section id="des-tokens-au-dfm" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="des-tokens-au-dfm"><span class="header-section-number">11.1</span> des tokens au DFM</h2>
-<section id="la-construction-du-tableau" class="level3" data-number="11.1.1">
-<h3 data-number="11.1.1" class="anchored" data-anchor-id="la-construction-du-tableau"><span class="header-section-number">11.1.1</span> La construction du tableau</h3>
+<section id="des-tokens-au-dfm" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="des-tokens-au-dfm"><span class="header-section-number">9.1</span> des tokens au DFM</h2>
+<section id="la-construction-du-tableau" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="la-construction-du-tableau"><span class="header-section-number">9.1.1</span> La construction du tableau</h3>
 </section>
-<section id="son-lanalyse-par-la-vénérable-afc" class="level3" data-number="11.1.2">
-<h3 data-number="11.1.2" class="anchored" data-anchor-id="son-lanalyse-par-la-vénérable-afc"><span class="header-section-number">11.1.2</span> Son l’analyse par la vénérable AFC</h3>
+<section id="son-lanalyse-par-la-vénérable-afc" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="son-lanalyse-par-la-vénérable-afc"><span class="header-section-number">9.1.2</span> Son l’analyse par la vénérable AFC</h3>
 </section>
-<section id="pondérer-par-la-rareté-parmi-les-documents" class="level3" data-number="11.1.3">
-<h3 data-number="11.1.3" class="anchored" data-anchor-id="pondérer-par-la-rareté-parmi-les-documents"><span class="header-section-number">11.1.3</span> Pondérer par la rareté parmi les documents</h3>
-</section>
-</section>
-<section id="calculer-les-coocurrences" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="calculer-les-coocurrences"><span class="header-section-number">11.2</span> Calculer les coocurrences</h2>
-<section id="un-simple-exemple" class="level3" data-number="11.2.1">
-<h3 data-number="11.2.1" class="anchored" data-anchor-id="un-simple-exemple"><span class="header-section-number">11.2.1</span> Un simple exemple</h3>
-</section>
-<section id="plus-compliqué" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="plus-compliqué"><span class="header-section-number">11.2.2</span> plus compliqué</h3>
-</section>
-<section id="ou-des-distances" class="level3" data-number="11.2.3">
-<h3 data-number="11.2.3" class="anchored" data-anchor-id="ou-des-distances"><span class="header-section-number">11.2.3</span> ou des distances</h3>
+<section id="pondérer-par-la-rareté-parmi-les-documents" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="pondérer-par-la-rareté-parmi-les-documents"><span class="header-section-number">9.1.3</span> Pondérer par la rareté parmi les documents</h3>
 </section>
 </section>
-<section id="références" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="références"><span class="header-section-number">11.3</span> Références</h2>
+<section id="calculer-les-coocurrences" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="calculer-les-coocurrences"><span class="header-section-number">9.2</span> Calculer les coocurrences</h2>
+<section id="un-simple-exemple" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="un-simple-exemple"><span class="header-section-number">9.2.1</span> Un simple exemple</h3>
+</section>
+<section id="plus-compliqué" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="plus-compliqué"><span class="header-section-number">9.2.2</span> plus compliqué</h3>
+</section>
+<section id="ou-des-distances" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="ou-des-distances"><span class="header-section-number">9.2.3</span> ou des distances</h3>
+</section>
+</section>
+<section id="références" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="références"><span class="header-section-number">9.3</span> Références</h2>
 
 
 </section>
@@ -798,12 +852,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./q08_Analyse_syntaxic.html" class="pagination-link" aria-label="Annotations syntaxiques">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./q10_Analyse_Cooccurences.html" class="pagination-link" aria-label="Analyse des co-occurrences">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

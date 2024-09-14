@@ -40,7 +40,7 @@ L'ensemble des documents constitue la collection , elle peut être systématique
 
 #### Le document comme chaine de caractère
 
-Une unité de texte se définit comme une chaîne de caractères qui constitue un document. Celui ci peut être de forme quelconque : un livre, un article, une note, une transcription, il reste une séquence plus ou moins longue de caractères qui répondent à des règles de composition dont on ignore la nature a priori. Dans le cas de texte courts, cette chaîne de caractères est simple. 
+Une unité de texte se définit comme une chaîne de caractères qui constitue un document. Celui ci peut être de forme quelconque : un livre, un article, une note, une transcription, il reste une séquence plus ou moins longue de caractères qui répondent à des règles de composition dont on ignore la nature a priori. Dans le cas de texte courts, cette chaîne de caractères est simple.
 
 Dans celui d'un article, elle peut être plus complexe et comporter des combinaison de caractères qui signalent un effet de composition. par exemple la chaîne `\n` définit un saut de page, et si le document est codé en xml, certaines séquences identifient des balises. Par exemple la chaîne `<h1>` indique que les caractères qui vont suivre définissent le contenu d'un titre de niveau 1 et que cette définition s'achève avec la balise `<|>`. L'exemple adresse une convention qui est celle des langage xml qui séparent le contenu du contenant, c'est à dire des actions qui seront opérées sur le contenu.
 
@@ -49,7 +49,6 @@ L'analyse de ces structure est un préalable indispensable pour les lire correct
 #### la structuration
 
 Différents types de corpus Le degré de structuration : séquentielle, plan spatiale ( ex = le curriculum viate, la fiche de brevet,...)
-
 
 #### Metadonnées
 
@@ -90,14 +89,13 @@ Les corpus peuvent aussi se distinguer par la diversité de leurs auteurs
 
 -   la monographie quand le corpus compile tous les documents d'une même source
 
--   la polygraphie quand les auteurs sont presque aussi nombreux que le nombre de textes. 
-Quand les auteurs sont multiples, il peuvent constituer le texte de deux manières
+-   la polygraphie quand les auteurs sont presque aussi nombreux que le nombre de textes. Quand les auteurs sont multiples, il peuvent constituer le texte de deux manières
 
 -   par addition : c'est l'exemple du message publicitaire qui superpose une scène, des incrustations, de la musique.
+
 -   par interaction : c'est le mode tu texte de théâtre ou la structure du texte distribuent entre les personnage des fragments de paroles qui interagissent.
 
 encore une autre typologie
-
 
 | Auteurs  | Addition    | Interaction |
 |----------|-------------|-------------|
@@ -110,11 +108,9 @@ encore une autre typologie
 Ils varient aussi selon le niveaux de langues
 
 -   texte savant, texte standard, texte vernaculaire
-- 
-
+-   
 
 ### des corpus bien préparés
-
 
 Dans ce chapitre nous avons appris comment faire la cueillette dans les sources de textes et constituer matériellement un corpus. Il reste à traiter la question de la représentativité. La collecte doit rester raisonnée.
 

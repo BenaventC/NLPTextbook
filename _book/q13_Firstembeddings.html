@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction aux méthodes de traitement du langage naturel - 14&nbsp; Embeddings</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 13&nbsp; Embeddings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q13_Firstembeddings.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Embeddings</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q13_Firstembeddings.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,121 +143,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
+ <span class="menu-text">Préambule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -282,12 +282,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#le-principe" id="toc-le-principe" class="nav-link active" data-scroll-target="#le-principe"><span class="header-section-number">14.1</span> Le principe</a></li>
-  <li><a href="#word2vec" id="toc-word2vec" class="nav-link" data-scroll-target="#word2vec"><span class="header-section-number">14.2</span> Word2vec</a></li>
-  <li><a href="#text2vec" id="toc-text2vec" class="nav-link" data-scroll-target="#text2vec"><span class="header-section-number">14.3</span> Text2vec</a></li>
-  <li><a href="#les-alternatives" id="toc-les-alternatives" class="nav-link" data-scroll-target="#les-alternatives"><span class="header-section-number">14.4</span> Les alternatives</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">14.5</span> Conclusion</a></li>
-  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">14.6</span> Références</a></li>
+  <li><a href="#le-principe" id="toc-le-principe" class="nav-link active" data-scroll-target="#le-principe"><span class="header-section-number">13.1</span> Le principe</a></li>
+  <li><a href="#word2vec" id="toc-word2vec" class="nav-link" data-scroll-target="#word2vec"><span class="header-section-number">13.2</span> Word2vec</a></li>
+  <li><a href="#text2vec" id="toc-text2vec" class="nav-link" data-scroll-target="#text2vec"><span class="header-section-number">13.3</span> Text2vec</a></li>
+  <li><a href="#les-alternatives" id="toc-les-alternatives" class="nav-link" data-scroll-target="#les-alternatives"><span class="header-section-number">13.4</span> Les alternatives</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.5</span> Conclusion</a></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">13.6</span> Références</a></li>
   </ul>
 </nav>
     </div>
@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Embeddings</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></h1>
 </div>
 
 
@@ -387,27 +387,27 @@ a.glossary:active .def::after {
 <p><em>Word2vec parachève une idée essentielle du NLP. Représenter les mots dans un vaste espace, de telle manière à ce que leur corrélations, leurs proximités soient conservées.</em></p>
 <p>**</p>
 </div>
-<section id="le-principe" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="le-principe"><span class="header-section-number">14.1</span> Le principe</h2>
+<section id="le-principe" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="le-principe"><span class="header-section-number">13.1</span> Le principe</h2>
 <p>L’analyse des classes latentes ? est-ce nécessaire ?</p>
 </section>
-<section id="word2vec" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="word2vec"><span class="header-section-number">14.2</span> Word2vec</h2>
+<section id="word2vec" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="word2vec"><span class="header-section-number">13.2</span> Word2vec</h2>
 <p>Word2vec parachève une idée essentielle du NLP. Représenter les mots dans un vaste espace, de telle manière à ce que leur corrélations, leurs proximités soient conservées.</p>
 <p>sur ce plan On doit beaucoup à mikolov</p>
 </section>
-<section id="text2vec" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="text2vec"><span class="header-section-number">14.3</span> Text2vec</h2>
+<section id="text2vec" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="text2vec"><span class="header-section-number">13.3</span> Text2vec</h2>
 </section>
-<section id="les-alternatives" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="les-alternatives"><span class="header-section-number">14.4</span> Les alternatives</h2>
+<section id="les-alternatives" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="les-alternatives"><span class="header-section-number">13.4</span> Les alternatives</h2>
 <p>Glove</p>
 </section>
-<section id="conclusion" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">14.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.5</span> Conclusion</h2>
 </section>
-<section id="références" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="références"><span class="header-section-number">14.6</span> Références</h2>
+<section id="références" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="références"><span class="header-section-number">13.6</span> Références</h2>
 
 
 </section>
@@ -825,12 +825,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./q12_Topic_Model.html" class="pagination-link" aria-label="Modèles de Topic">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./q14_Transformers.html" class="pagination-link" aria-label="Modèles de Topic">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./q14_Transformers.html" class="pagination-link" aria-label="Transformers">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -48,11 +48,9 @@ col_4<-c("#85D4E3", "#F4B5BD", "#9C964A", "#CDC08C")
 
 <div>
 
-*Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,...), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques *
+*Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,...), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques*
 
 </div>
-
-
 
 ## des tokens au DFM
 
@@ -69,7 +67,5 @@ col_4<-c("#85D4E3", "#F4B5BD", "#9C964A", "#CDC08C")
 ### plus compliqué
 
 ### ou des distances
-
-
 
 ## Références

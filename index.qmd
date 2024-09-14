@@ -1,4 +1,5 @@
-# Préambule
+# Préambule {.unnumbered}
+
 
 "Au commencement était le verbe", et désormais le verbe est partout, non pas l'esprit de Dieu, mais la parole humaine qui s'éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l'enregistrement des transactions informatiques.
 
@@ -34,37 +35,41 @@ Il suit ainsi une sorte de développement historique qui se construit par l'accu
 
 Voici les raisons qui organisent le cours en 20 chapitres (c'est à ajuster au cours de la rédaction)
 
-1.  Préambule (ce que vous êtes en train de lire !)
+-  Préambule (ce que vous êtes en train de lire !)
 
-2.  Chapitre 1 : une introduction générale à des éléments linguistique et technique et sociaux de l'analyse du langage naturel et de ses fulgurantes évolutions au cours de la dernière décennie.
+-  Chapitre 1 : une introduction générale à des éléments linguistique et technique et sociaux de l'analyse du langage naturel et de ses fulgurantes évolutions au cours de la dernière décennie.
 
-3.  Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu'on étudie par collection. Il faut aussi penser à la notion de corpus.
+-  Chapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu'on étudie par collection. Il faut aussi penser à la notion de corpus.
 
-4.  Chapitre 4 : corpus - techniques avancées D'un point de vue matériel le corpus est aussi
+-  Chapitre 4 : corpus - techniques avancées D'un point de vue matériel le corpus est aussi
 
-5.  Chapitre 5 : Explorer et naviguer dans le corpus
+-  Chapitre 5 : Explorer et naviguer dans le corpus
 
-6.  Chapitre 6 : Analyse quantitative du corpus
+-  Chapitre 6 : Analyse quantitative du corpus
 
-7.  Chapitre 7 : Tokenisation et dtm
+-  Chapitre 7 : Tokenisation et dtm
 
-8.  Chapitre 8 : Analyse des co-occurences
+-  Chapitre 8 : Analyse des co-occurences
 
-9.  Chapitre 9 : au début il y avait l'analyse factorielle
+-  Chapitre 9 : au début il y avait l'analyse factorielle
 
-10. Chapitre 10 : SVD et LSA :
+-  Chapitre 10 : SVD et LSA :
 
-11. Chapitre 11 : Topic model
+-  Chapitre 11 : Topic model
 
-12. Chapitre 12 : Supervised modeling
+-  Chapitre 12 : word2vec to doc2vec
 
-13. Chapitre 13 : word2vec to doc2vec
+-  Chapitre 13 : Transformers
 
-14. Chapitre 14 : Transformers
+-  Chapitre 14 : Supervised modeling
 
-15. Chapitre 15 : tasks , Zsl, abstracting
+-  Chapitre 15 : LLM
 
-16. chapitre 16 : generative models , un monde à inventer.
+-  Chapitre 16 : NER
+
+-  Chapitre 17 : abstracting
+
+-  Chapitre 18 : generative models , un monde à inventer.
 
 
 ## Data sets
@@ -92,6 +97,13 @@ Il n'y a jamais une solution unique, nous avons fait des choix de méthodes qui 
 ```{r 03}
 #environnement de travail
 library(tidyverse) # the perfect tool box.
+library(flextable) # pour produire des tableaux élégants
+
+#ses compléments  
+library(ggwordcloud)
+library(ggrepel)
+
+#glosaire 
 library(glossary)
 glossary_path("glossary.yml")
 
@@ -99,10 +111,7 @@ glossary_path("glossary.yml")
 #glossary_add(term = "loi de Dirichlet",
 #             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")
 
-#ses compléments  
-library(ggwordcloud)
 
-library(flextable) # pour produire des tableaux élégants
 
 #ressource nlp  
 library(quanteda) 
@@ -113,3 +122,7 @@ library(FactoMineR)
 library(factoextra)
 
 ```
+
+
+Pour l'usage des modèle LLM on basculera progessivement en python avec 
+

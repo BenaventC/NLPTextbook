@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction aux méthodes de traitement du langage naturel - 15&nbsp; Transformers</title>
+<title>Introduction aux méthodes de traitement du langage naturel - 14&nbsp; Transformers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -115,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q14_Transformers.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Transformers</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q14_Transformers.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,121 +163,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préambule</span></span></a>
+ <span class="menu-text">Préambule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse Quantitative du corpus</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analyse du sentiment et autres dictionnaires</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -282,12 +302,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#le-mécanisme-attention" id="toc-le-mécanisme-attention" class="nav-link active" data-scroll-target="#le-mécanisme-attention"><span class="header-section-number">15.1</span> le mécanisme Attention</a></li>
-  <li><a href="#bert" id="toc-bert" class="nav-link" data-scroll-target="#bert"><span class="header-section-number">15.2</span> Bert</a></li>
-  <li><a href="#les-variation-de-bert" id="toc-les-variation-de-bert" class="nav-link" data-scroll-target="#les-variation-de-bert"><span class="header-section-number">15.3</span> Les variation de bert</a>
+  <li><a href="#le-mécanisme-attention" id="toc-le-mécanisme-attention" class="nav-link active" data-scroll-target="#le-mécanisme-attention"><span class="header-section-number">14.1</span> le mécanisme Attention</a></li>
+  <li><a href="#bert" id="toc-bert" class="nav-link" data-scroll-target="#bert"><span class="header-section-number">14.2</span> Bert</a></li>
+  <li><a href="#les-variation-de-bert" id="toc-les-variation-de-bert" class="nav-link" data-scroll-target="#les-variation-de-bert"><span class="header-section-number">14.3</span> Les variation de bert</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">14.4</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#application-de-bert-au-sentiment" id="toc-application-de-bert-au-sentiment" class="nav-link" data-scroll-target="#application-de-bert-au-sentiment"><span class="header-section-number">15.3.1</span> Application de bert au sentiment</a></li>
-  <li><a href="#application-de-bert-au-topic-bert-model" id="toc-application-de-bert-au-topic-bert-model" class="nav-link" data-scroll-target="#application-de-bert-au-topic-bert-model"><span class="header-section-number">15.3.2</span> Application de bert au topic ( bert model)</a></li>
+  <li><a href="#application-de-bert-au-sentiment" id="toc-application-de-bert-au-sentiment" class="nav-link" data-scroll-target="#application-de-bert-au-sentiment"><span class="header-section-number">14.4.1</span> Application de bert au sentiment</a></li>
+  <li><a href="#application-de-bert-au-topic-bert-model" id="toc-application-de-bert-au-topic-bert-model" class="nav-link" data-scroll-target="#application-de-bert-au-topic-bert-model"><span class="header-section-number">14.4.2</span> Application de bert au topic ( bert model)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -297,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Transformers</span></h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></h1>
 </div>
 
 
@@ -319,17 +340,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapître</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/data_trustpilot_oiseaux.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Objectifs du chapitre :</strong></p>
@@ -339,23 +361,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>représentation de langage*</p></li>
 </ul>
 </div>
-<section id="le-mécanisme-attention" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="le-mécanisme-attention"><span class="header-section-number">15.1</span> le mécanisme Attention</h2>
+<p>Les Transformers forment une famille de modèle dont l’architecture a l’allure suivante.</p>
+<p><img src="image/transformers.png" class="img-fluid" alt="transformers"> Elle comprend trois particularités</p>
+<ul>
+<li>le mécanisme d’attention ( Multihead attention)</li>
+<li>l’encodage de la position des mots</li>
+</ul>
+<section id="le-mécanisme-attention" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="le-mécanisme-attention"><span class="header-section-number">14.1</span> le mécanisme Attention</h2>
 <p>L’analyse des classes latentes</p>
 </section>
-<section id="bert" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="bert"><span class="header-section-number">15.2</span> Bert</h2>
-<p>sur ce plan On doit beaucoup à sokal et sneath</p>
+<section id="bert" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="bert"><span class="header-section-number">14.2</span> Bert</h2>
+<p>sur ce plan On doit beaucoup</p>
 </section>
-<section id="les-variation-de-bert" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="les-variation-de-bert"><span class="header-section-number">15.3</span> Les variation de bert</h2>
-<section id="application-de-bert-au-sentiment" class="level3" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="application-de-bert-au-sentiment"><span class="header-section-number">15.3.1</span> Application de bert au sentiment</h3>
+<section id="les-variation-de-bert" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="les-variation-de-bert"><span class="header-section-number">14.3</span> Les variation de bert</h2>
 </section>
-<section id="application-de-bert-au-topic-bert-model" class="level3" data-number="15.3.2">
-<h3 data-number="15.3.2" class="anchored" data-anchor-id="application-de-bert-au-topic-bert-model"><span class="header-section-number">15.3.2</span> Application de bert au topic ( bert model)</h3>
+<section id="applications" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="applications"><span class="header-section-number">14.4</span> Applications</h2>
+<p>L’idée est d’entraîner un modèle de langue, sur de très larges corpus, pour ensuite l’utiliser dans des tâches spécifiques.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="multitaches.png" class="img-fluid figure-img"></p>
+<figcaption>Exemples</figcaption>
+</figure>
+</div>
+<p>Il ne s’agit pas ici de ré-entraîner des modèles, ce qui est une approche tout à fait pertinente lorsque l’on est face à des corpus au langage spécifique, mais d’utiliser les outils existants directement disponibles.</p>
+<p>Pour trouver le bon modèle à utiliser, il existe <a href="https://huggingface.co/">Hugging Face</a>. La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.</p>
+<p>Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d’avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n’ont pas encore implémenté le recours au GPU, et nos ordis portables n’en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (souvent, moyennant finance).</p>
+<p>On va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul.</p>
+<p>On pourra garder un oeil sur le package R <a href="https://www.r-text.org/index.html">‘text’</a> qui propose beaucoup d’outils mais est encore en construction.</p>
+<section id="application-de-bert-au-sentiment" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="application-de-bert-au-sentiment"><span class="header-section-number">14.4.1</span> Application de bert au sentiment</h3>
+</section>
+<section id="application-de-bert-au-topic-bert-model" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="application-de-bert-au-topic-bert-model"><span class="header-section-number">14.4.2</span> Application de bert au topic ( bert model)</h3>
+<p>Un classique du genre : <a href="https://maartengr.github.io/BERTopic/index.html">BERTopic</a> de <span class="citation" data-cites="grootendorst_bertopic_2022">Grootendorst (<a href="references.html#ref-grootendorst_bertopic_2022" role="doc-biblioref">2022</a>)</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#from bertopic import BERTopic</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#from bertopic.representation import KeyBERTInspired</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#import pandas as pd</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df = r.data</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#print(df)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model = BERTopic(language="multilingual")</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#topics, probs = topic_model.fit_transform(df['comments'])</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.get_topic_info()</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.get_topic(8)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.get_topic_freq().head()</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.get_document_info(df['comments'])</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.find_topics("réclamation")</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.generate_topic_labels()</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.visualize_topics()</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.visualize_heatmap()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-grootendorst_bertopic_2022" class="csl-entry" role="listitem">
+Grootendorst, Maarten. 2022. <span>“<span>BERTopic</span>: Neural Topic Modeling with a Class-Based <span>TF</span>-<span>IDF</span> Procedure.”</span> <em><span>arXiv</span> Preprint <span>arXiv</span>:2203.05794</em>.
+</div>
+</div>
 </section>
 </section>
 
@@ -772,12 +845,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./q13_Firstembeddings.html" class="pagination-link" aria-label="Embeddings">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Embeddings</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./q15_Classification.html" class="pagination-link" aria-label="Classification with embeddings">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

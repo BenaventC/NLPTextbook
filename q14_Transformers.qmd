@@ -3,10 +3,8 @@
 ```{r 600}
 #les librairies du chapître
 library(tidyverse)
-library(tokenizers)
-library(quanteda)
-library(quanteda.textplots)
 library(flextable)
+library(reticulate)
 
 theme_set(theme_minimal()) 
 
@@ -14,18 +12,29 @@ set_flextable_defaults(
   font.size = 10, theme_fun = theme_vanilla,
   padding = 6,
   background.color = "#EFEFEF")
+
+
+data <- read_csv("data/data_trustpilot_oiseaux.csv")
+
 ```
 
 **Objectifs du chapitre :**
 
 <div>
 
-* La révolution des transformers *
+-   La révolution des transformers \*
 
-* représentation de langage*
+-   représentation de langage\*
 
 </div>
 
+Les Transformers forment une famille de modèle dont l'architecture a l'allure suivante.
+
+![transformers](image/transformers.png)
+Elle comprend trois particularités
+
+- le mécanisme d'attention ( Multihead attention)
+- l'encodage de la position des mots
 
 ## le mécanisme Attention
 
@@ -33,10 +42,54 @@ L'analyse des classes latentes
 
 ## Bert
 
-sur ce plan On doit beaucoup à sokal et sneath
+sur ce plan On doit beaucoup 
 
 ## Les variation de bert
+
+## Applications
+
+L'idée est d'entraîner un modèle de langue, sur de très larges corpus, pour ensuite l'utiliser dans des tâches spécifiques. 
+
+![Exemples](multitaches.png)
+
+Il ne s'agit pas ici de ré-entraîner des modèles, ce qui est une approche tout à fait pertinente lorsque l'on est face à des corpus au langage spécifique, mais d'utiliser les outils existants directement disponibles.
+
+Pour trouver le bon modèle à utiliser, il existe [Hugging Face](https://huggingface.co/). La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.
+
+Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d'avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n'ont pas encore implémenté le recours au GPU, et nos ordis portables n'en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (souvent, moyennant finance).
+
+On va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul. 
+
+On pourra garder un oeil sur le package R ['text'](https://www.r-text.org/index.html) qui propose beaucoup d'outils mais est encore en construction.
 
 ### Application de bert au sentiment
 
 ### Application de bert au topic ( bert model)
+
+Un classique du genre : [BERTopic](https://maartengr.github.io/BERTopic/index.html) de @grootendorst_bertopic_2022
+
+```{python}
+
+#from bertopic import BERTopic
+#from bertopic.representation import KeyBERTInspired
+
+#import pandas as pd
+
+#df = r.data
+#print(df)
+#topic_model = BERTopic(language="multilingual")
+#topics, probs = topic_model.fit_transform(df['comments'])
+#topic_model.get_topic_info()
+#topic_model.get_topic(8)
+#topic_model.get_topic_freq().head()
+#topic_model.get_document_info(df['comments'])
+#topic_model.find_topics("réclamation")
+#topic_model.generate_topic_labels()
+
+#topic_model.visualize_topics()
+#topic_model.visualize_heatmap()
+
+
+```
+
+
