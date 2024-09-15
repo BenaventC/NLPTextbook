@@ -302,14 +302,19 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#le-mécanisme-attention" id="toc-le-mécanisme-attention" class="nav-link active" data-scroll-target="#le-mécanisme-attention"><span class="header-section-number">14.1</span> le mécanisme Attention</a></li>
+  <li><a href="#le-mécanisme-de-lattention" id="toc-le-mécanisme-de-lattention" class="nav-link active" data-scroll-target="#le-mécanisme-de-lattention"><span class="header-section-number">14.1</span> le mécanisme de l’attention</a></li>
   <li><a href="#bert" id="toc-bert" class="nav-link" data-scroll-target="#bert"><span class="header-section-number">14.2</span> Bert</a></li>
-  <li><a href="#les-variation-de-bert" id="toc-les-variation-de-bert" class="nav-link" data-scroll-target="#les-variation-de-bert"><span class="header-section-number">14.3</span> Les variation de bert</a></li>
+  <li><a href="#les-variations-de-bert" id="toc-les-variations-de-bert" class="nav-link" data-scroll-target="#les-variations-de-bert"><span class="header-section-number">14.3</span> Les variations de bert</a>
+  <ul class="collapse">
+  <li><a href="#le-réentrainement" id="toc-le-réentrainement" class="nav-link" data-scroll-target="#le-réentrainement"><span class="header-section-number">14.3.1</span> le réentrainement</a></li>
+  <li><a href="#ajuster-à-des-nouvelles-tâches" id="toc-ajuster-à-des-nouvelles-tâches" class="nav-link" data-scroll-target="#ajuster-à-des-nouvelles-tâches"><span class="header-section-number">14.3.2</span> Ajuster à des nouvelles tâches</a></li>
+  </ul></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">14.4</span> Applications</a>
   <ul class="collapse">
   <li><a href="#application-de-bert-au-sentiment" id="toc-application-de-bert-au-sentiment" class="nav-link" data-scroll-target="#application-de-bert-au-sentiment"><span class="header-section-number">14.4.1</span> Application de bert au sentiment</a></li>
   <li><a href="#application-de-bert-au-topic-bert-model" id="toc-application-de-bert-au-topic-bert-model" class="nav-link" data-scroll-target="#application-de-bert-au-topic-bert-model"><span class="header-section-number">14.4.2</span> Application de bert au topic ( bert model)</a></li>
   </ul></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">14.5</span> Références</a></li>
   </ul>
 </nav>
     </div>
@@ -367,16 +372,23 @@ div.csl-indent {
 <li>le mécanisme d’attention ( Multihead attention)</li>
 <li>l’encodage de la position des mots</li>
 </ul>
-<section id="le-mécanisme-attention" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="le-mécanisme-attention"><span class="header-section-number">14.1</span> le mécanisme Attention</h2>
-<p>L’analyse des classes latentes</p>
+<section id="le-mécanisme-de-lattention" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="le-mécanisme-de-lattention"><span class="header-section-number">14.1</span> le mécanisme de l’attention</h2>
+<p>C’est un article intitulé “Attention is all you need” de <span class="citation" data-cites="vaswani_attention_2017">Vaswani et al. (<a href="references.html#ref-vaswani_attention_2017" role="doc-biblioref">2017</a>)</span> qui est le germe d’une véritable révolution des modèles de langage. IL propose une solution pour prendre en compte les relations qui existent entre les différents termes d’un séquence de terme.</p>
+<p>Cette solution est celle du mécanisme d’attention.</p>
 </section>
 <section id="bert" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="bert"><span class="header-section-number">14.2</span> Bert</h2>
 <p>sur ce plan On doit beaucoup</p>
 </section>
-<section id="les-variation-de-bert" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="les-variation-de-bert"><span class="header-section-number">14.3</span> Les variation de bert</h2>
+<section id="les-variations-de-bert" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="les-variations-de-bert"><span class="header-section-number">14.3</span> Les variations de bert</h2>
+<section id="le-réentrainement" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="le-réentrainement"><span class="header-section-number">14.3.1</span> le réentrainement</h3>
+</section>
+<section id="ajuster-à-des-nouvelles-tâches" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="ajuster-à-des-nouvelles-tâches"><span class="header-section-number">14.3.2</span> Ajuster à des nouvelles tâches</h3>
+</section>
 </section>
 <section id="applications" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="applications"><span class="header-section-number">14.4</span> Applications</h2>
@@ -389,7 +401,7 @@ div.csl-indent {
 </div>
 <p>Il ne s’agit pas ici de ré-entraîner des modèles, ce qui est une approche tout à fait pertinente lorsque l’on est face à des corpus au langage spécifique, mais d’utiliser les outils existants directement disponibles.</p>
 <p>Pour trouver le bon modèle à utiliser, il existe <a href="https://huggingface.co/">Hugging Face</a>. La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.</p>
-<p>Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d’avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n’ont pas encore implémenté le recours au GPU, et nos ordis portables n’en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (souvent, moyennant finance).</p>
+<p>Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d’avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n’ont pas encore implémenté le recours au GPU, et nos ordis portables n’en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (au prix d’une facturation).</p>
 <p>On va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul.</p>
 <p>On pourra garder un oeil sur le package R <a href="https://www.r-text.org/index.html">‘text’</a> qui propose beaucoup d’outils mais est encore en construction.</p>
 <section id="application-de-bert-au-sentiment" class="level3" data-number="14.4.1">
@@ -422,14 +434,20 @@ div.csl-indent {
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#topic_model.visualize_heatmap()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+</section>
+<section id="références" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="références"><span class="header-section-number">14.5</span> Références</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-grootendorst_bertopic_2022" class="csl-entry" role="listitem">
 Grootendorst, Maarten. 2022. <span>“<span>BERTopic</span>: Neural Topic Modeling with a Class-Based <span>TF</span>-<span>IDF</span> Procedure.”</span> <em><span>arXiv</span> Preprint <span>arXiv</span>:2203.05794</em>.
 </div>
+<div id="ref-vaswani_attention_2017" class="csl-entry" role="listitem">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> <span>arXiv</span>. <a href="https://doi.org/10.48550/ARXIV.1706.03762">https://doi.org/10.48550/ARXIV.1706.03762</a>.
 </div>
-</section>
+</div>
 </section>
 
 </main> <!-- /main -->

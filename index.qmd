@@ -121,6 +121,10 @@ library(udpipe)
 library(FactoMineR)
 library(factoextra)
 
+
+#python
+library(reticulate)
+
 ```
 
 

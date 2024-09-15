@@ -1,4 +1,4 @@
-# Analyse du sentiment et autres dictionnaires
+# Compter les mots pour annoter
 
 ```{r, results='asis'}
 #les librairies du chapitre
@@ -32,22 +32,81 @@ set_flextable_defaults(
 
 <div>
 
-*Compter les mots en construisant des dictionnaires.*
+*L'analyse du sentiment est sans doute la technique de NLP la plus populaire*
+
+*Son principe est de compter les mots en construisant des dictionnaires annotés.*
 
 \*\*
 
 </div>
 
+
+Avec la montée en puissance du web2, et de la possibilité pour les internautes de réagir aux contenus proposés que ce soit par des notes, des avis ou des commentaires, très rapidement est venue la nécessité de caractériser ce contenu au moins de manière sommaire en mesurant si ils sont plutôt positif ou négatif. Mesurer le sentiment de l'opinion.
+
+La méthode est simple : constituer un dictionnaire de terme et les annoter. l'amour est positif, la haine est négative. 
+
+Voilà qui ouvre à bien d'autres mesures : parle-t-on du corps ? Du passé ou du présent ? A la première personne ou à la seconde ? Le liwc a joué un rôle clé de ce poitn de vue.
+
+La méthode est simple est peut être adaptée à toute situation particulère de recherche? Elle demande simplement un protocole systématiques. Et même si nous disposons aujourd'hui d'outils puissants, ces techniques simples peuvent produirent des résultats très intéressant, surtout sur des volumes importants.
+
+
+
 ## Analyse du sentiment
 
-L'analyse des classes latentes ? est-ce nécessaire ?
+C'est sans doute @liu_sentiment_2012 qui en est le plus grand spécialiste et un pionnier.  Voir aussi @duval_analyse_2016
 
-## Liwc
+L'idée est simple, pour surveiller de grand volumes de données il est utile de saisir des tendances générale, l'humeur de l'opinion en est une. Les contenus sociaux produits sur les multiples plateformes sont-il positifs ou négatifs? L'idée initiale est de quantifier cet indicateur en comptant le nombre de mots positifs, neutre et négatifs, en utilisant des dictionnaire de termes préalablement qualifiés. Ces qualification sont lexicales plus que psychologiques mais donnent une idées du ton.
 
-Word2vec parachève une idée essentielle du NLP. Représenter les mots dans un vaste espace, de telle manière à ce que leur corrélations, leurs proximités soient conservées.
+Il va sans dire que pour cette tâche désormais les LLM remplissent un office précieux.Il est utile cependant d'explorer cette technique 
 
-sur ce plan On doit beaucoup à mikolov
+
+### Un premier exemple
+
+On utilise le NCR dont il existe une version française
+
+
+### La nature de la mesure 
+
+ternaire
+
+valence
+polarité
+
+### des améliorations
+
+#### modifyers
+
+#### machine learning
+
+
+## Le Liwc
+
+Le Liwc est un ensemble de dictionnaires proposés par @tausczik_psychological_2010 qui a connu un assez grand retentissement dans la littérature. Il systématise l'analyse du sentiment en multipliant les champs conceptuels
+
+## d'autres dictionnaires notables
+
+### les émotions
+
+### la personnalité
+
+Les big five étaient un candidat évident à ce genre de techniques, déjà car dès leur constitution ils se sont appuyés sur des listes de qualificatifs. 
+
+### les fondements moraux de la politique
+
+
+## Construire des dictionnaires ad hoc
+
+pourquoi de pas s'inspirer de méthodes quali en les systématisant
+
+l'exemple d'evneguia. un très large corpus Bloomberg. Des concepts claire : la demande et l'offrfe, la baiise ou la hausse. 
+
+l'exemple de PMP
+
+un peu de techniques : l'utilité des regex
 
 ## Conclusion
 
-## Références
+Aujourd'hui ce genre de méthode peut sembler désuète. Nous verrons au chapitre 18, avec les méthodes Zero Shot learning, qu'une approche plus sophistiquées peut être entreprises avec des LLM.
+
+Nous la défendrons cependant, le simple s'avère souvent efficace, et certaine idées se rassemblent sur des mots très précis.S'il faut mesurer l'idée d'amour dans un corpus de romans sentimentaux, un bon dictionnaire est un bon nuancier.
+

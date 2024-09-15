@@ -36,15 +36,22 @@ Elle comprend trois particularités
 - le mécanisme d'attention ( Multihead attention)
 - l'encodage de la position des mots
 
-## le mécanisme Attention
+## le mécanisme de l'attention
 
-L'analyse des classes latentes
+C'est un article intitulé "Attention is all you need" de @vaswani_attention_2017 qui est le germe d'une véritable révolution des modèles de langage. IL propose une solution pour prendre en compte les relations qui existent entre les différents termes d'un séquence de terme. 
+
+Cette solution est celle du mécanisme d'attention.
 
 ## Bert
 
 sur ce plan On doit beaucoup 
 
-## Les variation de bert
+## Les variations de bert
+
+### le réentrainement
+
+### Ajuster à des nouvelles tâches
+
 
 ## Applications
 
@@ -56,11 +63,11 @@ Il ne s'agit pas ici de ré-entraîner des modèles, ce qui est une approche tou
 
 Pour trouver le bon modèle à utiliser, il existe [Hugging Face](https://huggingface.co/). La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.
 
-Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d'avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n'ont pas encore implémenté le recours au GPU, et nos ordis portables n'en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (souvent, moyennant finance).
+Le problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d'avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n'ont pas encore implémenté le recours au GPU, et nos ordis portables n'en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (au prix d'une facturation).
 
 On va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul. 
 
-On pourra garder un oeil sur le package R ['text'](https://www.r-text.org/index.html) qui propose beaucoup d'outils mais est encore en construction.
+On pourra garder un oeil sur le package R ['text'](https://www.r-text.org/index.html) qui propose beaucoup d'outils mais est encore en construction. 
 
 ### Application de bert au sentiment
 
@@ -91,5 +98,5 @@ Un classique du genre : [BERTopic](https://maartengr.github.io/BERTopic/index.ht
 
 
 ```
-
+## Références
 

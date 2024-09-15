@@ -264,7 +264,7 @@
     "href": "index.html#packages",
     "title": "Introduction aux méthodes de traitement du langage naturel",
     "section": "Packages",
-    "text": "Packages\nCe cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d’images. Zotero pour la bibliographie.\nIl n’y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.\n\n\nShow the code\n#environnement de travail\nlibrary(tidyverse) # the perfect tool box.\nlibrary(flextable) # pour produire des tableaux élégants\n\n#ses compléments  \nlibrary(ggwordcloud)\nlibrary(ggrepel)\n\n#glosaire \nlibrary(glossary)\nglossary_path(\"glossary.yml\")\n\n# un exemple pour ajouter des termes au cours de la rédaction\n#glossary_add(term = \"loi de Dirichlet\",\n#             def = \"la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant\")\n\n\n\n#ressource nlp  \nlibrary(quanteda) \nlibrary(udpipe)\n\n#analyse de données\nlibrary(FactoMineR)\nlibrary(factoextra)\n\n\nPour l’usage des modèle LLM on basculera progessivement en python avec",
+    "text": "Packages\nCe cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d’images. Zotero pour la bibliographie.\nIl n’y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.\n\n\nShow the code\n#environnement de travail\nlibrary(tidyverse) # the perfect tool box.\nlibrary(flextable) # pour produire des tableaux élégants\n\n#ses compléments  \nlibrary(ggwordcloud)\nlibrary(ggrepel)\n\n#glosaire \nlibrary(glossary)\nglossary_path(\"glossary.yml\")\n\n# un exemple pour ajouter des termes au cours de la rédaction\n#glossary_add(term = \"loi de Dirichlet\",\n#             def = \"la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant\")\n\n\n\n#ressource nlp  \nlibrary(quanteda) \nlibrary(udpipe)\n\n#analyse de données\nlibrary(FactoMineR)\nlibrary(factoextra)\n\n\n#python\nlibrary(reticulate)\n\n\nPour l’usage des modèle LLM on basculera progessivement en python avec",
     "crumbs": [
       "Préambule"
     ]
@@ -922,41 +922,41 @@
   {
     "objectID": "q11_Sentimentetdict.html",
     "href": "q11_Sentimentetdict.html",
-    "title": "11  Analyse du sentiment et autres dictionnaires",
+    "title": "11  Compter les mots pour annoter",
     "section": "",
-    "text": "11.1 Analyse du sentiment\nL’analyse des classes latentes ? est-ce nécessaire ?",
+    "text": "11.1 Analyse du sentiment\nC’est sans doute Liu (2012) qui en est le plus grand spécialiste et un pionnier. Voir aussi Duval and Pétry (2016)\nL’idée est simple, pour surveiller de grand volumes de données il est utile de saisir des tendances générale, l’humeur de l’opinion en est une. Les contenus sociaux produits sur les multiples plateformes sont-il positifs ou négatifs? L’idée initiale est de quantifier cet indicateur en comptant le nombre de mots positifs, neutre et négatifs, en utilisant des dictionnaire de termes préalablement qualifiés. Ces qualification sont lexicales plus que psychologiques mais donnent une idées du ton.\nIl va sans dire que pour cette tâche désormais les LLM remplissent un office précieux.Il est utile cependant d’explorer cette technique",
     "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Analyse du sentiment et autres dictionnaires</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
     ]
   },
   {
     "objectID": "q11_Sentimentetdict.html#liwc",
     "href": "q11_Sentimentetdict.html#liwc",
-    "title": "11  Analyse du sentiment et autres dictionnaires",
+    "title": "11  Compter les mots pour annoter",
     "section": "11.2 Liwc",
-    "text": "11.2 Liwc\nWord2vec parachève une idée essentielle du NLP. Représenter les mots dans un vaste espace, de telle manière à ce que leur corrélations, leurs proximités soient conservées.\nsur ce plan On doit beaucoup à mikolov",
+    "text": "11.2 Liwc\nLe Liwc est un ensemble de dictionnaires proposés par Tausczik and Pennebaker (2010) qui a connu un assez grand rettentissement dans la littérature. Il systématise l’analyse du sentiment en multipliant les champs conceptuels",
     "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Analyse du sentiment et autres dictionnaires</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
     ]
   },
   {
     "objectID": "q11_Sentimentetdict.html#conclusion",
     "href": "q11_Sentimentetdict.html#conclusion",
-    "title": "11  Analyse du sentiment et autres dictionnaires",
-    "section": "11.3 Conclusion",
-    "text": "11.3 Conclusion",
+    "title": "11  Compter les mots pour annoter",
+    "section": "11.5 Conclusion",
+    "text": "11.5 Conclusion\nAujourd’hui ce genre de méthode peut sembler désuète. Nous verrons au chapitre 18, avec les méthodes Zero Shot learning, qu’une approche plus sophistiquées peut être entreprises avec des LLM.\nNous la défendrons cependant, le simple s’avère souvent efficace, et certaine idées se rassemblent sur des mots très précis.S’il faut mesurer l’idée d’amour dans un corpus de romans sentimentaux, un bon dictionnaire est un bon nuancier.\n\n\n\n\nDuval, Dominic, and François Pétry. 2016. “L’analyse Automatisée Du Ton Médiatique : Construction Et Utilisation de La Version Française Du Lexicoder Sentiment Dictionary.” Canadian Journal of Political Science 49 (2): 197–220. https://doi.org/10.1017/S000842391600055X.\n\n\nLiu, Bing. 2012. Sentiment Analysis and Opinion Mining. Synthesis Lectures on Human Language Technologies. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-031-02145-9.\n\n\nTausczik, Yla R., and James W. Pennebaker. 2010. “The Psychological Meaning of Words: LIWC and Computerized Text Analysis Methods.” Journal of Language and Social Psychology 29 (1): 24–54. https://doi.org/10.1177/0261927X09351676.",
     "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Analyse du sentiment et autres dictionnaires</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
     ]
   },
   {
     "objectID": "q11_Sentimentetdict.html#références",
     "href": "q11_Sentimentetdict.html#références",
-    "title": "11  Analyse du sentiment et autres dictionnaires",
+    "title": "11  Compter les mots pour annoter",
     "section": "11.4 Références",
-    "text": "11.4 Références",
+    "text": "11.4 Références\n\n\n\n\nDuval, Dominic, and François Pétry. 2016. “L’analyse Automatisée Du Ton Médiatique : Construction Et Utilisation de La Version Française Du Lexicoder Sentiment Dictionary.” Canadian Journal of Political Science 49 (2): 197–220. https://doi.org/10.1017/S000842391600055X.\n\n\nLiu, Bing. 2012. Sentiment Analysis and Opinion Mining. Synthesis Lectures on Human Language Technologies. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-031-02145-9.",
     "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Analyse du sentiment et autres dictionnaires</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
     ]
   },
   {
@@ -964,7 +964,7 @@
     "href": "q14_Transformers.html",
     "title": "14  Transformers",
     "section": "",
-    "text": "14.1 le mécanisme Attention\nL’analyse des classes latentes",
+    "text": "14.1 le mécanisme de l’attention\nC’est un article intitulé “Attention is all you need” de Vaswani et al. (2017) qui est le germe d’une véritable révolution des modèles de langage. IL propose une solution pour prendre en compte les relations qui existent entre les différents termes d’un séquence de terme.\nCette solution est celle du mécanisme d’attention.",
     "crumbs": [
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformers</span>"
     ]
@@ -1194,9 +1194,69 @@
     "href": "q14_Transformers.html#applications",
     "title": "14  Transformers",
     "section": "14.4 Applications",
-    "text": "14.4 Applications\nL’idée est d’entraîner un modèle de langue, sur de très larges corpus, pour ensuite l’utiliser dans des tâches spécifiques.\n\n\n\nExemples\n\n\nIl ne s’agit pas ici de ré-entraîner des modèles, ce qui est une approche tout à fait pertinente lorsque l’on est face à des corpus au langage spécifique, mais d’utiliser les outils existants directement disponibles.\nPour trouver le bon modèle à utiliser, il existe Hugging Face. La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.\nLe problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d’avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n’ont pas encore implémenté le recours au GPU, et nos ordis portables n’en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (souvent, moyennant finance).\nOn va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul.\nOn pourra garder un oeil sur le package R ‘text’ qui propose beaucoup d’outils mais est encore en construction.\n\n14.4.1 Application de bert au sentiment\n\n\n14.4.2 Application de bert au topic ( bert model)\nUn classique du genre : BERTopic de Grootendorst (2022)\n\n\nShow the code\n\n#from bertopic import BERTopic\n#from bertopic.representation import KeyBERTInspired\n\n#import pandas as pd\n\n#df = r.data\n#print(df)\n#topic_model = BERTopic(language=\"multilingual\")\n#topics, probs = topic_model.fit_transform(df['comments'])\n#topic_model.get_topic_info()\n#topic_model.get_topic(8)\n#topic_model.get_topic_freq().head()\n#topic_model.get_document_info(df['comments'])\n#topic_model.find_topics(\"réclamation\")\n#topic_model.generate_topic_labels()\n\n#topic_model.visualize_topics()\n#topic_model.visualize_heatmap()\n\n\n\n\n\n\nGrootendorst, Maarten. 2022. “BERTopic: Neural Topic Modeling with a Class-Based TF-IDF Procedure.” arXiv Preprint arXiv:2203.05794.",
+    "text": "14.4 Applications\nL’idée est d’entraîner un modèle de langue, sur de très larges corpus, pour ensuite l’utiliser dans des tâches spécifiques.\n\n\n\nExemples\n\n\nIl ne s’agit pas ici de ré-entraîner des modèles, ce qui est une approche tout à fait pertinente lorsque l’on est face à des corpus au langage spécifique, mais d’utiliser les outils existants directement disponibles.\nPour trouver le bon modèle à utiliser, il existe Hugging Face. La plupart des éléments de code sont en python, mais il commence à exister des implémentations en R.\nLe problème véritable repose sur les temps de calcul et la puissance disponible. On recommande d’avoir accès à un GPU, ce qui permet de considérablement raccourcir le temps des traitements. Les outils en R n’ont pas encore implémenté le recours au GPU, et nos ordis portables n’en ont pas forcément. On peut avoir recours au cluster de calcul de son université, ou utiliser les service de Google ou OpenAI (au prix d’une facturation).\nOn va utiliser du code en python et du code en R pour analyser les résultats. On travaille sur un tout petit corpus, pour limiter les temps de calcul.\nOn pourra garder un oeil sur le package R ‘text’ qui propose beaucoup d’outils mais est encore en construction.\n\n14.4.1 Application de bert au sentiment\n\n\n14.4.2 Application de bert au topic ( bert model)\nUn classique du genre : BERTopic de Grootendorst (2022)\n\n\nShow the code\n\n#from bertopic import BERTopic\n#from bertopic.representation import KeyBERTInspired\n\n#import pandas as pd\n\n#df = r.data\n#print(df)\n#topic_model = BERTopic(language=\"multilingual\")\n#topics, probs = topic_model.fit_transform(df['comments'])\n#topic_model.get_topic_info()\n#topic_model.get_topic(8)\n#topic_model.get_topic_freq().head()\n#topic_model.get_document_info(df['comments'])\n#topic_model.find_topics(\"réclamation\")\n#topic_model.generate_topic_labels()\n\n#topic_model.visualize_topics()\n#topic_model.visualize_heatmap()",
     "crumbs": [
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformers</span>"
+    ]
+  },
+  {
+    "objectID": "q14_Transformers.html#les-variations-de-bert",
+    "href": "q14_Transformers.html#les-variations-de-bert",
+    "title": "14  Transformers",
+    "section": "14.3 Les variations de bert",
+    "text": "14.3 Les variations de bert\n\n14.3.1 le réentrainement\n\n\n14.3.2 Ajuster à des nouvelles tâches",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformers</span>"
+    ]
+  },
+  {
+    "objectID": "q14_Transformers.html#références",
+    "href": "q14_Transformers.html#références",
+    "title": "14  Transformers",
+    "section": "14.5 Références",
+    "text": "14.5 Références\n\n\n\n\nGrootendorst, Maarten. 2022. “BERTopic: Neural Topic Modeling with a Class-Based TF-IDF Procedure.” arXiv Preprint arXiv:2203.05794.\n\n\nVaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. “Attention Is All You Need.” arXiv. https://doi.org/10.48550/ARXIV.1706.03762.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformers</span>"
+    ]
+  },
+  {
+    "objectID": "q11_Sentimentetdict.html#analyse-du-sentiment",
+    "href": "q11_Sentimentetdict.html#analyse-du-sentiment",
+    "title": "11  Compter les mots pour annoter",
+    "section": "",
+    "text": "11.1.1 Un premier exemple\nOn utilise le NCR dont il existe une version française\n\n\n11.1.2 La nature de la mesure\nternaire\nvalence polarité\n\n\n11.1.3 des améliorations\n\n11.1.3.1 modifyers\n\n\n11.1.3.2 machine learning",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
+    ]
+  },
+  {
+    "objectID": "q11_Sentimentetdict.html#construire-des-dictionnaires-ad-hoc",
+    "href": "q11_Sentimentetdict.html#construire-des-dictionnaires-ad-hoc",
+    "title": "11  Compter les mots pour annoter",
+    "section": "11.4 Construire des dictionnaires ad hoc",
+    "text": "11.4 Construire des dictionnaires ad hoc\npourquoi de pas s’inspirer de méthodes quali en les systématisant\nl’exemple d’evneguia. un très large corpus Bloomberg. Des concepts claire : la demande et l’offrfe, la baiise ou la hausse.\nl’exemple de PMP\nun peu de techniques : l’utilité des regex",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
+    ]
+  },
+  {
+    "objectID": "q11_Sentimentetdict.html#dautres-dictionnaires-notables",
+    "href": "q11_Sentimentetdict.html#dautres-dictionnaires-notables",
+    "title": "11  Compter les mots pour annoter",
+    "section": "11.3 d’autres dictionnaires notables",
+    "text": "11.3 d’autres dictionnaires notables\n\n11.3.1 les émotions\n\n\n11.3.2 la personnalité\nLes big five étaient un candidat évident à ce genre de techniques, déjà car dès leur constitution ils se sont appuyés sur des listes de qualificatifs.\n\n\n11.3.3 les fondements moraux de la politique",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
+    ]
+  },
+  {
+    "objectID": "q11_Sentimentetdict.html#le-liwc",
+    "href": "q11_Sentimentetdict.html#le-liwc",
+    "title": "11  Compter les mots pour annoter",
+    "section": "11.2 Le Liwc",
+    "text": "11.2 Le Liwc\nLe Liwc est un ensemble de dictionnaires proposés par Tausczik and Pennebaker (2010) qui a connu un assez grand retentissement dans la littérature. Il systématise l’analyse du sentiment en multipliant les champs conceptuels",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Compter les mots pour annoter</span>"
     ]
   }
 ]
