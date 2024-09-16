@@ -1,4 +1,4 @@
-# Analyse Quantitative du corpus
+# Analyse quantitative du corpus
 
 ```{r 600}
 #les librairies du chapître
@@ -497,8 +497,8 @@ Nous aurons appris à
 
 Ces mesures n'ont ne sens que si elles peuvent être l'objet de comparaison :
 
--   De manière interne la comparaison se fait dans dans le temps et à travers des segments. On s'intéresse moins au niveau, qu'aux différences entre les niveaux.
--   De manière externe elle requiert un étalonnage. Comparer par rapport au français courant, à un niveau de langue soutenu, ou relâché. L'étalonnage revient à caractériser des types de corpus : presses, écriture savante, réseaux sociaux, publications officielles etc. On ne peut que souhaiter que des comparaisons systématiques soient engagées et compilées pour donner des points de repère précis quand on étudie un corpus particulier.
+-   De manière interne la comparaison se fait dans dans le temps et à travers des segments. On s'intéresse moins aux niveaux, qu' à leurs différences.
+-   De manière externe elle requiert un étalonnage. Comparer par rapport au français courant, à un niveau de langue soutenu, ou relâché. L'étalonnage revient à caractériser des types de corpus : presse, écriture savante, réseaux sociaux, publications officielles etc. On ne peut que souhaiter que des comparaisons systématiques soient engagées et compilées pour donner des points de repère quand on étudie un corpus particulier.
 
 Elles participent à un premier niveau d'analyse du texte, en surface, visant à apprécier la dynamique de sa production, à établir les échelles d'analyse, à repérer les éléments structurels.
 

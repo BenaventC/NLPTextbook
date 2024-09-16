@@ -76,42 +76,36 @@ Voici les raisons qui organisent le cours en 20 chapitres (c'est à ajuster au c
 
 On s'appuiera sur des data test "réel" et publics
 
--   [Trump Tweeter Archive](https://www.thetrumparchive.com/) : c'est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.
+-   **[Trump Tweeter Archive](https://www.thetrumparchive.com/)** : c'est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.
 
--   Tripadvisor en Polynésie
+-   **Tripadvisor en Polynésie** constitués par Gwevy et Chabrier de l'Université de Polynésie.
 
--   Airbnb Paris 2019
+-   **Airbnb Paris 2023** à partir de [Inside Airbnb](https://insideairbnb.com/)
 
--   PMP40ans : ce set de données comprend tous les résumés d'articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu'en 2023. C'est un observatoire intéressant d'une discipline naissance et de l'évolution des normes professionnelles de la recherche en gestion.
+-   **PMP40ans** : ce set de données comprend tous les résumés d'articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu'en 2023. C'est un observatoire intéressant d'une discipline naissance et de l'évolution des normes professionnelles de la recherche en gestion.
 
--   yyy
+-   **RapLyrics** : Une collection de texte de rap français des années 80 à 2020 constituées par un groupe d'étudiants. 
 
--   zzz
 
 ## Packages
 
-Ce cours avec les ressources de r, de rstudio et de Quarto. Les apports externes le sont sous forme d'images. Zotero pour la bibliographie.
-
-Il n'y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée.
+Ce cours utilise les ressources de r, de [rstudio et de Quarto](https://posit.co/), de l'analyse des données à la publication de ce book. On utilise [Zotero](https://www.zotero.org/) pour gérer la bibliographie.Il n'y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée. Pour l'usage des modèle LLM on basculera progressivement en python qui propose immensément plus de ressources. 
 
 ```{r 03}
 #environnement de travail
-library(tidyverse) # the perfect tool box.
+library(tidyverse) # the perfect tool box. Comprend dplyr pour la gestion des données, ggplot pour les graphiques, et d'autres packages utiles comme lubreidate ou stringr.
 library(flextable) # pour produire des tableaux élégants
 
 #ses compléments  
-library(ggwordcloud)
-library(ggrepel)
+library(ggwordcloud) ##complete ggplot pour les nuages de mots
+library(ggrepel) ## pour éviter la superposition de label
 
 #glosaire 
 library(glossary)
 glossary_path("glossary.yml")
-
 # un exemple pour ajouter des termes au cours de la rédaction
 #glossary_add(term = "loi de Dirichlet",
 #             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")
-
-
 
 #ressource nlp  
 library(quanteda) 
@@ -121,12 +115,17 @@ library(udpipe)
 library(FactoMineR)
 library(factoextra)
 
-
 #python
 library(reticulate)
 
 ```
 
 
-Pour l'usage des modèle LLM on basculera progessivement en python avec 
+## Ressources complémentaires
 
+-  [r en français](https://larmarange.github.io/analyse-R/)
+-  On encourage vivement le lecteur à jouer avec les modèles de [Hugging Face](https://huggingface.co/models)
+-  Le [Stanford Natural Language Processing Group](https://nlp.stanford.edu/) est sans doute la principale institution scientifique dans ce domaine.
+-  En France : Acss-PSL, Ollion, science po ...
+
+Pour aller plus loin, il est possible de suivre le [NLPWorkshop de Acss](https://acss-dig.psl.eu/fr/seminaires/nlp) ou le cours " introduction au NLP pour les sciences sociales " dispensé chaque année en novembre au sein de la PSL weeks. 
