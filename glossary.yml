@@ -20,5 +20,6 @@ bag of words: |
   
 loi de Dirichlet: |
   la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant
+
 hapax: |
   Mot unique dans un corpus donné

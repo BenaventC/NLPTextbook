@@ -1,5 +1,16 @@
 # Manipuler les chaines de caractères
 
+**Objectifs du chapitre :**
+
+<div>
+
+```         
+*Apprendre à manipuler les chaines de caractères ainsi que les regex*
+
+</div>
+```
+
+
 ```{r 500}
 #les librairies du chapître
 library(tidyverse)
@@ -20,25 +31,16 @@ df <- read_csv("data/PMPLast3.csv",
 
 ```
 
-**Objectifs du chapitre :**
+**Environnement de travail**
 
-<div>
-
-```         
-*Apprendre à manipuler les chaines de caractères ainsi que les regex*
-
-</div>
-```
 
 ## Stringr
 
-C'est l'outil général que nous favorisons , il est intégré dans la suite tidyverse et propose de nombreuses fonctions.
+`[stringr](https://stringr.tidyverse.org/index.html)` est le package de la suite tidyverse destiné à manipuler les chaînes de caractère.
 
-https://stringr.tidyverse.org/index.html
+### Compter 
 
-### Compter :
-
-Dans le chunck suivant on utilise le set de donnée PMP40ans. Le but est de compter le nombre de fois où un terme apparaît dans chacun des textes avec la fonction `str_count`. On en donne l'évolution au cours du temps
+Dans le code suivant on utilise le set de donnée PMP40ans. Le but est de compter le nombre de fois où un terme apparaît dans chacun des textes avec la fonction `str_count`. On en donne l'évolution au cours du temps
 
 ```{r 501}
 
@@ -55,15 +57,18 @@ ggplot(foo, aes(Year,n))+geom_line() +
 
 ```
 
-### Extraire
+### Extraire, supprimer et remplacer
 
-Dans certaines situations on peut souhaiter extraire une chaîne de caractère pour l'utiliser à un autre usage.L'exemple ordinaire est celui d'extraire l'année d'une date. ou un auteur
+Dans certaines situations on peut souhaiter extraire une chaîne de caractère pour l'utiliser à un autre usage.L'exemple ordinaire est celui d'extraire l'année d'une date ou un auteur d'un titre.
 
 `str_extract`
 
-### Remplacer
 
 `str_replace`
+
+
+### Majuscules, minuscule et espaces.
+
 
 ## Regex
 
@@ -92,9 +97,9 @@ str_replace_all(x,"[A-Z]", "X")
 
 ```
 
--   meta caractères Les méta caractères représentent un type de caractère. Ils commencent généralement par une barre oblique inverse (backslash). La barre oblique inverse étant un caractère spécial dans R, elle doit être échappée chaque fois qu'elle est utilisée avec une autre barre oblique inverse. En d'autres termes, R exige deux barres obliques inverses lors de l'utilisation de métacaractères. Chaque méta-caractère correspondra à un seul caractère.
+-   Les méta caractères représentent un type de caractère. Ils commencent généralement par une barre oblique inverse (backslash). La barre oblique inverse étant un caractère spécial dans R, elle doit être échappée chaque fois qu'elle est utilisée avec une autre barre oblique inverse. En d'autres termes, R exige deux barres obliques inverses lors de l'utilisation de méta caractères. Chaque méta-caractère correspondra à un seul caractère.
 
-\\s : Ce méta caractère représente les espaces. Il correspondra à chaque espace, tabulation et nouvelle ligne.
+`\\s` : Ce méta caractère représente les espaces. Il correspondra à chaque espace, tabulation et nouvelle ligne.
 
 -   Les quantificateurs permette de contrôler le nombre de caractère que l'on attend. Par exemple , le quantificateur + indique que l'on souhaite que l'élément recherché apparaisse une ou plus fois. Si l'action est d'identifier a, a+, renvoie a, aa, aaa etc . Ceci ne semble pas très utile, sauf si le caractère peut être n'importe quelle lettre de l'alphabet, ce qui est représenté par le . Une variante du + est \*, c'est la même idée mais cela inclue l'option de 0 caractère.
 
@@ -102,11 +107,11 @@ str_replace_all(x,"[A-Z]", "X")
 
 ### Des formules usuelles
 
-La formulation de regex est un art, dans le quotidien on se contentera de reprendre des formules communes
+La formulation de regex est un art, dans le quotidien on se contentera de reprendre des formules communes et d'utiliser des générateurs de regex comme xxxx
 
 en voici quelles-unes
 
--   date "\[0-9\]{2}-\[0-9\]{2}-\[0-9\]{2}"
+-   date `\[0-9\]{2}-\[0-9\]{2}-\[0-9\]{2}"`
 
 -   mention
 

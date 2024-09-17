@@ -105,7 +105,7 @@ library(glossary)
 glossary_path("glossary.yml")
 # un exemple pour ajouter des termes au cours de la rédaction
 #glossary_add(term = "loi de Dirichlet",
-#             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.Ex. probabilités d'un mot parmi les trois milles d'usage courant")
+#             def = "la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.(Ex. probabilités d'un mot parmi les trois milles d'usage courant")
 
 #ressource nlp  
 library(quanteda) 

@@ -1,5 +1,16 @@
 # Classification with embeddings
 
+
+**Objectifs du chapitre :**
+
+<div>
+
+*L'histoire de la linguistique computationnelle est intimement liée au machine learning, et à la tâche de classification. Le principe général de l'apprentissage artificiel consiste d'abord à choisir les caractéristiques qui vont être employées pour prédire une variable donnée, ensuite à choisir un modèle, puis à entraîner sur un premier jeu de donnée, et enfin à l'évaluer sur la base d'un second échantillon de données. Le processus est itératifs et vise à choisir les hyper-paramètres les plus adéquation pour maximiser la capacité prédictive du modèle*
+
+</div>
+
+**Environnement de travail**
+
 ```{r 600}
 #les librairies du chapître
 library(tidyverse)
@@ -16,28 +27,63 @@ set_flextable_defaults(
   background.color = "#EFEFEF")
 ```
 
-**Objectifs du chapitre :**
+## Un cadre général
 
-<div>
+![Processus d'apprentissage machine](image/ML2024.png)
 
-*Jusqu'à présent, nous nous sommes consacrés au traitement des chaines de caractères, généralement dans un but univarié, examinant la distribution des termes.*
+-jouer avec les [réseaux de neurone](https://playground.tensorflow.org/) est forment recommandé.
 
-*Ce chapitre est celui d'un virage multivarié : ce qu'on va étudier ce sont les distributions conjointes des termes, au travers principalement de l'analyse de leur co-occurrences. On découvrira une large palette de techniques qui permettent de les représenter et d'identifier des thématique et la manières dont elles s'articulent. Elles sont principalement descriptive.*
+### Ce qu'on cherche à prédire
 
-</div>
+le rôle central de l'annotation.
 
-L'idée d'identifier des thématiques sémantique dans un corpus de texte est ancienne. AFC, clustering et Analyses de réseaux en sont les premières tentatives qui se poursuit avec la généralisation de techniques factorielle fondée sur la décomposition SVD.
+L'enjeu de l'annotation humaine. kappa.
 
-Mais l'innovation majeure est celle de la méthode LDA, dont l'apport essentiel est d'identifier les thématique au niveau des documents plutôt qu'à celui du corpus. Si dans les approches précédentes un texte sera classifié parmi l'un des k sujets que l'on cherche à identifier, désormais il se traduit par une distribution de probabilité d'appartenir à chacun des k topics.
+### Avec quoi on cherche à prédire
 
-## LSA et les autres
+le featuring
 
-L'analyse des classes latentes
+les embeddings comme featuring, et un saut dans la performance
 
-## Le modèle fondateur : LDA
+### Les modèles
 
-sur ce plan On doit beaucoup à sokal et sneath
+| Col1         | Continu            | binaire           | polytomique       |
+|--------------|--------------------|-------------------|-------------------|
+| generation 1 | regression         | Naive Bayes       |                   |
+|              | Arbre de décision  |                   |                   |
+| génération 2 | lasso ( penalized) | Random forets     | Random forest     |
+| génération 3 | réseaux neuronaux  | réseaux neuronaux | réseaux neuronaux |
 
-## Les variations
+### Entrainement
+
+### Validation
+
+précision /rappel
+
+roc
+
+### Déploiement et inférence
+
+## Un exemple simple : Naive bayes vs random forest
+
+Naive bayes :
+
+Random forest :
+
+### le processus
+
+### les résultats
+
+## Un exemple plus avancé : du Bert sentiment
+
+les modèles de langage fournissent un bon featuring
+
+### le processus
+
+### les résultats
 
 ## Conclusion
+
+Application à de nombreux concepts : - toxicité, "profanité", complotisme - POS, - sentiment, émotions, personnalité ... - detection d'élément thématiques - temporalité
+
+Lourdeur de l'approche, incertitude du résultat : vers une approche plus directe : le zeroshot classiqcation et le NER.
