@@ -1,4 +1,4 @@
-# Découper les mots en jetons (Tokenize)
+# Jouer avec les jetons
 
 ```{r 600}
 #les librairies du chapître
@@ -25,7 +25,7 @@ set_flextable_defaults(
 
 </div>
 
-L'étape initiale de toute analyse textuelle est de découper le texte en unités d'analyse, les *tokens*, ce qui transforme le texte écrit pour la compréhension humaine en données interprétables par l'ordinateur. Les *tokens* utilisés peuvent varier selon les objectifs de l'analyse et la nature du corpus, la granularité peut être plus ou moins fine. Les *tokens* peuvent ainsi être :
+L'étape initiale de toute analyse textuelle est de découper le texte en unités d'analyse, les *tokens*, ou jetons en français, ce qui transforme le texte écrit pour la compréhension humaine en données interprétables par l'ordinateur. Les *tokens* utilisés peuvent varier selon les objectifs de l'analyse et la nature du corpus, la granularité peut être plus ou moins fine. Les *tokens* peuvent ainsi être :
 
 -   des lettres : c'est l'unité insécable.
 -   des syllabes : ça permet de s'intéresser aux phonèmes.mais aussi d'extraire d'un mot les suffixes et préfixes, ainsi que les radicaux ( la racine du mot, ex : dés-espéré-ment).
@@ -36,11 +36,11 @@ L'étape initiale de toute analyse textuelle est de découper le texte en unité
 
 Les *tokenizers* sont les outils indispensables à cette tâche. Dans cet ouvrage, nous nous concentrons sur l'étude des mots. Lors de cette étude, un certain nombre de mots apparaissent de nombreuses fois, pour permettre de donner du sens au langage humain, mais ils ne portent pas en eux d'informations particulièrement pertinentes pour l'analyse : ce sont les *stopwords*, qu'il conviendra souvent d'éliminer.
 
-Les n-grammes, quant à eux, représentent des suites de n *tokens*. Un unigramme est donc équivalent à un *token*, un digramme[^q07_tokenisation-1] est une suite de deux *tokens*, etc. L'identification des n-grammes permet de détecter des suites de *tokens* qui reviennent plus souvent que leur probabilité d'occurrences. Si l'on se concentre sur les mots, nous sommes alors face à une unité sémantique, comme on le comprend facilement avec le digramme 'Assemblée Nationale' dont le sens est autre que ses constituants.
+Les n-grammes, quant à eux, représentent des suites de n *tokens*. Un unigramme est donc équivalent à un *token*, un digramme[^q07_tokenisation-1] est une suite de deux *tokens*, etc. L'identification des n-grammes permet de détecter des suites de *tokens* qui reviennent plus souvent que leur probabilité d'occurrences. Si l'on se concentre sur les mots, nous sommes alors face à une unité sémantique, comme on le comprend facilement avec le digramme 'Assemblée Nationale' dont le sens est plus que ses constituants.
 
 [^q07_tokenisation-1]: En français digramme est la meilleure traduction de bigram, une bigramme en français est un mot dont les lettres peuvent former deux autres mot.
 
-Tokeniser revient donc à découper le texte pour en construire une représentation quantitative qui se traduit par la construction de matrices termes /documents, que l'on désignera par dtm ( document term matrix) où les documents forment les lignes, et les termes - mots ou n-grammes - les colonnes. Dans les cellules sont reportés les effectif ou d'autres mesures de fréquence. C'est ce tableau qui fera l'objet d'analyse statistiques et de modèles de language.
+Tokeniser revient donc à découper le texte pour en construire une représentation quantitative.C'est d'ailleurs une des spécificités des grands modèles de langage qui s'intréesse moins aux mots, qu'à ses décompositions, telles qu'un nombre limité( ~30 000) permette de générer la plupart des graphies et au passage de supporter les dysgraphies. 
 
 ## Quelques exercices de tokenization
 
@@ -330,39 +330,24 @@ textplot_wordcloud(dfm2, comparison = TRUE, max_words = 200,
 
 ```
 
-## Pondérer la fréquences des termes
+## La question des mots distinctifs
 
-Dans un *dtm*, chaque cellule du tableau indique la fréquence d'un mot dans un document. Cette mesure cependant peut ne pas être pertinentes. Les mots les plus fréquents peuvent se distribuer également entre les documents, et leur fréquence indique au mieux un lieu commun.
+Plus que comparer la fréquence des mots on peux souhaiter identifier ceux qui sont les plus discrimants, les plus distinctifs. 
 
-L'idée clé va être de pondérer la fréquence d'un terme dans un document par la présence de ce terme à travers les documents. S'il se retrouve partout on en minore le poids, s'ils est présent dans une petit groupe de document on va lui donner de l'importance.
+### Keyness index
 
-### le concept de tfidf
 
-Cette idée est formalisée par le critère du TfIdf. La fréquence d'un terme dans un document (Tf) par être pondéré par l'inverse de la fréquence des documents dans lesquels il est présent (Idf). S'il est présent partout (c'est le cas des verbes auxiliaires) sont poids sera minimal, s'il est concentré dans un petit nombre de documents on lui donnera un poids plus important.
+### Find keywords based on the Textrank algorithm
 
-Formalisation
+Le Textrank est un algorithme implémenté dans le paquetage R textrank. Cet algorithme permet de résumer un texte et d'en extraire des mots-clés. Pour ce faire, il construit un réseau de mots en vérifiant si les mots se suivent. Sur ce réseau, l'algorithme "Google Pagerank" est appliqué pour extraire les mots pertinents, après quoi les mots pertinents qui se suivent sont combinés pour obtenir des mots-clés. Dans l'exemple ci-dessous, nous souhaitons trouver des mots-clés à l'aide de cet algorithme pour les noms ou les adjectifs qui se suivent. Le graphique ci-dessous montre que les mots-clés combinent les mots pour former des expressions à plusieurs mots.
 
-la fréquence brute des termes est le rapport du nombre de termes i dans le document d sur le nombre de termes du document i
+### Rake 
 
-$tf_{id}= n_{id}$
+L'algorithme de base suivant s'appelle RAKE, acronyme de Rapid Automatic Keyword Extraction (extraction automatique rapide de mots clés). Il recherche des mots-clés en examinant une séquence contiguë de mots qui ne contient pas de mots non pertinents. En d'autres termes, il
 
-Cette fréquence peut être modulée par le nombre de mots dans le texte, cette fréquence relative permet d'avoir une idée de la densité d'un terme dans un document.
+en calculant un score pour chaque mot faisant partie d'un mot-clé candidat.
+parmi les mots des mots-clés candidats, l'algorithme examine le nombre d'occurrences de chaque mot et le nombre de cooccurrences avec d'autres mots. Chaque mot obtient un score qui est le rapport entre le degré du mot (le nombre de fois qu'il cooccurre avec d'autres mots) et la fréquence du mot. un score RAKE pour le mot-clé candidat complet est calculé en additionnant les scores de chacun des mots qui définissent le mot-clé candidat.
 
-$tf_{id}= n_{id}/\sum_{i}(n_{id}$
-
-la pondération
-
-$idf_{id}= log10(D_{}/D_{i})$
-
-Ce concept souligne une chose capitale : un terme, ou token, dans un corpus, est caractérisé par une double distribution : d'une part sa part dans l'ensemble des termes de références, et d'autre part, sa présence à travers les documents.
-
-### D'autres variantes
-
-Celles de l'idf https://programminghistorian.org/fr/lecons/analyse-de-documents-avec-tfidf
-
-le bm25 est une généralisation à une requête Q de plusieurs termes et vise à qualifier la pertinence
-
-on développe avec une étude empirique.
 
 ## Conclusion
 

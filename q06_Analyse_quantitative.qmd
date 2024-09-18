@@ -409,7 +409,7 @@ ggplot(foo, aes(x=docfreq, y= frequency/docfreq))+
   scale_y_log10()
 ```
 
-## Comptons les mots
+## Comptons les mots (toute cette partie est à déplacer au chapitre tokens)
 
 Il est temps de compter les mots, chacun d'entre eux, de se faire une idée une idée de leurs fréquences, de leur distribution.
 

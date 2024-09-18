@@ -234,7 +234,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Découper les mots en jetons (Tokenize)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Jouer avec les jetons</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -344,6 +344,8 @@ window.Quarto = {
   <li><a href="#le-calcul" id="toc-le-calcul" class="nav-link" data-scroll-target="#le-calcul"><span class="header-section-number">9.2.1</span> le calcul</a></li>
   <li><a href="#les-variantes" id="toc-les-variantes" class="nav-link" data-scroll-target="#les-variantes"><span class="header-section-number">9.2.2</span> les variantes</a></li>
   <li><a href="#on-met-en-oeuvre" id="toc-on-met-en-oeuvre" class="nav-link" data-scroll-target="#on-met-en-oeuvre"><span class="header-section-number">9.2.3</span> On met en oeuvre</a></li>
+  <li><a href="#le-concept-de-tfidf" id="toc-le-concept-de-tfidf" class="nav-link" data-scroll-target="#le-concept-de-tfidf"><span class="header-section-number">9.2.4</span> le concept de tfidf</a></li>
+  <li><a href="#dautres-variantes" id="toc-dautres-variantes" class="nav-link" data-scroll-target="#dautres-variantes"><span class="header-section-number">9.2.5</span> D’autres variantes</a></li>
   </ul></li>
   <li><a href="#calculer-les-coocurrences" id="toc-calculer-les-coocurrences" class="nav-link" data-scroll-target="#calculer-les-coocurrences"><span class="header-section-number">9.3</span> Calculer les coocurrences</a>
   <ul class="collapse">
@@ -752,6 +754,8 @@ anges                    0    0        0         0           0        0</code></
 <h2 data-number="9.2" class="anchored" data-anchor-id="tf-idf"><span class="header-section-number">9.2</span> Tf-idf</h2>
 <p>Le dfm a un défaut, il ne tient pas compte du fait que les mots fréquents peuvent être partagés par un grand nombre de texte et n’indiquer rien d’autre qu’un élément régulier du corpus, un plus petit dénominateur commun, des mots un peu moins fréquents mais concentrés sur quelques textes sont plus informatifs.</p>
 <p>C’est cette idée qui conduit à une autre métrique, celle du Tf-idf qui pondère la fréquence d’un mot dans un texte par l’inverse de sa fréquence dans les documents. Les mots qu’on retrouvent partout sont pénalisés.</p>
+<p>Dans un <em>dfm</em>, chaque cellule du tableau indique la fréquence d’un mot dans un document. Cette mesure cependant peut ne pas être pertinentes. Les mots les plus fréquents peuvent se distribuer également entre les documents, et leur fréquence indique au mieux un lieu commun.</p>
+<p>L’idée clé va être de pondérer la fréquence d’un terme dans un document par la présence de ce terme à travers les documents. S’il se retrouve partout on en minore le poids, s’ils est présent dans une petit groupe de document on va lui donner de l’importance.</p>
 <section id="le-calcul" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="le-calcul"><span class="header-section-number">9.2.1</span> le calcul</h3>
 <p>Le TF-IDF est calculé en deux étapes :</p>
@@ -771,6 +775,24 @@ anges                    0    0        0         0           0        0</code></
 </section>
 <section id="on-met-en-oeuvre" class="level3" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="on-met-en-oeuvre"><span class="header-section-number">9.2.3</span> On met en oeuvre</h3>
+</section>
+<section id="le-concept-de-tfidf" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="le-concept-de-tfidf"><span class="header-section-number">9.2.4</span> le concept de tfidf</h3>
+<p>Cette idée est formalisée par le critère du TfIdf. La fréquence d’un terme dans un document (Tf) par être pondéré par l’inverse de la fréquence des documents dans lesquels il est présent (Idf). S’il est présent partout (c’est le cas des verbes auxiliaires) sont poids sera minimal, s’il est concentré dans un petit nombre de documents on lui donnera un poids plus important.</p>
+<p>Formalisation</p>
+<p>la fréquence brute des termes est le rapport du nombre de termes i dans le document d sur le nombre de termes du document i</p>
+<p><span class="math inline">\(tf_{id}= n_{id}\)</span></p>
+<p>Cette fréquence peut être modulée par le nombre de mots dans le texte, cette fréquence relative permet d’avoir une idée de la densité d’un terme dans un document.</p>
+<p><span class="math inline">\(tf_{id}= n_{id}/\sum_{i}(n_{id})\)</span></p>
+<p>la pondération</p>
+<p><span class="math inline">\(idf_{id}= log(D_{}/D_{i})\)</span></p>
+<p>Ce concept souligne une chose capitale : un terme, ou token, dans un corpus, est caractérisé par une double distribution : d’une part sa part dans l’ensemble des termes de références, et d’autre part, sa présence à travers les documents.</p>
+</section>
+<section id="dautres-variantes" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="dautres-variantes"><span class="header-section-number">9.2.5</span> D’autres variantes</h3>
+<p>Celles de l’idf <a href="https://programminghistorian.org/fr/lecons/analyse-de-documents-avec-tfidf" class="uri">https://programminghistorian.org/fr/lecons/analyse-de-documents-avec-tfidf</a></p>
+<p>le bm25 est une généralisation à une requête Q de plusieurs termes et vise à qualifier la pertinence</p>
+<p>on développe avec une étude empirique.</p>
 </section>
 </section>
 <section id="calculer-les-coocurrences" class="level2" data-number="9.3">
