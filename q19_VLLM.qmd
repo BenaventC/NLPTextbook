@@ -38,26 +38,76 @@ set_flextable_defaults(
 
 </div>
 
-Genralité sur les l'IAG
+Généralité sur les l'IAG : (https://aiindex.stanford.edu/)
 
-la nature de l'usage ; generatif ou
+- la montée en puissance : une manière simple d'en rendre compte 
+- le renforcement humain
+- Un nouvel art le prompt
+- Les applications
 
-## Prompter pour des tâche classiques
 
-L'analyse des classes latentes ? est-ce nécessaire ?
+écarter l'usage génératif : création et résolution de problème.
+
+
+## Prompter pour des tâches classiques
+
+Pour le chercheur l'intérêt immédiat pour les VLLM est évidemment la promesse de performance des annotations mais aussi leur flexibilité par la procédure du prompt. 
+
+On présentera ici quelques exemples élémentaires
+
 
 ### NER
 
+
+
 ### ZERO shot
 
-## Transformer le texte
 
-### résumé
+### procédure générale
+
+- utilisation de l'API
+- construire des boucles d'interrogations
+- valider les résultats
+
+
+## L'élargissement du champs des tâches
+
+Avec l'IAG le spectre des tâches s'élargit considérablement au delà de l'annotation des éléments du texte ( ner et argumentation) et de l'ensemble du texte ()
+
+### Résumé
+
+réduire le texte
+
+structurer le texte.
+
+
+l'apport des rag ( exemple coral AI)
 
 ### lecture d'image
 
-sur ce plan On doit beaucoup à mikolov
+Voici un essai de Image2Text réalisé avec Claude Sonnet 3.5 . 
+
+<div>
+
+*A : This image appears to be a vintage advertisement for DIM, a French clothing brand known for hosiery and undergarments.
+The image features a woman in a provocative pose, bending forward with her hands touching the ground. She's wearing a shiny, metallic blue top, black shorts or a short skirt, and black tights or stockings. Her hair is short and blonde, styled in a somewhat messy or tousled manner. She appears to be standing on a dry, cracked surface, possibly representing a desert or dried lake bed.
+The text on the image reads: "Merci à la terre qui est si basse." (Thank you to the earth which is so low.) "DIM" "Surtout en dim up." (Especially in dim up.)
+This text plays on the woman's posture, bending low to the ground, and likely references the brand's products, possibly suggesting they allow for flexibility or movement.
+The ad seems to be using a combination of sexuality, wordplay, and striking visuals to promote the DIM brand, which was common in fashion advertising of certain eras. The overall aesthetic suggests this may be from the 1980s or early 1990s.*
+
+</div>
+
+![exemple de la pub dim](image/pub_image_dim-4003100.jpeg)
+
+La première impression est plutôt très favorable, même si des omissions et aveuglement peuvent être remarqués : le caractère provoquant vient de ce que la pose fait entrevoir la peau de la cuisse au-dessous du bas. C'est naturellement un poncif érotique, qu'atténue l'accident. Le dernier paragraphe, en reprend l'idée mais sans en situer l'élément visuel de manière précise. Quand à l'aveuglement, il s'agit du pavé que la machine ne discerne pas, dérivant de la perception de surface (sèche et craquelée) le lit d'une rivière asséchée. C'est ici un mirage au pied de la lettre !
+
 
 ## Conclusion
 
-## Références
+Un certain nombre de questions ouvertes quand à l'intérêt intrinsèque des très grands modèles de langages:
+
+-   Un art ou une ingénierie du prompt. 
+-   la question de la réplicabilité.
+-   La question de la vie privée et de la protection des données.
+-   La question de la validation des mesures
+
