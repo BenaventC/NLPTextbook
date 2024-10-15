@@ -1,4 +1,4 @@
-# NLPTextbook
+# NLP Textbook
 
 
-[Une introduction au NLP pour les science sociales](https://benaventc.github.io/NLPTextbook/)
+[Une introduction au NLP pour les sciences sociales](https://benaventc.github.io/NLPTextbook/)
