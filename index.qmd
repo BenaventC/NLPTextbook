@@ -1,9 +1,7 @@
 # Préambule {.unnumbered}
 
 
-"Au commencement était le verbe", et désormais le verbe est partout, non pas l'esprit de Dieu, mais la parole humaine qui s'éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l'enregistrement des transactions informatiques.
-
-Le verbe est désormais une copie du monde, moins l'affirmation d'une vision, que la stratification de nos manifestations sociales.
+"Au commencement était le verbe", et désormais le verbe est partout, non pas l'esprit de Dieu, mais la parole humaine qui s'éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l'enregistrement des transactions informatiques. Le verbe est désormais une copie du monde, moins l'affirmation d'une vision, que la stratification de nos manifestations sociales.
 
 C'est bien sur le fruit d'un développement technique engagés depuis 10 000 ans et dont l'imprimerie est une nouvelle étape. La révolution actuelle réside dans la colonisation de l'espace social, chaque bribes de parole est enregistrée , transcrite, archivée. Le livre n'est plus qu'un îlot dans un océan de texte.
 
@@ -13,9 +11,7 @@ A mesure que ces données prolifèrent, des méthodes pour les analyser se sont 
 
 ## Le but de l'ouvrage
 
-Ce e-book est le syllabus d'un cours que nous dispensons sous différents formats et avec différents degrés d'approfondissement. Il fait l'inventaire des méthodes les plus courantes incluant le développement des embeddings et aboutit à l'usage des LLM pour différentes formes d'annotations.
-
-Il a une vocation pratique , des cas, des codes.
+Ce e-book est le syllabus d'un cours que nous dispensons sous différents formats et avec différents degrés d'approfondissement. Il fait l'inventaire des méthodes les plus courantes incluant le développement des embeddings et aboutit à l'usage des LLM pour différentes formes d'annotations. Il a une vocation pratique, étudier des cas, et décrire des codes.
 
 ## Les contributeurs
 
@@ -128,4 +124,4 @@ library(reticulate)
 -  Le [Stanford Natural Language Processing Group](https://nlp.stanford.edu/) est sans doute la principale institution scientifique dans ce domaine.
 -  En France : Acss-PSL, Ollion, science po ...
 
-Pour aller plus loin, il est possible de suivre le [NLPWorkshop de Acss](https://acss-dig.psl.eu/fr/seminaires/nlp) ou le cours " introduction au NLP pour les sciences sociales " dispensé chaque année en novembre au sein de la PSL weeks. 
+Pour aller plus loin, il est possible de suivre le [NLPWorkshop de Acss](https://acss-dig.psl.eu/fr/seminaires/nlp) ou le cours " introduction au NLP pour les sciences sociales " dispensé chaque année en novembre au sein de la PSL week. 
