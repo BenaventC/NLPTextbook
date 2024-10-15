@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Des tokens à leurs co-occurences. – Introduction aux méthodes de traitement du langage naturel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./q10_Analyse_Cooccurences.html" rel="next">
+<link href="./q08_Analyse_syntaxic.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q09_token_to_dfm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction aux méthodes de traitement du langage naturel</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préambule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse quantitative du corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Jouer avec les jetons</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Compter les mots pour annoter</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#décomposons-le-pipe" id="toc-décomposons-le-pipe" class="nav-link active" data-scroll-target="#décomposons-le-pipe"><span class="header-section-number">9.1</span> Décomposons le pipe</a>
+  <ul class="collapse">
+  <li><a href="#lire-les-données-et-les-sélectionner" id="toc-lire-les-données-et-les-sélectionner" class="nav-link" data-scroll-target="#lire-les-données-et-les-sélectionner"><span class="header-section-number">9.1.1</span> lire les données et les sélectionner</a></li>
+  <li><a href="#constituer-le-corpus" id="toc-constituer-le-corpus" class="nav-link" data-scroll-target="#constituer-le-corpus"><span class="header-section-number">9.1.2</span> Constituer le corpus</a></li>
+  <li><a href="#tokenizer" id="toc-tokenizer" class="nav-link" data-scroll-target="#tokenizer"><span class="header-section-number">9.1.3</span> tokenizer</a></li>
+  <li><a href="#construire-le-dfm" id="toc-construire-le-dfm" class="nav-link" data-scroll-target="#construire-le-dfm"><span class="header-section-number">9.1.4</span> Construire le <code>dfm</code></a></li>
+  <li><a href="#son-analyse-par-la-vénérable-afc" id="toc-son-analyse-par-la-vénérable-afc" class="nav-link" data-scroll-target="#son-analyse-par-la-vénérable-afc"><span class="header-section-number">9.1.5</span> Son analyse par la vénérable AFC</a></li>
+  </ul></li>
+  <li><a href="#tf-idf" id="toc-tf-idf" class="nav-link" data-scroll-target="#tf-idf"><span class="header-section-number">9.2</span> Tf-idf</a>
+  <ul class="collapse">
+  <li><a href="#le-calcul" id="toc-le-calcul" class="nav-link" data-scroll-target="#le-calcul"><span class="header-section-number">9.2.1</span> le calcul</a></li>
+  <li><a href="#les-variantes" id="toc-les-variantes" class="nav-link" data-scroll-target="#les-variantes"><span class="header-section-number">9.2.2</span> les variantes</a></li>
+  <li><a href="#on-met-en-oeuvre" id="toc-on-met-en-oeuvre" class="nav-link" data-scroll-target="#on-met-en-oeuvre"><span class="header-section-number">9.2.3</span> On met en oeuvre</a></li>
+  <li><a href="#le-concept-de-tfidf" id="toc-le-concept-de-tfidf" class="nav-link" data-scroll-target="#le-concept-de-tfidf"><span class="header-section-number">9.2.4</span> le concept de tfidf</a></li>
+  <li><a href="#dautres-variantes" id="toc-dautres-variantes" class="nav-link" data-scroll-target="#dautres-variantes"><span class="header-section-number">9.2.5</span> D’autres variantes</a></li>
+  </ul></li>
+  <li><a href="#calculer-les-coocurrences" id="toc-calculer-les-coocurrences" class="nav-link" data-scroll-target="#calculer-les-coocurrences"><span class="header-section-number">9.3</span> Calculer les coocurrences</a>
+  <ul class="collapse">
+  <li><a href="#un-simple-exemple" id="toc-un-simple-exemple" class="nav-link" data-scroll-target="#un-simple-exemple"><span class="header-section-number">9.3.1</span> Un simple exemple</a></li>
+  <li><a href="#des-mesures-plus-sensibles" id="toc-des-mesures-plus-sensibles" class="nav-link" data-scroll-target="#des-mesures-plus-sensibles"><span class="header-section-number">9.3.2</span> Des mesures plus sensibles</a></li>
+  <li><a href="#ou-des-distances" id="toc-ou-des-distances" class="nav-link" data-scroll-target="#ou-des-distances"><span class="header-section-number">9.3.3</span> ou des distances</a></li>
+  </ul></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références"><span class="header-section-number">9.4</span> Références</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapître</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#accessoires de ggplot</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#NLP</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse de données</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># glossaire</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glossary)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary_path</span>(<span class="st">"glossary.yml"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary_style</span>(<span class="at">color =</span> <span class="st">"purple"</span>, </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">text_decoration =</span> <span class="st">"underline"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>               <span class="at">def_bg =</span> <span class="st">"#333"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>               <span class="at">def_color =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<style>
+a.glossary {
+  color: purple;
+  text-decoration: underline;
+  cursor: help;
+  position: relative;
+}
+
+/* only needed for popup = "click" */
+/* popup-definition */
+a.glossary .def {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px;
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 6px;
+}
+/* show on click */
+a.glossary:active .def {
+  display: inline-block;
+}
+/* triangle arrow */
+a.glossary:active .def::after {
+  content: ' ';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+</style>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary_popup</span>(<span class="st">"click"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#glossary_add(term = "hapax", def = "Mot unique dans un corpus donné")</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#tableau</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#palettes</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#names(wes_palettes)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>col_1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>col_1b<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#F4B5BD"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>col_2<span class="ot">&lt;-</span>c <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>, <span class="st">"#F4B5BD"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>col_4<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"#85D4E3"</span>, <span class="st">"#F4B5BD"</span>, <span class="st">"#9C964A"</span>, <span class="st">"#CDC08C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<p><strong>Objectifs du chapitre :</strong></p>
+<div>
+<p><em>Puisque nous savons découper une chaîne de caractères en unités élémentaires, mais aussi en caractériser la nature (POS,…), nous allons apprendre à mieux représenter ces éléments sous formes de tableaux statistiques</em></p>
+</div>
+<p>Dans ce chapitre, nous allons travailler sur les textes de MC Solaar, soit un ensemble de 44 chansons (et rien n’empêche de <a href="https://www.youtube.com/watch?v=22-kiKkc614">mettre le son</a>.</p>
+<section id="décomposons-le-pipe" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="décomposons-le-pipe"><span class="header-section-number">9.1</span> Décomposons le pipe</h2>
+<section id="lire-les-données-et-les-sélectionner" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="lire-les-données-et-les-sélectionner"><span class="header-section-number">9.1.1</span> lire les données et les sélectionner</h3>
+<p>On commence par lire le fichier, en apportant des petites corrections.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">###LECTURE du FICHIERS</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/RapLyrics.csv"</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">"WINDOWS-1252"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Artiste<span class="sc">==</span><span class="st">"MC Solaar"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Paroles=</span><span class="fu">str_remove_all</span>(Paroles, <span class="st">"&lt;U</span><span class="sc">\\</span><span class="st">+[0-9A-F]{4}&gt;"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="constituer-le-corpus" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="constituer-le-corpus"><span class="header-section-number">9.1.2</span> Constituer le corpus</h3>
+<p>On constitue le corpus et on en profites pour examiner les caractéristiques du texte.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### création du corpus</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df<span class="sc">$</span>Paroles, <span class="at">doc_var=</span>df)  <span class="co"># build a new corpus from the texts</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>summary<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(<span class="fu">summary</span>(corpus))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>summary2<span class="ot">&lt;-</span><span class="fu">cbind</span>(df<span class="sc">$</span>Titre,df<span class="sc">$</span>Date,summary)<span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Titre=</span><span class="dv">1</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Date=</span><span class="dv">2</span>)<span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Text,<span class="sc">-</span><span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TTR=</span>Types<span class="sc">/</span>Tokens,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         complexité<span class="ot">=</span>Tokens<span class="sc">/</span>Sentences,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year=</span><span class="fu">year</span>(Date)) <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Titre=</span><span class="fu">str_remove_all</span>(Titre, <span class="st">"&lt;U</span><span class="sc">\\</span><span class="st">+[0-9A-F]{4}&gt;"</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summary2, <span class="fu">aes</span>(<span class="at">x=</span>Year,<span class="at">y=</span>TTR))<span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>Titre), <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Evolution de la diversité du lexique (TTR)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q09_token_to_dfm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tokenizer" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="tokenizer"><span class="header-section-number">9.1.3</span> tokenizer</h3>
+<p>On passe à la tokenisation en nettoyant la ponctuation, les nombres et les symboles. Ainsi que les stopwords.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer un dictionnaire de stop words en français</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stopwords_fr <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"fr"</span>, <span class="at">source =</span> <span class="st">"stopwords-iso"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(df<span class="sc">$</span>Paroles,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> stopwords_fr)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(toks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 6 documents.
+text1 :
+ [1] "Fuck"      "Terre"     "meurs"     "testament" "Déposez"   "cendres"  
+ [7] "bouche"    "opposants" "Virez"     "coup"      "d'front"   "kick"     
+[ ... and 360 more ]
+
+text2 :
+ [1] "J'étais"    "cool"       "assis"      "banc"       "c'était"   
+ [6] "printemps"  "cueillent"  "marguerite" "amants"     "Overdose"  
+[11] "douceur"    "jouent"    
+[ ... and 211 more ]
+
+text3 :
+ [1] "s'étaient"  "rencontrés" "bancs"      "d'l'école"  "heure"     
+ [6] "colle"      "maths"      "cours"      "d'espagnol" "C'était"   
+[11] "fille"      "fun"       
+[ ... and 160 more ]
+
+text4 :
+ [1] "passe-t-il" "c'est"      "personnel"  "douleur"    "éternelle" 
+ [6] "partageais" "qu'avec"    "ciel"       "monstre"    "yeux"      
+[11] "verts"      "synonyme"  
+[ ... and 215 more ]
+
+text5 :
+ [1] "Hasta"      "siempre"    "viva"       "Revolucion" "Rapero"    
+ [6] "numero"     "uno"        "el"         "grito"      "cancion"   
+[11] "Soy"        "el"        
+[ ... and 202 more ]
+
+text6 :
+ [1] "vie"        "belle"      "vie"        "belle"      "vie"       
+ [6] "belle"      "chambre"    "jour"       "normal"     "J'apprends"
+[11] "journaux"   "j'suis"    
+[ ... and 287 more ]</code></pre>
+</div>
+</div>
+</section>
+<section id="construire-le-dfm" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="construire-le-dfm"><span class="header-section-number">9.1.4</span> Construire le <code>dfm</code></h3>
+<p>Les tokens sont dans quanteda une liste de mots associés à chaque texte. En l’Etat ils ne peuvent être exploités directement. On aura besoin dans les analyses ultérieures de les recomposer sous la forme d’un tableau texte x mots, dans lequel chaque cellule représente le nombre de fois où un mot est employé dans un texte.</p>
+<p>Des outils tels que <code>quanteda</code>, simplifie la tâche en proposant une fonction qui fait l’opération simplement en une fonction élémentaire. Cette matrice que nous appelons <code>dfm</code> pour document feature matrix (les matrices peuvent êtres des mots ou d’autres termes comme des collocations) , possède une particularité : c’est une matrice creuse, ou vide, la plus part de ses éléments sont égaux à zéro.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dfm<span class="ot">&lt;-</span><span class="fu">dfm</span>(toks)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dfm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 6 documents, 4,876 features (96.28% sparse) and 0 docvars.
+       features
+docs    fuck terre meurs testament déposez cendres bouche opposants virez coup
+  text1    1     4     1         1       1       1      1         1     1    1
+  text2    0     0     0         0       0       0      0         0     0    0
+  text3    0     0     0         0       0       0      0         0     0    0
+  text4    0     0     0         0       0       0      0         0     0    0
+  text5    0     0     0         0       0       0      0         0     0    0
+  text6    0     0     0         0       0       0      0         0     0    0
+[ reached max_nfeat ... 4,866 more features ]</code></pre>
+</div>
+</div>
+<p>Pour mieux s’en représenter le contenu, un petit nuage de mots fera l’affaire. On sélectionne ceux qui ont été employés au moins cinq fois.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dfm_df<span class="ot">&lt;-</span><span class="fu">convert</span>(dfm, <span class="at">to=</span><span class="st">"data.frame"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>foo1<span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary2<span class="sc">$</span>Titre, dfm_df) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Titre=</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>doc_id)<span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Titre, <span class="at">names_to =</span> <span class="st">"Tokens"</span>, <span class="at">values_to =</span> <span class="st">"Fréquence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Tokens)<span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Fréquence<span class="ot">=</span><span class="fu">sum</span>(Fréquence)) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Fréquence<span class="sc">&gt;</span><span class="dv">5</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">nrow</span>(foo1)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo1, <span class="fu">aes</span>(<span class="at">label =</span> Tokens, <span class="at">size =</span> Fréquence)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="fu">aes</span>(<span class="at">color=</span>Fréquence)) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">"brown"</span>, <span class="at">high =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q09_token_to_dfm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary2<span class="sc">$</span>Titre, dfm_df) <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Titre=</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>doc_id)<span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Titre, <span class="at">names_to =</span> <span class="st">"Tokens"</span>, <span class="at">values_to =</span> <span class="st">"Fréquence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Tokens)<span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Fréquence<span class="ot">=</span><span class="fu">sum</span>(Fréquence)) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Fréquence<span class="sc">&lt;</span><span class="dv">2</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>l<span class="ot">&lt;-</span><span class="fu">nrow</span>(foo)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary2<span class="sc">$</span>Titre, dfm_df) <span class="sc">|&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Titre=</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>doc_id)<span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Titre, <span class="at">names_to =</span> <span class="st">"Tokens"</span>, <span class="at">values_to =</span> <span class="st">"Fréquence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Tokens)<span class="sc">|&gt;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Fréquence<span class="ot">=</span><span class="fu">sum</span>(Fréquence)) <span class="sc">|&gt;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Fréquence<span class="sc">&gt;</span><span class="dv">1</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">nrow</span>(foo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>A ce stade on dispose d’un tableau textes x mots de dimension [44,5800] dont la grande part sont des <a class="glossary">hapax<span class="def">Mot unique dans un corpus donné</span></a> , on en compte 3522. Ils sont 1354 à être répété plus d’une fois, et 270 6 fois et plus.</p>
+<p>En voici une image condensée.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_afc <span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary2<span class="sc">$</span>Titre, dfm_df) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Titre=</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>doc_id)<span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Titre, <span class="at">names_to =</span> <span class="st">"Tokens"</span>, <span class="at">values_to =</span> <span class="st">"Fréquence_text"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Titre, Tokens)<span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Fréquence<span class="at">_text=</span><span class="fu">sum</span>(Fréquence_text))<span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()<span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(foo1)<span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Fréquence))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span> df_afc<span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Fréquence<span class="sc">&gt;</span><span class="dv">15</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(Titre, Tokens, <span class="at">fill =</span> Fréquence_text)) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"grey10"</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">60</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">7</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q09_token_to_dfm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_AFC<span class="ot">&lt;-</span>df_afc <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Fréquence) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols=</span>Tokens, <span class="at">names_from =</span> <span class="st">"Titre"</span>, <span class="at">values_from =</span> <span class="st">"Fréquence_text"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var=</span><span class="st">"Tokens"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_AFC[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      A La Claire Fontaine AIWA Arkansas Baby Love Bouge de là Caroline
+acte                     0    0        0         0           0        0
+aiwa                     0   12        0         0           0        0
+aller                    0    0        0         0           1        0
+amis                     0    0        0         0           1        0
+amor                     0    0        0         0           0        0
+anges                    0    0        0         0           0        0</code></pre>
+</div>
+</div>
+</section>
+<section id="son-analyse-par-la-vénérable-afc" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="son-analyse-par-la-vénérable-afc"><span class="header-section-number">9.1.5</span> Son analyse par la vénérable AFC</h3>
+<p>L’ Analyse factorielle des Correspondance, héritage de <span class="citation" data-cites="benzecri_analyse_2006">Benzecri (<a href="#ref-benzecri_analyse_2006" role="doc-biblioref">2006</a>)</span>, est l’outil traditionnel de l’analyse textuelle et de ce type de tableau. Elle permet de donner une représentation des lignes et des colonnes, des mots et des textes, simultanément.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res.ca <span class="ot">&lt;-</span> <span class="fu">CA</span>(df_AFC, <span class="at">graph =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#fviz_screeplot(res.ca, addlabels = TRUE, ylim = c(0, 10))</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>d_word<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(res.ca<span class="sc">$</span>row<span class="sc">$</span>coord) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">"Tokens"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(foo1) <span class="sc">%&gt;%</span><span class="fu">filter</span>(Fréquence<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>d_texte<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(res.ca<span class="sc">$</span>col<span class="sc">$</span>coord)<span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">"Tokens"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(Fréquence<span class="ot">=</span><span class="dv">10</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>ca<span class="ot">&lt;-</span><span class="fu">rbind</span>(d_word,d_texte) <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type=</span><span class="fu">ifelse</span>(Fréquence<span class="sc">==</span><span class="dv">10</span>,<span class="st">"texte"</span>, <span class="st">"word"</span>))</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ca, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">Dim 1</span><span class="st">`</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Dim 2</span><span class="st">`</span>, <span class="at">color=</span>Type))<span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>Tokens), <span class="at">size=</span><span class="dv">2</span>, <span class="at">max.overlaps =</span><span class="dv">80</span>)<span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="co">#+ylim(-2,1)+xlim(-1,1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q09_token_to_dfm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nous verrons dans le chapitre suivant des méthodes bien plus efficace.</p>
+</section>
+</section>
+<section id="tf-idf" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="tf-idf"><span class="header-section-number">9.2</span> Tf-idf</h2>
+<p>Le dfm a un défaut, il ne tient pas compte du fait que les mots fréquents peuvent être partagés par un grand nombre de texte et n’indiquer rien d’autre qu’un élément régulier du corpus, un plus petit dénominateur commun, des mots un peu moins fréquents mais concentrés sur quelques textes sont plus informatifs.</p>
+<p>C’est cette idée qui conduit à une autre métrique, celle du Tf-idf qui pondère la fréquence d’un mot dans un texte par l’inverse de sa fréquence dans les documents. Les mots qu’on retrouvent partout sont pénalisés.</p>
+<p>Dans un <em>dfm</em>, chaque cellule du tableau indique la fréquence d’un mot dans un document. Cette mesure cependant peut ne pas être pertinentes. Les mots les plus fréquents peuvent se distribuer également entre les documents, et leur fréquence indique au mieux un lieu commun.</p>
+<p>L’idée clé va être de pondérer la fréquence d’un terme dans un document par la présence de ce terme à travers les documents. S’il se retrouve partout on en minore le poids, s’ils est présent dans une petit groupe de document on va lui donner de l’importance.</p>
+<section id="le-calcul" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="le-calcul"><span class="header-section-number">9.2.1</span> le calcul</h3>
+<p>Le TF-IDF est calculé en deux étapes :</p>
+<ol type="1">
+<li><strong>Term Frequency (TF)</strong> : La fréquence d’un terme <span class="math inline">\(t\)</span> dans un document <span class="math inline">\(d\)</span> est définie par :<span class="math inline">\(f_{td}\)</span></li>
+</ol>
+<p><span class="math inline">\(TF_{t,d} = \frac{f_{td}}{f_{.d}}\)</span></p>
+<ol start="2" type="1">
+<li><strong>Inverse Document Frequency (IDF)</strong> : L’IDF d’un terme ( t ) dans un corpus de documents est donnée par :</li>
+</ol>
+<p><span class="math inline">\(IDF_{t} = \log (\frac{D}{D_t} )\)</span></p>
+<p>Le TF-IDF est alors le produit du TF et de l’IDF :</p>
+<p>$ (t, d) = (t, d) (t)$</p>
+</section>
+<section id="les-variantes" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="les-variantes"><span class="header-section-number">9.2.2</span> les variantes</h3>
+</section>
+<section id="on-met-en-oeuvre" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="on-met-en-oeuvre"><span class="header-section-number">9.2.3</span> On met en oeuvre</h3>
+</section>
+<section id="le-concept-de-tfidf" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="le-concept-de-tfidf"><span class="header-section-number">9.2.4</span> le concept de tfidf</h3>
+<p>Cette idée est formalisée par le critère du TfIdf. La fréquence d’un terme dans un document (Tf) par être pondéré par l’inverse de la fréquence des documents dans lesquels il est présent (Idf). S’il est présent partout (c’est le cas des verbes auxiliaires) sont poids sera minimal, s’il est concentré dans un petit nombre de documents on lui donnera un poids plus important.</p>
+<p>Formalisation</p>
+<p>la fréquence brute des termes est le rapport du nombre de termes i dans le document d sur le nombre de termes du document i</p>
+<p><span class="math inline">\(tf_{id}= n_{id}\)</span></p>
+<p>Cette fréquence peut être modulée par le nombre de mots dans le texte, cette fréquence relative permet d’avoir une idée de la densité d’un terme dans un document.</p>
+<p><span class="math inline">\(tf_{id}= n_{id}/\sum_{i}(n_{id})\)</span></p>
+<p>la pondération</p>
+<p><span class="math inline">\(idf_{id}= log(D_{}/D_{i})\)</span></p>
+<p>Ce concept souligne une chose capitale : un terme, ou token, dans un corpus, est caractérisé par une double distribution : d’une part sa part dans l’ensemble des termes de références, et d’autre part, sa présence à travers les documents.</p>
+</section>
+<section id="dautres-variantes" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="dautres-variantes"><span class="header-section-number">9.2.5</span> D’autres variantes</h3>
+<p>Celles de l’idf <a href="https://programminghistorian.org/fr/lecons/analyse-de-documents-avec-tfidf" class="uri">https://programminghistorian.org/fr/lecons/analyse-de-documents-avec-tfidf</a></p>
+<p>le bm25 est une généralisation à une requête Q de plusieurs termes et vise à qualifier la pertinence</p>
+<p>on développe avec une étude empirique.</p>
+</section>
+</section>
+<section id="calculer-les-coocurrences" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="calculer-les-coocurrences"><span class="header-section-number">9.3</span> Calculer les coocurrences</h2>
+<section id="un-simple-exemple" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="un-simple-exemple"><span class="header-section-number">9.3.1</span> Un simple exemple</h3>
+<p>on continue avec quanteda.</p>
+</section>
+<section id="des-mesures-plus-sensibles" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="des-mesures-plus-sensibles"><span class="header-section-number">9.3.2</span> Des mesures plus sensibles</h3>
+<p>les co-occurrences peuvent être calculées sur une fenêtre de texte. Deux mots ne sont pas forcément similaires s’ils sont dans le même texte, il le sont plus s’ils sont employés dans la même séquence de texte, dans une même fenêtre. C’est une manière de prendre mieux en compte le contexte, cette notion essentielle pour identifier le sens des termes : il est lié à leur proximités aux autres termes de leur contexte. Le sens des mots se déterminent par leurs usages communs.</p>
+</section>
+<section id="ou-des-distances" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="ou-des-distances"><span class="header-section-number">9.3.3</span> ou des distances</h3>
+</section>
+</section>
+<section id="références" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="références"><span class="header-section-number">9.4</span> Références</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-benzecri_analyse_2006" class="csl-entry" role="listitem">
+Benzecri, Jean-Paul. 2006. <span>“L’analyse de Données : Histoire, Bilan, Projets Et Perspectives,”</span> 5.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./q08_Analyse_syntaxic.html" class="pagination-link" aria-label="Annotations syntaxiques">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./q10_Analyse_Cooccurences.html" class="pagination-link" aria-label="Analyse des co-occurrences">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

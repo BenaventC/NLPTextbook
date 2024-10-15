@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "",
+    "text": "Préambule\n“Au commencement était le verbe”, et désormais le verbe est partout, non pas l’esprit de Dieu, mais la parole humaine qui s’éteignait avec le vent, la rumeur mais qui désormais, accumule ses traces imprimées de manière systématique, non plus des petits mots passés de main en main, mais l’enregistrement des transactions informatiques. Le verbe est désormais une copie du monde, moins l’affirmation d’une vision, que la stratification de nos manifestations sociales.\nC’est bien sur le fruit d’un développement technique engagés depuis 10 000 ans et dont l’imprimerie est une nouvelle étape. La révolution actuelle réside dans la colonisation de l’espace social, chaque bribes de parole est enregistrée , transcrite, archivée. Le livre n’est plus qu’un îlot dans un océan de texte.\nIl y a un défi empirique pour les sciences sociales, la société produit massivement la documentation de son développement. L’exploitation de ces sources est un enjeu majeur pour la psychologique, sociologique, économique, le droit, les sciences de gestion en ouvrant un nouvel accès au données.\nA mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d’études que pour répondre à des besoins opérationnels. Aujourd’hui, dans le sillage de l’invention des embeddings, nous sommes à l’ère des grands modèles de langages qui ouvrent de nouveaux horizons dans la capacité de produire du texte (par exemple des descriptions d’images), de transformer le texte (résumé ou traduction), et surtout de l’annoter (classification, NER…)",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#le-but-de-louvrage",
+    "href": "index.html#le-but-de-louvrage",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Le but de l’ouvrage",
+    "text": "Le but de l’ouvrage\nCe e-book est le syllabus d’un cours que nous dispensons sous différents formats et avec différents degrés d’approfondissement. Il fait l’inventaire des méthodes les plus courantes incluant le développement des embeddings et aboutit à l’usage des LLM pour différentes formes d’annotations. Il a une vocation pratique, étudier des cas, et décrire des codes.",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#les-contributeurs",
+    "href": "index.html#les-contributeurs",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Les contributeurs",
+    "text": "Les contributeurs\nOn ne peut (encore) en produire la liste exhaustives, mais plusieurs générations d’étudiants ont contribué à ce travail en explorant un certain nombre de jeux de données proposés ici.",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#le-plan-du-cours",
+    "href": "index.html#le-plan-du-cours",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Le plan du cours",
+    "text": "Le plan du cours\nIl s’organise selon les grandes étapes du processus d’analyse et des types de problèmes posés par le traitement et l’analyse du texte. Ce processus va de l’acquisition des données à leurs représentations en passant par des phases de transformation, mais aussi un ordre de complexité des modèles et des ressources.\nIl suit ainsi une sorte de développement historique qui se construit par l’accumulation de différentes philosophies d’analyses et de méthodes et qui peut se présenter en trois grandes périodes:\n\ncompter les mots et jouer avec leur co-occurences\nannoter des mots en s’appuyant sur leurs régularités syntaxiques.\nencoder les mots dans un espace vectoriel, cette perspective a été ouverte par word2vec , étendue avec les transformers, systématisée par les grands modèles de langages tels que gpt4 ou Bloom.\n\nVoici les raisons qui organisent le cours en 20 chapitres (c’est à ajuster au cours de la rédaction)\n\nPréambule (ce que vous êtes en train de lire !)\nChapitre 1 : une introduction générale à des éléments linguistique et technique et sociaux de l’analyse du langage naturel et de ses fulgurantes évolutions au cours de la dernière décennie.\nChapitre 2 : Constituer des corpus. Pour les sciences sociales, le texte est un document qu’on étudie par collection. Il faut aussi penser à la notion de corpus.\nChapitre 4 : corpus - techniques avancées D’un point de vue matériel le corpus est aussi\nChapitre 5 : Explorer et naviguer dans le corpus\nChapitre 6 : Analyse quantitative du corpus\nChapitre 7 : Tokenisation et dtm\nChapitre 8 : Analyse des co-occurences\nChapitre 9 : au début il y avait l’analyse factorielle\nChapitre 10 : SVD et LSA :\nChapitre 11 : Topic model\nChapitre 12 : word2vec to doc2vec\nChapitre 13 : Transformers\nChapitre 14 : Supervised modeling\nChapitre 15 : LLM\nChapitre 16 : NER\nChapitre 17 : abstracting\nChapitre 18 : generative models , un monde à inventer.",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#data-sets",
+    "href": "index.html#data-sets",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Data sets",
+    "text": "Data sets\nOn s’appuiera sur des data test “réel” et publics\n\nTrump Tweeter Archive : c’est un site qui rassemble tous les tweets émis par Donald Trump depuis 2010, et propose un outil de navigation.\nTripadvisor en Polynésie constitués par Gwevy et Chabrier de l’Université de Polynésie.\nAirbnb Paris 2023 à partir de Inside Airbnb\nPMP40ans : ce set de données comprend tous les résumés d’articles publiés par la revue Politique et Management Public sur une période de 40 années de sa naissance en 1983 jusqu’en 2023. C’est un observatoire intéressant d’une discipline naissance et de l’évolution des normes professionnelles de la recherche en gestion.\nRapLyrics : Une collection de texte de rap français des années 80 à 2020 constituées par un groupe d’étudiants.",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#packages",
+    "href": "index.html#packages",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Packages",
+    "text": "Packages\nCe cours utilise les ressources de r, de rstudio et de Quarto, de l’analyse des données à la publication de ce book. On utilise Zotero pour gérer la bibliographie.Il n’y a jamais une solution unique, nous avons fait des choix de méthodes qui se reflètent dans celui des packages dont voici la liste commentée. Pour l’usage des modèle LLM on basculera progressivement en python qui propose immensément plus de ressources.\n\n\nShow the code\n#environnement de travail\nlibrary(tidyverse) # the perfect tool box. Comprend dplyr pour la gestion des données, ggplot pour les graphiques, et d'autres packages utiles comme lubreidate ou stringr.\nlibrary(flextable) # pour produire des tableaux élégants\n\n#ses compléments  \nlibrary(ggwordcloud) ##complete ggplot pour les nuages de mots\nlibrary(ggrepel) ## pour éviter la superposition de label\n\n#glosaire \nlibrary(glossary)\nglossary_path(\"glossary.yml\")\n# un exemple pour ajouter des termes au cours de la rédaction\n#glossary_add(term = \"loi de Dirichlet\",\n#             def = \"la loi de Dirichlet, souvent notée Dir(α), est une famille de lois de probabilité continues pour des variables #aléatoires multinomiales.(Ex. probabilités d'un mot parmi les trois milles d'usage courant\")\n\n#ressource nlp  \nlibrary(quanteda) \nlibrary(udpipe)\n\n#analyse de données\nlibrary(FactoMineR)\nlibrary(factoextra)\n\n#python\nlibrary(reticulate)",
+    "crumbs": [
+      "Préambule"
+    ]
+  },
+  {
+    "objectID": "index.html#ressources-complémentaires",
+    "href": "index.html#ressources-complémentaires",
+    "title": "Introduction aux méthodes de traitement du langage naturel",
+    "section": "Ressources complémentaires",
+    "text": "Ressources complémentaires\n\nr en français\nOn encourage vivement le lecteur à jouer avec les modèles de Hugging Face\nLe Stanford Natural Language Processing Group est sans doute la principale institution scientifique dans ce domaine.\nEn France : Acss-PSL, Ollion, science po …\n\nPour aller plus loin, il est possible de suivre le NLPWorkshop de Acss ou le cours ” introduction au NLP pour les sciences sociales ” dispensé chaque année en novembre au sein de la PSL week.",
+    "crumbs": [
+      "Préambule"
+    ]
+  }
+]
