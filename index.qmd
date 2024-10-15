@@ -9,7 +9,7 @@ C'est bien sur le fruit d'un développement technique engagés depuis 10 000 ans
 
 Il y a un défi empirique pour les sciences sociales, la société produit massivement la documentation de son développement. L'exploitation de ces sources est un enjeu majeur pour la psychologique, sociologique, économique, le droit, les sciences de gestion en ouvrant un nouvel accès au données.
 
-A mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d'études que pour répondre à des besoins opérationnels. Aujourd'hui, dans le sillage de l'invention des embeddings, nous sommes à l'ère des grands modèles de langages qui ouvrent de nouveaux horizons dans la capacité de produire du texte (par exemple des descriptions d'images), de transformer le texte (résumé ou traduction), et surtout de l'annoter ( classification, NER...)
+A mesure que ces données prolifèrent, des méthodes pour les analyser se sont développées à grande vitesse, moins pour des motivations d'études que pour répondre à des besoins opérationnels. Aujourd'hui, dans le sillage de l'invention des embeddings, nous sommes à l'ère des grands modèles de langages qui ouvrent de nouveaux horizons dans la capacité de produire du texte (par exemple des descriptions d'images), de transformer le texte (résumé ou traduction), et surtout de l'annoter (classification, NER...)
 
 ## Le but de l'ouvrage
 
