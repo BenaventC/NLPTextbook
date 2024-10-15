@@ -187,7 +187,7 @@ l'action dans le langage se manifeste par des formes verbales que précise certa
 
 ## Reconnaissance d'entités nommées
 
-En français courant les entités nommées correspondent largement à l'idée de noms propres. Un nom propre à une entité. Une chose qui est est indépendamment des catégories qui peuvent l'étiqueter. John Dupont, né le 19 février 1898 à Glasgow et abattu à Verdun le 8 août 1917, est un personnage unique. John Dupont ne désigne par une catégorie, mais bien une personne singulière. La désignation peut cependant être ambiguë, il y a un "Paris, Texas.", et un Paris sur Seine. La morphologie ne résout pas l’ambiguïté.
+En français courant les entités nommées correspondent largement à l'idée de noms propres. Un nom propre à une entité. Une chose qui est est indépendamment des catégories qui peuvent l'étiqueter. John Dupont, né le 19 février 1898 à Glasgow et abattu à Verdun le 8 août 1917, est un personnage unique. John Dupont ne désigne par une catégorie, mais bien une personne singulière. La désignation peut cependant être ambiguë, il y a un "Paris, Texas.", et un Paris sur Seine. La morphologie ne résout pas l'ambiguïté.
 
 les entités nommées appartiennent à différentes catégories d'objets : des noms de lieux, des noms de personnes, des noms de marques, des acronymes d'organisation,
 

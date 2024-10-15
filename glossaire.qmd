@@ -1,4 +1,4 @@
-# ZGlossaire {.unnumbered}
+# Glossaire {.unnumbered}
 
 fonction glossaire
 

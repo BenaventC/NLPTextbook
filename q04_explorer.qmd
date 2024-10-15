@@ -37,13 +37,13 @@ Le premier réflexe dans la lecture d'un corpus est de rechercher dans quels con
 Exemple :
 
 ```{r}
-df <- read_csv("data/PMPLast3.csv", locale = locale(encoding = "WINDOWS-1252"))%>%
+df <- read_csv("data/PMPLast3.csv", locale = locale(encoding = "WINDOWS-1252"))|>
    rename(Text=11, Year=3)
  
 corp<-corpus(df$Text)
  
 foo<- kwic(corp, "évaluation",
-  window = 6) %>%
+  window = 6) |>
   as.data.frame()
 
 set_flextable_defaults(
@@ -68,12 +68,14 @@ library(readr)
 library(corporaexplorer)   
 library(readr) 
 
-foo<-df %>% select(Key, Author, Title, Year, Text) %>%
-  rename(year=Year)%>%filter(Text!="Null" & !is.na(year))    
+foo<-df |> 
+  select(Key, Author, Title, Year, Text) |>
+  rename(year=Year)|>
+  filter(Text!="Null" & !is.na(year))    
 
 corpus <- prepare_data(foo, date_based_corpus =FALSE, grouping_variable = "year")
 
-explore(corpus)
+#explore(corpus)
 
 
 ```
@@ -85,3 +87,5 @@ Dans la photo d'écran suivante, on teste les termes " politique" et "management
 ### reprendre le topic de revtools dans topic model
 
 https://revtools.net/screening.html#screening-with-topic-models
+
+</div>

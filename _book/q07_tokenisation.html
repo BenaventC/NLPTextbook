@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Jouer avec les jetons – Introduction aux méthodes de traitement du langage naturel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./q08_Analyse_syntaxic.html" rel="next">
+<link href="./q06_Analyse_quantitative.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./q07_tokenisation.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Jouer avec les jetons</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction aux méthodes de traitement du langage naturel</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préambule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q02_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">La notion de corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q03_corpus_suite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Corpus : techniques avancées</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q04_explorer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Explorer le corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q05_manipuler_caractere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler les chaines de caractères</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q06_Analyse_quantitative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse quantitative du corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q07_tokenisation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Jouer avec les jetons</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q08_Analyse_syntaxic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q09_token_to_dfm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Des tokens à leurs co-occurences.</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q10_Analyse_Cooccurences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analyse des co-occurrences</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q11_Sentimentetdict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Compter les mots pour annoter</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q12_Topic_Model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modèles de Topic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q13_Firstembeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q14_Transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transformers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q15_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification with embeddings</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q16_LLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction aux LLMs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q17_NER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reconnaissance des entités nommées (NER)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q18_ZeroShotClassification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Zero shot Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./q19_VLLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Utilisation de l’IA generative</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ZGlossaire</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#quelques-exercices-de-tokenization" id="toc-quelques-exercices-de-tokenization" class="nav-link active" data-scroll-target="#quelques-exercices-de-tokenization"><span class="header-section-number">7.1</span> Quelques exercices de tokenization</a>
+  <ul class="collapse">
+  <li><a href="#les-lettres" id="toc-les-lettres" class="nav-link" data-scroll-target="#les-lettres"><span class="header-section-number">7.1.1</span> Les lettres</a></li>
+  <li><a href="#les-mots" id="toc-les-mots" class="nav-link" data-scroll-target="#les-mots"><span class="header-section-number">7.1.2</span> les mots</a></li>
+  <li><a href="#les-phrases" id="toc-les-phrases" class="nav-link" data-scroll-target="#les-phrases"><span class="header-section-number">7.1.3</span> Les phrases</a></li>
+  </ul></li>
+  <li><a href="#n-grammes" id="toc-n-grammes" class="nav-link" data-scroll-target="#n-grammes"><span class="header-section-number">7.2</span> N-grammes</a>
+  <ul class="collapse">
+  <li><a href="#mise-en-oeuvre" id="toc-mise-en-oeuvre" class="nav-link" data-scroll-target="#mise-en-oeuvre"><span class="header-section-number">7.2.1</span> Mise en oeuvre</a></li>
+  </ul></li>
+  <li><a href="#choisir-des-n-grammes-pertinents" id="toc-choisir-des-n-grammes-pertinents" class="nav-link" data-scroll-target="#choisir-des-n-grammes-pertinents"><span class="header-section-number">7.3</span> Choisir des n-grammes pertinents</a>
+  <ul class="collapse">
+  <li><a href="#créer-les-tokens-avec-quanteda" id="toc-créer-les-tokens-avec-quanteda" class="nav-link" data-scroll-target="#créer-les-tokens-avec-quanteda"><span class="header-section-number">7.3.1</span> Créer les <em>tokens</em> avec ‘quanteda’</a></li>
+  <li><a href="#application-à-la-détection-des-entités-nommées" id="toc-application-à-la-détection-des-entités-nommées" class="nav-link" data-scroll-target="#application-à-la-détection-des-entités-nommées"><span class="header-section-number">7.3.2</span> Application à la détection des entités nommées</a></li>
+  <li><a href="#composer-des-tokens-à-partir-dexpressions-multi-mots-collocation" id="toc-composer-des-tokens-à-partir-dexpressions-multi-mots-collocation" class="nav-link" data-scroll-target="#composer-des-tokens-à-partir-dexpressions-multi-mots-collocation"><span class="header-section-number">7.3.3</span> Composer des <em>tokens</em> à partir d’expressions multi-mots : collocation</a></li>
+  <li><a href="#identifier-les-autres-concepts" id="toc-identifier-les-autres-concepts" class="nav-link" data-scroll-target="#identifier-les-autres-concepts"><span class="header-section-number">7.3.4</span> Identifier les autres concepts</a></li>
+  </ul></li>
+  <li><a href="#des-tokens-au-dtm" id="toc-des-tokens-au-dtm" class="nav-link" data-scroll-target="#des-tokens-au-dtm"><span class="header-section-number">7.4</span> Des tokens au dtm</a></li>
+  <li><a href="#la-question-des-mots-distinctifs" id="toc-la-question-des-mots-distinctifs" class="nav-link" data-scroll-target="#la-question-des-mots-distinctifs"><span class="header-section-number">7.5</span> La question des mots distinctifs</a>
+  <ul class="collapse">
+  <li><a href="#keyness-index" id="toc-keyness-index" class="nav-link" data-scroll-target="#keyness-index"><span class="header-section-number">7.5.1</span> Keyness index</a></li>
+  <li><a href="#find-keywords-based-on-the-textrank-algorithm" id="toc-find-keywords-based-on-the-textrank-algorithm" class="nav-link" data-scroll-target="#find-keywords-based-on-the-textrank-algorithm"><span class="header-section-number">7.5.2</span> Find keywords based on the Textrank algorithm</a></li>
+  <li><a href="#rake" id="toc-rake" class="nav-link" data-scroll-target="#rake"><span class="header-section-number">7.5.3</span> Rake</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.6</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Jouer avec les jetons</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les librairies du chapître</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>()) </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set_flextable_defaults</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">font.size =</span> <span class="dv">10</span>, <span class="at">theme_fun =</span> theme_vanilla,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="dv">6</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">background.color =</span> <span class="st">"#EFEFEF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Objectifs du chapitre :</strong></p>
+<div>
+<p><em>L’analyse du texte commence par découper les chaines de caractères en unités pertinentes, c’est souvent le mot, ce peut être la syllabe, la phrase, ou la lettre. Ces unités sont des jetons, les pièces élémentaire d’un traitement plus sophistiqué. cette opération permet de quantifier le texte et de le représenter sous la forme de dfm.</em></p>
+</div>
+<p>L’étape initiale de toute analyse textuelle est de découper le texte en unités d’analyse, les <em>tokens</em>, ou jetons en français, ce qui transforme le texte écrit pour la compréhension humaine en données interprétables par l’ordinateur. Les <em>tokens</em> utilisés peuvent varier selon les objectifs de l’analyse et la nature du corpus, la granularité peut être plus ou moins fine. Les <em>tokens</em> peuvent ainsi être :</p>
+<ul>
+<li>des lettres : c’est l’unité insécable.</li>
+<li>des syllabes : ça permet de s’intéresser aux phonèmes.mais aussi d’extraire d’un mot les suffixes et préfixes, ainsi que les radicaux ( la racine du mot, ex : dés-espéré-ment).</li>
+<li>des mots : il s’agit du niveau le plus évident et le plus courant, que l’on privilégiera tout au long de ce livre, il présente aussi des difficultés car il ne coincide par avec l’unité de sens, par exemple avec les locutions: ” Président de la République”, ni avec les lexiques établis, ils peuvent prendre souvent la caractéristiques de <a href="http://stella.atilf.fr/MotsFantomes/">mots fantômes</a></li>
+<li>des phrases : c’est l’unité de langage, lui correspond un argument, une proposition ; l’usage du point suivi d’un espace et d’une majuscule est assez général pour les identifier.</li>
+<li>des paragraphes : c’est une unité plus générale, qui souvent développe une idée.</li>
+<li>des sections, des chapitres, ou des livres : selon la nature des documents, cela permet de découper le corpus en sous-unités.</li>
+</ul>
+<p>Les <em>tokenizers</em> sont les outils indispensables à cette tâche. Dans cet ouvrage, nous nous concentrons sur l’étude des mots. Lors de cette étude, un certain nombre de mots apparaissent de nombreuses fois, pour permettre de donner du sens au langage humain, mais ils ne portent pas en eux d’informations particulièrement pertinentes pour l’analyse : ce sont les <em>stopwords</em>, qu’il conviendra souvent d’éliminer.</p>
+<p>Les n-grammes, quant à eux, représentent des suites de n <em>tokens</em>. Un unigramme est donc équivalent à un <em>token</em>, un digramme<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> est une suite de deux <em>tokens</em>, etc. L’identification des n-grammes permet de détecter des suites de <em>tokens</em> qui reviennent plus souvent que leur probabilité d’occurrences. Si l’on se concentre sur les mots, nous sommes alors face à une unité sémantique, comme on le comprend facilement avec le digramme ‘Assemblée Nationale’ dont le sens est plus que ses constituants.</p>
+<p>Tokeniser revient donc à découper le texte pour en construire une représentation quantitative.C’est d’ailleurs une des spécificités des grands modèles de langage qui s’intréesse moins aux mots, qu’à ses décompositions, telles qu’un nombre limité( ~30 000) permette de générer la plupart des graphies et au passage de supporter les dysgraphies.</p>
+<section id="quelques-exercices-de-tokenization" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="quelques-exercices-de-tokenization"><span class="header-section-number">7.1</span> Quelques exercices de tokenization</h2>
+<section id="les-lettres" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="les-lettres"><span class="header-section-number">7.1.1</span> Les lettres</h3>
+<p>Commençons par un exemple simple, à l’aide d’une courte citation de Max Weber. On choisit les lettres pour unité de découpe, et l’on utilise le package <a href="https://cran.r-project.org/web/packages/tokenizers/vignettes/introduction-to-tokenizers.html">‘tokenizer’</a>. Automatiquement, ‘tokenizer’ met le texte en minuscule et élimine la ponctuation</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Les données</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MaxWeber <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Bureaucratie: le moyen le plus rationnel que l’on connaisse pour exercer un contrôle impératif sur des êtres humains."</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#On tokenise, plus on transforme en dataframe le résultat.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>toc_maxweber<span class="ot">&lt;-</span><span class="fu">tokenize_characters</span>(MaxWeber)<span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#On compte pour chaque token sa fréquence d'apparition</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>toc_maxweber <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(tokens)<span class="sc">%&gt;%</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#On représente par un diagramme en barre cette distribution des occuences d'apparition, en classant les tokens par fréquence</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(tokens,n), <span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x=</span><span class="dv">10</span>,<span class="at">y=</span><span class="dv">10</span>, <span class="at">label=</span><span class="fu">paste</span>(<span class="st">"nombre de tokens ="</span>, <span class="fu">nrow</span>(toc_maxweber)))<span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>               <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fréquence des tokens, unité = lettres"</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">x=</span><span class="st">"tokens"</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span><span class="st">"nombre d'occurences"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span><span class="st">" 'Bureaucratie: le moyen le plus rationnel que l’on connaisse pour exercer un contrôle impératif sur des êtres humains.' "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q07_tokenisation_files/figure-html/601-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="les-mots" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="les-mots"><span class="header-section-number">7.1.2</span> les mots</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Les données</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>MaxWeber <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Bureaucratie: le moyen le plus rationnel que l’on connaisse pour exercer un contrôle impératif sur des êtres humains. La bureaucratie est une forme d'organisation générale caractérisée par la prépondérance des règles et de procédures qui sont appliquées de façon impersonnelle par des agents spécialisés. Ces agents appliquent les règles sans discuter des objectifs ou des raisons qui les fondent. Ils doivent faire preuve de neutralité et oublier leurs propres intérêts personnels au profit de l’intérêt général."</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#On tokenise, plus on transforme en dataframe le résultat. le strp_punc écarte la ponctuation du processus.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>toc_maxweber<span class="ot">&lt;-</span><span class="fu">tokenize_words</span>(MaxWeber,<span class="at">strip_punct=</span><span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#On compte pour chaque token sa fréquence d'apparition</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>toc_maxweber <span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">n=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(tokens)<span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">sum</span>(n))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#On représente par un diagramme en barre cette distribution des occurrences, en classant les tokens par fréquence</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(tokens,n), <span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x=</span><span class="dv">10</span>,<span class="at">y=</span><span class="dv">4</span>, <span class="at">label=</span><span class="fu">paste</span>(<span class="st">"nombre de tokens ="</span>, <span class="fu">nrow</span>(toc_maxweber)))<span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>               <span class="fu">coord_flip</span>()<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fréquence des tokens, unité = mots"</span>, <span class="at">x=</span><span class="st">"tokens"</span>, <span class="at">y=</span><span class="st">"nombre d'occurences"</span>, <span class="at">caption =</span><span class="st">" 'Bureaucratie: le moyen le plus rationnel que l’on connaisse pour exercer un contrôle impératif sur des êtres humains.' "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q07_tokenisation_files/figure-html/602-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On peut également constater que certains mots sont proches, par exemple les deux derniers sur le graphiques précédents qui sont des déclinaisons du verbe appliquer. Il peut alors être pertinent de regrouper ces différentes formes verbales (comme un mot au singulier et au pluriel, au féminin et au masculin, ou conjugué sous différentes formes), pour faciliter l’analyse. C’est ce qu’on fait avec les opérations de <em>stemming</em> ou de lemmatisation, présentées au chapitre 8.</p>
+</section>
+<section id="les-phrases" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="les-phrases"><span class="header-section-number">7.1.3</span> Les phrases</h3>
+<p>On reproduit les mêmes opérations, mais cette fois sur les phrases de l’exemple précédent.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tokenize_sentences</span>(MaxWeber)<span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>(<span class="at">cwidth =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-3f67c42e{}.cl-3f5a1f90{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f5a1fa4{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f5f3b10{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-3f5f6112{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f5f611c{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f5f6126{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f5f6127{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-3f67c42e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-3f5f6112"><p class="cl-3f5f3b10"><span class="cl-3f5a1f90">tokens</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-3f5f611c"><p class="cl-3f5f3b10"><span class="cl-3f5a1fa4">Bureaucratie: le moyen le plus rationnel que l’on connaisse pour exercer un contrôle impératif sur des êtres humains.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f5f6126"><p class="cl-3f5f3b10"><span class="cl-3f5a1fa4">La bureaucratie est une forme d'organisation générale caractérisée par la prépondérance des règles et de procédures qui sont appliquées de façon impersonnelle par des agents spécialisés.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f5f6126"><p class="cl-3f5f3b10"><span class="cl-3f5a1fa4">Ces agents appliquent les règles sans discuter des objectifs ou des raisons qui les fondent.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f5f6127"><p class="cl-3f5f3b10"><span class="cl-3f5a1fa4">Ils doivent faire preuve de neutralité et oublier leurs propres intérêts personnels au profit de l’intérêt général.</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</section>
+</section>
+<section id="n-grammes" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="n-grammes"><span class="header-section-number">7.2</span> N-grammes</h2>
+<p>Les n-grammes sont des séquences de n <em>tokens</em>, généralement consécutifs. Sur la d’un base d’un corpus important on peut calculer la probabilité d’apparition d’un n-gramme. C’est l’exercice auquel une équipe de google s’est attelé avec le <a href="https://books.google.com/ngrams/">Books Ngram Viewer</a>. et dont nous encourageons l’étude détaillée.</p>
+<p>L’article original doit aussi être lu. Sur la base de 5 millions de livres numérisés en 2011 et représentant 4% du nombre total de livres à jamais publiés à ce moment, être lu aussi, il montre que, pour l’anglais, chaque année 8500 mots entrent dans le lexique, sans que les dictionnaires, pour des raisons évidentes de concision, n’en font l’inventaire. Le webster comprend 300 000 mots, alors que pour l’anglais l’estimation du nombre de termes différents, est passé de l’ordre de 500 000 en 1900, à plus d’1.5 million en 2000. Il donne aussi une dimension au lexique : celle de sa densité. Dans un corpus, à un moment donné quelle est la probabilité d’observer un token donné (au plus simple un mot). Sur un corpus de 500 milliards de termes (pour toutes les langues traitées), un mot qui apparaît une fois sur 1000 ( 10^-3), apparaît 5 millions de fois, s’il apparaît une fois sur 1 million, il apparaît 5000 fois. L’échelle de mesure est ainsi la fréquence : 10-3, 10-5, 10-6 ….</p>
+<p>La notion de ngram au-delà de son apparence de tautologie possède aussi un intérêt théorique majeure. Les ngram sont des chaines de markov. Intérêt théorique des n gram : ce sont des chaines de markov.</p>
+<p><a href="https://fr.wikipedia.org/wiki/N-gramme">Processus de markov</a></p>
+<p>Pour comprendre l’importance de ce concept on peut considérer au moins 3 applications remarquables</p>
+<p>Application à l’auto-complétion . Son efficacité dépend naturellement de la taille des données récoltées. On comprend que pour google il est aisé d’être précis dans l’estimation de ces probabilités!</p>
+<p>Mais mieux encore, ces propriété markovienne ( probabilistique) permettent aussi la correction d’erreur avec l’algorithme de Viterbi https://fr.wikipedia.org/wiki/Algorithme_de_Viterbi</p>
+<ul>
+<li>Le principe de ‘textcat’ est fondée sur ces n-grammes de lettre. Chaque langue se caractérise par une distribution particulière des n-grammes. Pour décider de l’appartenance d’un texte à une langue, si on dispose des profils de distribution, on compare la distribution des n-grammes du texte à ces références. On peut ainsi calculer une distance et attribuer le texte à la langue dont il est le plus proche.</li>
+</ul>
+<section id="mise-en-oeuvre" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="mise-en-oeuvre"><span class="header-section-number">7.2.1</span> Mise en oeuvre</h3>
+<p>Si la notion est simple, sa mise en oeuvre l’est presque autant. Nous l’illustrons avec une séries d’exemples et le package “tokenizer” qui a ici un avantage pédagogique. On étudiera plus loin les ressources de “quanteda”.</p>
+<p>On commence de suite par un exemple sur les lettres. c’est de pure forme. On sélectionne les ngrammes (k&gt;1 et k&gt;4) dont la fréquence est supérieure à trois.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tokenization des lettres</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>toc_maxweber<span class="ot">&lt;-</span><span class="fu">tokenize_character_shingles</span>(MaxWeber,<span class="at">n=</span><span class="dv">3</span>, <span class="at">n_min=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(toc_maxweber, <span class="at">n=</span><span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-3f8e1fa2{}.cl-3f7e54be{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f7e54c8{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f85b4ca{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-3f85d5fe{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f85d608{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f85d609{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f85d612{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-3f8e1fa2"><thead><tr style="overflow-wrap:break-word;"><th class="cl-3f85d5fe"><p class="cl-3f85b4ca"><span class="cl-3f7e54be">tokens</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-3f85d608"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">bu</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">bur</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ur</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ure</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">re</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">rea</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ea</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">eau</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">au</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">auc</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">uc</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ucr</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">cr</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">cra</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ra</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">rat</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">at</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ati</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d609"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">ti</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3f85d612"><p class="cl-3f85b4ca"><span class="cl-3f7e54c8">tie</span></p></td></tr></tbody></table></div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>foo<span class="ot">&lt;-</span>toc_maxweber <span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">n=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(tokens)<span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">sum</span>(n))<span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">3</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(foo, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(tokens,n), <span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x=</span><span class="dv">5</span>,<span class="at">y=</span><span class="dv">11</span>, <span class="at">label=</span><span class="fu">paste</span>(<span class="st">"nombre total de tokens ="</span>, <span class="fu">nrow</span>(toc_maxweber)))<span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">coord_flip</span>()<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"digrammes et trigrammes des lettres"</span>, <span class="at">x=</span><span class="st">"n-gramme"</span>, <span class="at">y=</span><span class="st">"nombre d'occurences"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="q07_tokenisation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On peut faire la même chose sur les mots, et en plus en éliminant les <em>stopwords</em>. l’intérêt de la procédure est de se concentrer sur les idées, des paires de mots consistants du point de vue sémantique. Un ordre ce dégage ! la bureaucratie est un moyen, puis une rationalité qui dépend d’un exercice.</p>
+<p>On note qu’il n’y a pas besoin de beaucoup de mots pour produire du sens par l’analyse statistique de leurs distributions.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>toc_maxweber<span class="ot">&lt;-</span><span class="fu">tokenize_ngrams</span>(MaxWeber,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">n=</span><span class="dv">3</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">n_min=</span><span class="dv">2</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">stopwords =</span> <span class="fu">stopwords</span>(<span class="st">'fr'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qflextable</span>(<span class="fu">head</span>(toc_maxweber, <span class="at">n=</span><span class="dv">19</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-40039b42{}.cl-3ff529fe{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3ff52a12{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3ffac88c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-3ffaec04{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec18{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec19{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec22{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec23{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec2c{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec2d{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec36{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec37{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3ffaec38{width:1.982in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-40039b42"><thead><tr style="overflow-wrap:break-word;"><th class="cl-3ffaec04"><p class="cl-3ffac88c"><span class="cl-3ff529fe">tokens</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec18"><p class="cl-3ffac88c"><span class="cl-3ff52a12">bureaucratie moyen</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec19"><p class="cl-3ffac88c"><span class="cl-3ff52a12">bureaucratie moyen plus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec19"><p class="cl-3ffac88c"><span class="cl-3ff52a12">moyen plus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec19"><p class="cl-3ffac88c"><span class="cl-3ff52a12">moyen plus rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec22"><p class="cl-3ffac88c"><span class="cl-3ff52a12">plus rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec23"><p class="cl-3ffac88c"><span class="cl-3ff52a12">plus rationnel l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec2c"><p class="cl-3ffac88c"><span class="cl-3ff52a12">rationnel l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec2c"><p class="cl-3ffac88c"><span class="cl-3ff52a12">rationnel l’on connaisse</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec2c"><p class="cl-3ffac88c"><span class="cl-3ff52a12">l’on connaisse</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec2c"><p class="cl-3ffac88c"><span class="cl-3ff52a12">l’on connaisse exercer</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec2d"><p class="cl-3ffac88c"><span class="cl-3ff52a12">connaisse exercer</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec36"><p class="cl-3ffac88c"><span class="cl-3ff52a12">connaisse exercer contrôle</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec36"><p class="cl-3ffac88c"><span class="cl-3ff52a12">exercer contrôle</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec37"><p class="cl-3ffac88c"><span class="cl-3ff52a12">exercer contrôle impératif</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec37"><p class="cl-3ffac88c"><span class="cl-3ff52a12">contrôle impératif</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec37"><p class="cl-3ffac88c"><span class="cl-3ff52a12">contrôle impératif êtres</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec37"><p class="cl-3ffac88c"><span class="cl-3ff52a12">impératif êtres</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec37"><p class="cl-3ffac88c"><span class="cl-3ff52a12">impératif êtres humains</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3ffaec38"><p class="cl-3ffac88c"><span class="cl-3ff52a12">êtres humains</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>On peut également s’intéresser aux n-grammes non directement consécutifs mais séparés par k <em>tokens</em>. C’est sans doute un moyen de saisir des corrélations de mots à plus grande distance. La possibilité formelle est là , nous avouons ne pas savoir à quel usage elle correspond. Nous serions sur ce point ravi d’avoir des réponses.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>toc_maxweber<span class="ot">&lt;-</span><span class="fu">tokenize_skip_ngrams</span>(MaxWeber,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">n=</span><span class="dv">3</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">n_min=</span><span class="dv">2</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">k=</span><span class="dv">2</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">stopwords =</span> <span class="fu">stopwords</span>(<span class="st">'fr'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qflextable</span>(<span class="fu">head</span>(toc_maxweber, <span class="at">n=</span><span class="dv">19</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-402cddcc{}.cl-401d7814{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-401d7828{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4024e798{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-402508a4{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508ae{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508af{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508b8{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508b9{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508c2{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508c3{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508cc{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-402508cd{width:2.33in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-402cddcc"><thead><tr style="overflow-wrap:break-word;"><th class="cl-402508a4"><p class="cl-4024e798"><span class="cl-401d7814">tokens</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-402508ae"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie moyen</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508af"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie plus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b8"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie moyen plus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie moyen rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508c2"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie moyen l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508af"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie plus rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508c3"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie plus l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508af"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie plus connaisse</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508cc"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie rationnel l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b8"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie rationnel connaisse</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b8"><p class="cl-4024e798"><span class="cl-401d7828">bureaucratie rationnel exercer</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">moyen plus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">moyen rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508c2"><p class="cl-4024e798"><span class="cl-401d7828">moyen l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">moyen plus rationnel</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508c2"><p class="cl-4024e798"><span class="cl-401d7828">moyen plus l’on</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508b9"><p class="cl-4024e798"><span class="cl-401d7828">moyen plus connaisse</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-402508cd"><p class="cl-4024e798"><span class="cl-401d7828">moyen rationnel l’on</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>Dans cet exemple, aucun n-gramme n’est répété, mais c’est rarement le cas avec des corpus plus importants. Dans ce cas, une forte répétition de n-grammes est un indice d’une unité sémantique composée de plusieurs <em>tokens</em> que l’on peut alors regrouper en un seul et même <em>token</em>. C’est ce que l’on verra dans la section suivante, avec la méthodes des collocation,</p>
+</section>
+</section>
+<section id="choisir-des-n-grammes-pertinents" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="choisir-des-n-grammes-pertinents"><span class="header-section-number">7.3</span> Choisir des n-grammes pertinents</h2>
+<p>Dans ce e-book l’unité principale d’analyse restera le mot. Mais nous savons, au moins intuitivement que certaines combinaisons de mots représentent des expressions qui ont la valeur d’un mot, une valeur sémantique, par exemple, l’expression “Assemblée Nationale”. Ces deux mots réunis constituent un syntagme, une unité de sens. La question qui se pose est alors de savoir comment les identifier dans le flot des n-grammes ?</p>
+<p>La technique est simple : si deux mots se retrouvent dans un ordre donné plus fréquemment que ce que le produit de leurs probabilités d’apparition laisse espérer, c’est qu’ils constituent une expression. On peut imaginer faire un test du chi² pour décider si un couple de mots constitue une unité sémantique ou non.</p>
+<p>Le package quanteda propose une bonne solution à ce problème avec la fonction collocation.</p>
+<section id="créer-les-tokens-avec-quanteda" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="créer-les-tokens-avec-quanteda"><span class="header-section-number">7.3.1</span> Créer les <em>tokens</em> avec ‘quanteda’</h3>
+<p>À partir du corpus des commentaires de TripAdvisor concernant les hôtels de Polynésie Française,</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#les données</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>AvisTripadvisor<span class="ot">&lt;-</span><span class="fu">read_rds</span>(<span class="st">"./data/AvisTripadvisor.rds"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>AvisTripadvisor<span class="sc">$</span>Taille_hotel<span class="ot">&lt;-</span><span class="fu">as.character</span>(AvisTripadvisor<span class="sc">$</span>Taille_hotel)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>AvisTripadvisor<span class="sc">$</span>Taille_hotel[<span class="fu">is.na</span>(AvisTripadvisor<span class="sc">$</span>Taille_hotel)]<span class="ot">&lt;-</span><span class="st">"Autre"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#création du corpus</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>corpus<span class="ot">&lt;-</span><span class="fu">corpus</span>(AvisTripadvisor,<span class="at">docid_field =</span> <span class="st">"ID"</span>,<span class="at">text_field =</span> <span class="st">"Commetaire"</span>, <span class="at">docvars =</span>AvisTripadvisor)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>ft<span class="ot">&lt;-</span> <span class="fu">head</span>(corpus,<span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">tokens=</span><span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>(<span class="at">cwidth =</span> <span class="dv">6</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ft</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-4065a486{}.cl-4052a8fe{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4052a912{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4059212a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-40597102{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-40597116{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-40597120{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-40597121{width:6in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4065a486"><caption><p>corpus</p></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-40597102"><p class="cl-4059212a"><span class="cl-4052a8fe">tokens</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-40597116"><p class="cl-4059212a"><span class="cl-4052a912">Tout est magnifique au Vahine island. Séjour de rêve avec une équipe très chaleureuse . Le cadre est splendide. Notre meilleur hébergement en Polynésie.Merci à toute l' équipe pour votre gentillesse et vos nombreuses attentions.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-40597120"><p class="cl-4059212a"><span class="cl-4052a912">Tout était parfait, notre meilleure expérience et plus belle découverte en Polynésie.Un grand merci à Amélie et toute son équipe pour un service de très haut niveau.De la chambre, en passant par la restauration et les activités, tout était parfait. Encore merci à tous, en espérant revenir très vite.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-40597121"><p class="cl-4059212a"><span class="cl-4052a912">Un séjour magnifique, 3 jours époustouflants, accueillis chaleureusement par toute l’équipe du Vahine Island. Tout est au rendez vous, la cuisine délicieuse, le lieu au delà de notre imagination, un calme parfait. À faire, re faire, sans jamais s’en lasser.</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>On crée un objet de format <em>token</em>, avec la fonction tokens de quanteda, et on choisit d’enlèver la ponctuation, les symboles et les nombres avec les arguments correspondants.</p>
+<p>Notre tokenizer ici a quelques problèmes . Si le “.” n’est pas suivi d’un espace, il ne peut distinguer les mots, il ne saisit pas non plus l’ellipse de “l’équipe”, qui devrait distinguer le determinant “la” de “équipe. Souvent il faudra au préalable remanier les chaines de caractère pour une meilleure qualité de tokenisation.</p>
+<div class="cell" data-tbl-cap="token simple">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transformation en objet token</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tok<span class="ot">&lt;-</span><span class="fu">tokens</span>(corpus,<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols=</span><span class="cn">TRUE</span>, <span class="at">remove_numbers=</span><span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tok,<span class="dv">3</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 3 documents and 21 docvars.
+1 :
+ [1] "Tout"       "est"        "magnifique" "au"         "Vahine"    
+ [6] "island"     "Séjour"     "de"         "rêve"       "avec"      
+[11] "une"        "équipe"    
+[ ... and 22 more ]
+
+2 :
+ [1] "Tout"         "était"        "parfait"      "notre"        "meilleure"   
+ [6] "expérience"   "et"           "plus"         "belle"        "découverte"  
+[11] "en"           "Polynésie.Un"
+[ ... and 37 more ]
+
+3 :
+ [1] "Un"              "séjour"          "magnifique"      "jours"          
+ [5] "époustouflants"  "accueillis"      "chaleureusement" "par"            
+ [9] "toute"           "l’équipe"        "du"              "Vahine"         
+[ ... and 27 more ]</code></pre>
+</div>
+</div>
+<p>Au passage, on peut aussi enlever les <em>stopwords</em>. C’est a dire les mots d’usages courants mais sans signification intrinsèque : les conjonctions, les déterminants, etc, qui se présentent sous la formes de dictionnaires.</p>
+<p>Pour que les n-grammes très fréquents restent des syntagmes signifiants, on laisse apparentes les positions des <em>stopwords</em>, avec l’option <code>padding= TRUE</code>.</p>
+<div class="cell" data-tbl-cap="token with stopwords">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#enlever les stopwords</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tok<span class="ot">&lt;-</span><span class="fu">tokens_remove</span>(tok,<span class="fu">stopwords</span>(<span class="st">'fr'</span>),<span class="at">padding=</span><span class="cn">FALSE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tok, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 3 documents and 21 docvars.
+1 :
+ [1] "Tout"        "magnifique"  "Vahine"      "island"      "Séjour"     
+ [6] "rêve"        "équipe"      "très"        "chaleureuse" "cadre"      
+[11] "splendide"   "meilleur"   
+[ ... and 7 more ]
+
+2 :
+ [1] "Tout"         "parfait"      "meilleure"    "expérience"   "plus"        
+ [6] "belle"        "découverte"   "Polynésie.Un" "grand"        "merci"       
+[11] "Amélie"       "toute"       
+[ ... and 18 more ]
+
+3 :
+ [1] "séjour"          "magnifique"      "jours"           "époustouflants" 
+ [5] "accueillis"      "chaleureusement" "toute"           "l’équipe"       
+ [9] "Vahine"          "Island"          "Tout"            "rendez"         
+[ ... and 13 more ]</code></pre>
+</div>
+</div>
+</section>
+<section id="application-à-la-détection-des-entités-nommées" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="application-à-la-détection-des-entités-nommées"><span class="header-section-number">7.3.2</span> Application à la détection des entités nommées</h3>
+<p>On cherche ici à identifier les noms propres présents dans le corpus.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#on sélectionne les mots commençant par une majuscule</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>toks_cap <span class="ot">&lt;-</span> <span class="fu">tokens_select</span>(tok, </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">pattern =</span> <span class="st">"^[A-Z]"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">valuetype =</span> <span class="st">"regex"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">case_insensitive =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">padding =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#on cherche les collocations</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>tstat_col_cap <span class="ot">&lt;-</span> <span class="fu">textstat_collocations</span>(toks_cap, <span class="at">min_count =</span> <span class="dv">3</span>, <span class="at">tolower =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(<span class="fu">as.data.frame</span>(tstat_col_cap)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-416ad7c0{}.cl-415b72f8{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-415b7302{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-416157e0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-416157f4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-41617720{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41617734{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41617735{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4161773e{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4161773f{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41617748{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41617752{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41617753{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-416ad7c0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-41617720"><p class="cl-416157e0"><span class="cl-415b72f8">collocation</span></p></th><th class="cl-41617734"><p class="cl-416157f4"><span class="cl-415b72f8">count</span></p></th><th class="cl-41617734"><p class="cl-416157f4"><span class="cl-415b72f8">count_nested</span></p></th><th class="cl-41617734"><p class="cl-416157f4"><span class="cl-415b72f8">length</span></p></th><th class="cl-41617734"><p class="cl-416157f4"><span class="cl-415b72f8">lambda</span></p></th><th class="cl-41617734"><p class="cl-416157f4"><span class="cl-415b72f8">z</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-41617735"><p class="cl-416157e0"><span class="cl-415b7302">Bora Bora</span></p></td><td class="cl-4161773e"><p class="cl-416157f4"><span class="cl-415b7302">155</span></p></td><td class="cl-4161773e"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-4161773e"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-4161773e"><p class="cl-416157f4"><span class="cl-415b7302">6.604016</span></p></td><td class="cl-4161773e"><p class="cl-416157f4"><span class="cl-415b7302">53.27337</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4161773f"><p class="cl-416157e0"><span class="cl-415b7302">Sylvie Yves</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">21</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">8.183783</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">25.93161</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4161773f"><p class="cl-416157e0"><span class="cl-415b7302">Muriel Franck</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">19</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">7.141592</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">24.46065</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4161773f"><p class="cl-416157e0"><span class="cl-415b7302">Corinne Frédéric</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">17</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">8.609701</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">23.23737</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4161773f"><p class="cl-416157e0"><span class="cl-415b7302">Pearl Beach</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">13</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">8.037935</span></p></td><td class="cl-41617748"><p class="cl-416157f4"><span class="cl-415b7302">21.75092</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-41617752"><p class="cl-416157e0"><span class="cl-415b7302">Yves Sylvie</span></p></td><td class="cl-41617753"><p class="cl-416157f4"><span class="cl-415b7302">13</span></p></td><td class="cl-41617753"><p class="cl-416157f4"><span class="cl-415b7302">0</span></p></td><td class="cl-41617753"><p class="cl-416157f4"><span class="cl-415b7302">2</span></p></td><td class="cl-41617753"><p class="cl-416157f4"><span class="cl-415b7302">7.285754</span></p></td><td class="cl-41617753"><p class="cl-416157f4"><span class="cl-415b7302">21.32976</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</section>
+<section id="composer-des-tokens-à-partir-dexpressions-multi-mots-collocation" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="composer-des-tokens-à-partir-dexpressions-multi-mots-collocation"><span class="header-section-number">7.3.3</span> Composer des <em>tokens</em> à partir d’expressions multi-mots : collocation</h3>
+<p>Dans ce corpus, les noms propres correspondent aux noms des îles et des hôtels, et aux prénoms composés. La valeur du lambda montre la force de l’association entre les mots, on retiendra d’une manière générale un lambda au moins supérieur à 3 pour remplacer les <em>tokens</em> d’origine par leurs n-grammes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>toks_comp <span class="ot">&lt;-</span> <span class="fu">tokens_compound</span>(tok, <span class="at">pattern =</span> tstat_col_cap[tstat_col_cap<span class="sc">$</span>z <span class="sc">&gt;</span> <span class="dv">3</span>,], </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">case_insensitive =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(toks_comp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 6 documents and 21 docvars.
+1 :
+ [1] "Tout"        "magnifique"  "Vahine"      "island"      "Séjour"     
+ [6] "rêve"        "équipe"      "très"        "chaleureuse" "cadre"      
+[11] "splendide"   "meilleur"   
+[ ... and 7 more ]
+
+2 :
+ [1] "Tout"         "parfait"      "meilleure"    "expérience"   "plus"        
+ [6] "belle"        "découverte"   "Polynésie.Un" "grand"        "merci"       
+[11] "Amélie"       "toute"       
+[ ... and 18 more ]
+
+3 :
+ [1] "séjour"          "magnifique"      "jours"           "époustouflants" 
+ [5] "accueillis"      "chaleureusement" "toute"           "l’équipe"       
+ [9] "Vahine_Island"   "Tout"            "rendez"          "cuisine"        
+[ ... and 12 more ]
+
+4 :
+ [1] "Vraiment"    "beau"        "cadre"       "idyllique"   "personnel"  
+ [6] "très"        "attentionné" "adoré"       "séjour"      "attention"  
+[11] "spéciale"    "voyage"     
+[ ... and 15 more ]
+
+5 :
+ [1] "Vahiné_Island" "entre"         "monde"         "parallèle"    
+ [5] "où"            "sait"          "plus"          "très"         
+ [9] "bien"          "tient"         "réel"          "tient"        
+[ ... and 60 more ]
+
+6 :
+ [1] "adoré"         "séjour"        "Vahiné_Island" "enfants"      
+ [5] "bungalow"      "pilotis"       "bungalow"      "plage"        
+ [9] "c'était"       "paradis"       "motu"          "idyllique"    
+[ ... and 40 more ]</code></pre>
+</div>
+</div>
+</section>
+<section id="identifier-les-autres-concepts" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="identifier-les-autres-concepts"><span class="header-section-number">7.3.4</span> Identifier les autres concepts</h3>
+<p>Dans ce corpus, on peut aussi s’attendre à voir apparaître d’autres expressions multi-mots qui représentent des concepts, telles que “petit déjeuner”.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>col<span class="ot">&lt;-</span><span class="fu">textstat_collocations</span>(toks_comp, <span class="at">min_count =</span> <span class="dv">10</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(<span class="fu">as.data.frame</span>(col)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-42f16154{}.cl-42df7e6c{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-42df7e80{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-42e77bc6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-42e77bda{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:6pt;padding-top:6pt;padding-left:6pt;padding-right:6pt;line-height: 1;background-color:transparent;}.cl-42e79bc4{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79bce{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79bd8{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79be2{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79be3{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79bec{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79bf6{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42e79c00{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-42f16154"><thead><tr style="overflow-wrap:break-word;"><th class="cl-42e79bc4"><p class="cl-42e77bc6"><span class="cl-42df7e6c">collocation</span></p></th><th class="cl-42e79bce"><p class="cl-42e77bda"><span class="cl-42df7e6c">count</span></p></th><th class="cl-42e79bce"><p class="cl-42e77bda"><span class="cl-42df7e6c">count_nested</span></p></th><th class="cl-42e79bce"><p class="cl-42e77bda"><span class="cl-42df7e6c">length</span></p></th><th class="cl-42e79bce"><p class="cl-42e77bda"><span class="cl-42df7e6c">lambda</span></p></th><th class="cl-42e79bce"><p class="cl-42e77bda"><span class="cl-42df7e6c">z</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-42e79bd8"><p class="cl-42e77bc6"><span class="cl-42df7e80">petit déjeuner</span></p></td><td class="cl-42e79be2"><p class="cl-42e77bda"><span class="cl-42df7e80">769</span></p></td><td class="cl-42e79be2"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79be2"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79be2"><p class="cl-42e77bda"><span class="cl-42df7e80">6.955714</span></p></td><td class="cl-42e79be2"><p class="cl-42e77bda"><span class="cl-42df7e80">79.38781</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-42e79be3"><p class="cl-42e77bc6"><span class="cl-42df7e80">très bien</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">714</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">3.022621</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">64.09272</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-42e79be3"><p class="cl-42e77bc6"><span class="cl-42df7e80">très bon</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">422</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">3.506116</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">53.16466</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-42e79be3"><p class="cl-42e77bc6"><span class="cl-42df7e80">salle bain</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">274</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">8.724142</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">52.20121</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-42e79be3"><p class="cl-42e77bc6"><span class="cl-42df7e80">très agréable</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">374</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">3.636737</span></p></td><td class="cl-42e79bec"><p class="cl-42e77bda"><span class="cl-42df7e80">50.52490</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-42e79bf6"><p class="cl-42e77bc6"><span class="cl-42df7e80">grand merci</span></p></td><td class="cl-42e79c00"><p class="cl-42e77bda"><span class="cl-42df7e80">167</span></p></td><td class="cl-42e79c00"><p class="cl-42e77bda"><span class="cl-42df7e80">0</span></p></td><td class="cl-42e79c00"><p class="cl-42e77bda"><span class="cl-42df7e80">2</span></p></td><td class="cl-42e79c00"><p class="cl-42e77bda"><span class="cl-42df7e80">5.112295</span></p></td><td class="cl-42e79c00"><p class="cl-42e77bda"><span class="cl-42df7e80">50.38965</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>Au vue de la diversité des collocations, on choisit un lambda supérieur à 7 pour retenir les concepts les plus pertinents.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>toks_comp <span class="ot">&lt;-</span> <span class="fu">tokens_compound</span>(tok, <span class="at">pattern =</span> col[col<span class="sc">$</span>z <span class="sc">&gt;</span> <span class="dv">7</span>,])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(toks_comp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 6 documents and 21 docvars.
+1 :
+ [1] "Tout"            "magnifique"      "Vahine"          "island"         
+ [5] "Séjour_rêve"     "équipe"          "très"            "chaleureuse"    
+ [9] "cadre_splendide" "meilleur"        "hébergement"     "Polynésie.Merci"
+[ ... and 4 more ]
+
+2 :
+ [1] "Tout_parfait" "meilleure"    "expérience"   "plus_belle"   "découverte"  
+ [6] "Polynésie.Un" "grand_merci"  "Amélie"       "toute_équipe" "service"     
+[11] "très"         "haut"        
+[ ... and 10 more ]
+
+3 :
+ [1] "séjour"             "magnifique"         "jours"             
+ [4] "époustouflants"     "accueillis"         "chaleureusement"   
+ [7] "toute_l’équipe"     "Vahine"             "Island"            
+[10] "Tout"               "rendez"             "cuisine_délicieuse"
+[ ... and 11 more ]
+
+4 :
+ [1] "Vraiment"                   "beau"                      
+ [3] "cadre_idyllique"            "personnel_très_attentionné"
+ [5] "adoré_séjour"               "attention"                 
+ [7] "spéciale"                   "voyage_noce"               
+ [9] "soirée"                     "d’anniversaire"            
+[11] "paysage"                    "magnifique"                
+[ ... and 9 more ]
+
+5 :
+ [1] "Vahiné"    "Island"    "entre"     "monde"     "parallèle" "où"       
+ [7] "sait"      "plus"      "très_bien" "tient"     "réel"      "tient"    
+[ ... and 45 more ]
+
+6 :
+ [1] "adoré_séjour"     "Vahiné"           "Island"           "enfants"         
+ [5] "bungalow_pilotis" "bungalow_plage"   "c'était"          "paradis"         
+ [9] "motu"             "idyllique"        "situé"            "lagon"           
+[ ... and 33 more ]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="des-tokens-au-dtm" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="des-tokens-au-dtm"><span class="header-section-number">7.4</span> Des tokens au dtm</h2>
+<p>D’un point de vue pratique le nombre de colonne est de l’ordre de plusieurs milliers. Dans le cas de texte courts, quelques dizaines, ou même centaine de mots, moins de quelques pour-cent des lignes auront une valeur. C’est un tableau creux (sparse matrix) qui peut nécessiter des représentations particulières et plus économes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#on transforme en document-features matrix pour des représentations graphiques </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dfm<span class="ot">&lt;-</span><span class="fu">dfm</span>(toks_comp,<span class="at">remove_padding=</span><span class="cn">TRUE</span>) </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> <span class="fu">dfm_remove</span>(dfm, <span class="fu">stopwords</span>(<span class="st">"fr"</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>dfm_top <span class="ot">&lt;-</span> <span class="fu">topfeatures</span>(dfm, <span class="at">n =</span> <span class="dv">80</span>, <span class="at">decreasing =</span> <span class="cn">TRUE</span>,  <span class="at">scheme =</span><span class="st">"count"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>dfm_top</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             a           très           plus           tout           bien 
+          2345           1355           1194           1141            930 
+       pension        chambre          hôtel       bungalow             si 
+           896            883            804            775            748 
+         c'est     restaurant            peu          plage           fait 
+           740            716            702            670            663 
+           car          repas         séjour      personnel          faire 
+           623            606            600            577            551 
+     bungalows        service          merci       vraiment     magnifique 
+           527            480            479            475            472 
+         comme        piscine          lagon          aussi        cuisine 
+           469            469            467            463            453 
+      chambres          c’est           donc        accueil petit_déjeuner 
+           450            448            436            432            427 
+       l'hôtel          petit          super           tous            vue 
+           426            419            395            392            386 
+       l’hôtel           soir           prix        surtout          juste 
+           386            377            371            359            351 
+            où       toujours            bon            top        qualité 
+           348            348            346            343            315 
+         quand        endroit       agréable           deux      polynésie 
+           315            313            313            306            305 
+       famille          cadre      l'accueil       terrasse           nuit 
+           303            302            299            294            288 
+    recommande          d'une           rien          calme           motu 
+           284            284            281            279            276 
+     également        superbe             ça          n'est    gentillesse 
+           275            267            266            265            257 
+          lieu       poissons       beaucoup          après      très_bien 
+           257            254            254            253            248 
+          trop           être   restauration        journée          temps 
+           247            247            246            246            244 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#un nuage de mots rapide library(quanteda.textplots) </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfm, <span class="at">max_word=</span><span class="dv">80</span>, <span class="at">color =</span> <span class="fu">rev</span>(RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>, <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="q07_tokenisation_files/figure-html/609-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mots les plus fréquents du corpus</figcaption>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dfm2<span class="ot">&lt;-</span>dfm <span class="sc">%&gt;%</span> <span class="fu">dfm_subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(Taille_hotel))<span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> Taille_hotel)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfm2, <span class="at">comparison =</span> <span class="cn">TRUE</span>, <span class="at">max_words =</span> <span class="dv">200</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="q07_tokenisation_files/figure-html/609-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mots les plus fréquents du corpus</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="la-question-des-mots-distinctifs" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="la-question-des-mots-distinctifs"><span class="header-section-number">7.5</span> La question des mots distinctifs</h2>
+<p>Plus que comparer la fréquence des mots on peux souhaiter identifier ceux qui sont les plus discrimants, les plus distinctifs.</p>
+<section id="keyness-index" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="keyness-index"><span class="header-section-number">7.5.1</span> Keyness index</h3>
+</section>
+<section id="find-keywords-based-on-the-textrank-algorithm" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="find-keywords-based-on-the-textrank-algorithm"><span class="header-section-number">7.5.2</span> Find keywords based on the Textrank algorithm</h3>
+<p>Le Textrank est un algorithme implémenté dans le paquetage R textrank. Cet algorithme permet de résumer un texte et d’en extraire des mots-clés. Pour ce faire, il construit un réseau de mots en vérifiant si les mots se suivent. Sur ce réseau, l’algorithme “Google Pagerank” est appliqué pour extraire les mots pertinents, après quoi les mots pertinents qui se suivent sont combinés pour obtenir des mots-clés. Dans l’exemple ci-dessous, nous souhaitons trouver des mots-clés à l’aide de cet algorithme pour les noms ou les adjectifs qui se suivent. Le graphique ci-dessous montre que les mots-clés combinent les mots pour former des expressions à plusieurs mots.</p>
+</section>
+<section id="rake" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="rake"><span class="header-section-number">7.5.3</span> Rake</h3>
+<p>L’algorithme de base suivant s’appelle RAKE, acronyme de Rapid Automatic Keyword Extraction (extraction automatique rapide de mots clés). Il recherche des mots-clés en examinant une séquence contiguë de mots qui ne contient pas de mots non pertinents. En d’autres termes, il</p>
+<p>en calculant un score pour chaque mot faisant partie d’un mot-clé candidat. parmi les mots des mots-clés candidats, l’algorithme examine le nombre d’occurrences de chaque mot et le nombre de cooccurrences avec d’autres mots. Chaque mot obtient un score qui est le rapport entre le degré du mot (le nombre de fois qu’il cooccurre avec d’autres mots) et la fréquence du mot. un score RAKE pour le mot-clé candidat complet est calculé en additionnant les scores de chacun des mots qui définissent le mot-clé candidat.</p>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.6</span> Conclusion</h2>
+<p>Dans ce chapitre, nous avons vu comment découper un corpus en unités, les <em>tokens</em>. Nous avons abordé le sujet des n-grammes, et vu comment composer des <em>tokens</em> à partir de concepts multi-mots, identifiés par des n-grammes adjacents.</p>
+<p>On conclue sur l’idée que la distribution des termes d’un texte doit se comprendre dans deux dimensions : la fréquence des termes parmi tous les termes, leur fréquence à travers les documents.</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>En français digramme est la meilleure traduction de bigram, une bigramme en français est un mot dont les lettres peuvent former deux autres mot.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./q06_Analyse_quantitative.html" class="pagination-link" aria-label="Analyse quantitative du corpus">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analyse quantitative du corpus</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./q08_Analyse_syntaxic.html" class="pagination-link" aria-label="Annotations syntaxiques">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Annotations syntaxiques</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

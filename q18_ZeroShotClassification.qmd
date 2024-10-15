@@ -30,7 +30,7 @@ C'est une application fondamentale pour les sciences sociales.
 
 L'analyse des classes latentes
 
-## Une application avec 
+## Une application avec
 
 sur ce plan On doit beaucoup à sokal et sneath
 
